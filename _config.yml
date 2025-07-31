@@ -1,71 +1,77 @@
 ################################################################################
-# Theme & site basics
+#  BASIC SITE META
 ################################################################################
-remote_theme: thundergolfer/junior-theme   # Git repo; served via jekyll-remote-theme
-title: "Mario – Research, Portfolio & Diary"
+remote_theme: thundergolfer/junior-theme          # pulls Junior straight from GitHub
+title: "Mario • Research, Portfolio & Diary"
+author: "Mario"
 email: "mario@example.com"
-author: "Mario Berg"
-description: "Biomedical-imaging researcher: projects, papers and musings."
-url: "https://marioberg.github.io"        # Full canonical URL
-baseurl: ""                               # Keep blank for a *user* site
+description: "Biomedical-imaging researcher: projects, code, and musings."
+url: "https://marioberg.github.io"                # <— change to your username
+baseurl: ""                                       # blank for a *user* site
 date_format: "%b %-d, %Y"
 
 ################################################################################
-# Feature flags (all come from the original Junior `_config.yml`)
+#  OPTIONAL FEATURES (matching Belotti’s choices)
 ################################################################################
-animated: false
 show_related_posts: true
 show_post_footers: true
-show_social_icons: true
+show_subscribe_cta: true
+show_social_icons: false
 ajaxify_contact_form: false
-enable_mathjax: true                      # Good for LaTeX in research posts
+enable_mathjax: true                              # turn on LaTeX in posts
+enable_anchorjs: true                             # auto-link every heading
 extended_fonts: false
-enable_anchorjs: true                     # Adds anchor links to headings
 
 ################################################################################
-# Collections – give you “sections” beyond the default blog
+#  SOCIAL USERNAMES
+################################################################################
+github_username: marioberg
+twitter_username: mario_ai
+linkedin_username: mario-berg
+
+################################################################################
+#  TEXT STRINGS (for easy localisation)
+################################################################################
+text:
+  pagination:   { newer: "Newer",  older: "Older" }
+  post:         { updated: "Updated", minute_read: "minute read", related_posts: "More to read" }
+  index:        { coming_soon: "Coming soon…" }
+  og_locale: "en_US"
+
+################################################################################
+#  CONTENT COLLECTIONS  — these create the “sections”
 ################################################################################
 collections:
-  research:
-    output: true
-    permalink: /research/:path/
-  portfolio:
-    output: true
-    permalink: /portfolio/:path/
-  diary:                                   # long-form hobby diary, separate from blog
-    output: true
-    permalink: /diary/:title/
+  research:    { output: true, permalink: /research/:path/ }
+  diary:       { output: true, permalink: /diary/:title/  }
+  portfolio:   { output: true, permalink: /portfolio/:path/ }
+  reviews:     { output: true }                   # just like Belotti’s “library” pages
 
 ################################################################################
-# Navigation order defaults (Liquid can loop over these)
+#  DEFAULT FRONT-MATTER FOR EACH COLLECTION
 ################################################################################
 defaults:
-  - scope:
-      type: research
-    values:
-      layout: research
-      nav_order: 2
-  - scope:
-      type: portfolio
-    values:
-      layout: project
-      nav_order: 3
-  - scope:
-      type: diary
-    values:
-      layout: post
-      nav_order: 4
+  - scope: { type: research }   # research articles
+    values: { layout: research, nav_order: 2 }
+  - scope: { type: diary }      # hobby diary entries
+    values: { layout: post,     nav_order: 3 }
+  - scope: { type: portfolio }  # big visual projects
+    values: { layout: project,  nav_order: 4 }
+  - scope: { type: reviews }    # book/software reviews
+    values: { layout: review,   nav_order: 5 }
 
 ################################################################################
-# Pagination & build tweaks – all plugins are on GitHub’s whitelist
+#  BUILD / SEO / ANALYTICS
 ################################################################################
 markdown: kramdown
 permalink: pretty
-paginate: 5
-plugins:
-  - jekyll-remote-theme        # Provides the `remote_theme:` key itself :contentReference[oaicite:6]{index=6}
+paginate: 12
+paginate_path: "/blog/:num/"
+plugins:                       # all whitelisted on GitHub Pages
+  - jekyll-remote-theme        # :contentReference[oaicite:1]{index=1}
   - jekyll-paginate
   - jekyll-sitemap
 sass:
   compressed: true
+google_analytics: "UA-XXXXXXX-1"                  # or leave blank
 exclude: [vendor, node_modules]

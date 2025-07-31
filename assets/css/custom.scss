@@ -1,0 +1,27 @@
+---
+# Empty front-matter so Jekyll processes this file
+---
+
+@import "{{ site.theme }}";  /* pull in all of Junior’s Sass */
+
+/* ---------- COLOUR PALETTE ---------- */
+$brand-primary:  #333;          // darker primary text
+$brand-accent:   #007acc;       // bright links
+$body-bg:        #fafafa;       // off-white background
+
+/* ---------- TYPOGRAPHY ---------- */
+body            { font-family: 'Inter', sans-serif; }
+h1, h2, h3, h4  { letter-spacing: -.5px; }
+
+/* ---------- NAVIGATION ---------- */
+.nav__item      { padding: .25rem .75rem; transition: color .3s ease; }
+.nav__item:hover{ color: $brand-accent; }
+
+/* ---------- CODE BLOCKS ---------- */
+.highlight pre  { background: #272822; color: #f8f8f2; }
+
+/* ---------- IMAGES ---------- */
+img { border-radius: .5rem; }
+
+/* ---------- PAGE WIDTH ---------- */
+.container { max-width: 860px; }

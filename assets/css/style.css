@@ -46,6 +46,8 @@ body {
 
 .nav-links a:hover::after {
   transform: scaleX(0);
+  color: #fff;
+  text-decoration: none;
 }
 
 .page-content {
@@ -68,7 +70,6 @@ body {
 }
 
 .social-links li {
-  margin: 0 0.5rem;
 }
 
 .social-links a {

@@ -1,0 +1,16 @@
+<!-- _includes/research-header.html -->
+<div class="research-header">
+  <h1>{{ page.title }}</h1>
+
+  {% if page.summary %}
+    <p class="research-summary">{{ page.summary }}</p>
+  {% endif %}
+
+  {% if page.tags %}
+    <div class="tags">
+      {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

@@ -16,10 +16,7 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-}
-
-.nav-links li {
-  margin: 0;
+  gap: 2rem;
 }
 
 .nav-links a {
@@ -41,18 +38,19 @@ body {
   background: currentColor;
   transform-origin: center;
   transform: scaleX(1);
-  transition: transform 0.3s ease;
+  transition: transform 0.6s ease;
 }
 
 .nav-links a:hover::after {
   transform: scaleX(0);
-  color: #fff;
-  text-decoration: none;
 }
 
 .page-content {
   flex: 1;
   padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .site-footer {
@@ -67,9 +65,7 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-}
-
-.social-links li {
+  gap: 2rem;
 }
 
 .social-links a {

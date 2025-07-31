@@ -1,0 +1,71 @@
+################################################################################
+# Theme & site basics
+################################################################################
+remote_theme: thundergolfer/junior-theme   # Git repo; served via jekyll-remote-theme
+title: "Mario – Research, Portfolio & Diary"
+email: "mario@example.com"
+author: "Mario Berg"
+description: "Biomedical-imaging researcher: projects, papers and musings."
+url: "https://marioberg.github.io"        # Full canonical URL
+baseurl: ""                               # Keep blank for a *user* site
+date_format: "%b %-d, %Y"
+
+################################################################################
+# Feature flags (all come from the original Junior `_config.yml`)
+################################################################################
+animated: false
+show_related_posts: true
+show_post_footers: true
+show_social_icons: true
+ajaxify_contact_form: false
+enable_mathjax: true                      # Good for LaTeX in research posts
+extended_fonts: false
+enable_anchorjs: true                     # Adds anchor links to headings
+
+################################################################################
+# Collections – give you “sections” beyond the default blog
+################################################################################
+collections:
+  research:
+    output: true
+    permalink: /research/:path/
+  portfolio:
+    output: true
+    permalink: /portfolio/:path/
+  diary:                                   # long-form hobby diary, separate from blog
+    output: true
+    permalink: /diary/:title/
+
+################################################################################
+# Navigation order defaults (Liquid can loop over these)
+################################################################################
+defaults:
+  - scope:
+      type: research
+    values:
+      layout: research
+      nav_order: 2
+  - scope:
+      type: portfolio
+    values:
+      layout: project
+      nav_order: 3
+  - scope:
+      type: diary
+    values:
+      layout: post
+      nav_order: 4
+
+################################################################################
+# Pagination & build tweaks – all plugins are on GitHub’s whitelist
+################################################################################
+markdown: kramdown
+permalink: pretty
+paginate: 5
+plugins:
+  - jekyll-remote-theme        # Provides the `remote_theme:` key itself :contentReference[oaicite:6]{index=6}
+  - jekyll-paginate
+  - jekyll-sitemap
+sass:
+  compressed: true
+exclude: [vendor, node_modules]

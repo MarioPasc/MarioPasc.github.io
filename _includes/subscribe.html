@@ -1,37 +1,186 @@
-<script>
-const form  = document.querySelector('#subscribe-cta form');
-const btn   = form.querySelector('input[type=submit]');
+<section id="subscribe-cta">
+  <h3>Want to get blog posts over email?</h3>
+  <p>Enter your email address and get notified when there's a new post!</p>
+  <form>
+    <input
+      type="email"
+      id="useremail"
+      name="useremail"
+      placeholder="mpascualg02@gmail.com"
+    /><br />
+    <input type="submit" text="Subscribe" />
+  </form>
+</section>
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  const email = form.EMAIL.value.trim();
-  if (!email) return;
+<style>
+  #subscribe-cta {
+    background-color: #f7f7f9;
+    border-radius: 1rem;
+    padding: 1.5em;
+    margin-top: 2.5em;
+  }
 
-  btn.classList.add('pulse');
-  btn.disabled = true;
-  btn.value = 'Wait…';
+  h3 {
+    margin-top: 0.5em;
+  }
 
-  const url = `https://github.us21.list-manage.com/subscribe/post-json
-               ?u=YOUR_U_ID&id=YOUR_LIST_ID&c=?&EMAIL=${encodeURIComponent(email)}`.replace(/\s/g,'');
+  p {
+    color: #444;
+  }
 
-  // JSONP: create temporary <script>
-  window.mcCallback = data => {
-    btn.classList.remove('pulse');
-    if (data.result === 'success') {
-      btn.value = 'Done!';
-      btn.disabled = true;
-      /* append your injected success <p> exactly like before */
-    } else {
-      btn.value = 'Subscribe';
-      btn.disabled = false;
-      /* show data.msg inside your red error <p> */
+  form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  input[type="email"] {
+    border-style: none;
+    font-size: 1em;
+    border-radius: 0.5rem;
+    min-width: 5rem;
+    width: 90%;
+    margin-right: 1rem;
+  }
+
+  input[type="submit"] {
+    background-color: black;
+    border-radius: 0.5rem;
+    border-style: none;
+    color: white;
+    padding: 0.4rem;
+    font-size: 1em;
+  }
+
+  input[type="submit"]:hover {
+    cursor: pointer;
+    /* TODO: This is $blue. Incorporate this style into site's scss. */
+    background-color: #0076df;
+  }
+
+  input[type="submit"]:disabled {
+    cursor: not-allowed;
+    /* TODO: This is $blue. Incorporate this style into site's scss. */
+    background-color: #444;
+  }
+
+  .pulse {
+    background-color: #222;
+    animation-name: pulsecolor;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes pulsecolor {
+    0% {
+      background-color: #222;
     }
-    delete window.mcCallback;
-    script.remove();
+    50% {
+      background-color: #4285f4;
+    }
+    100% {
+      background-color: #222;
+    }
+  }
+
+  .error {
+    background-color: red !important;
+  }
+</style>
+
+<script>
+/* --------------------------------------------------------------------------
+   Mailchimp JSONP handler – preserves your pulse / success / error UX
+   -------------------------------------------------------------------------- */
+
+const htmlToElement = (html) => {
+  const t = document.createElement("template");
+  t.innerHTML = html.trim();
+  return t.content.firstChild;
+};
+
+(() => {
+  const form       = document.querySelector("#subscribe-cta form");
+  const emailInput = form.querySelector("input[name=EMAIL]");
+  const btn        = form.querySelector('input[type="submit"]');
+  const errId      = "subscription-signup-error";
+
+  /* ─ helpers ───────────────────────────────────────────────────────────── */
+
+  const clearError = () => {
+    btn.classList.remove("error");
+    document.getElementById(errId)?.remove();
   };
 
-  const script = document.createElement('script');
-  script.src = url.replace('&c=?', `&c=mcCallback`);
-  document.body.appendChild(script);
-});
+  const showError = (msg) => {
+    btn.classList.add("error");
+    const style = "color:#f70f1c;display:flex;align-items:center;margin-top:1em;";
+    form.appendChild(htmlToElement(`<p id="${errId}" style="${style}">${msg}</p>`));
+  };
+
+  const setLoading = (flag) => {
+    btn.classList.toggle("pulse", flag);
+    btn.disabled = flag;
+    btn.value = flag ? "Wait…" : "Subscribe";
+  };
+
+  const showSuccess = () => {
+    btn.classList.remove("pulse");
+    btn.disabled = true;
+    btn.value = "Done!";
+    const pStyle = "color:rgb(21 128 61);display:flex;align-items:center;margin-top:1em;";
+    const svg    = `<svg style="height:20px;padding-right:4px" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9
+                           10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"/></svg>`;
+    form.appendChild(htmlToElement(`<p style="${pStyle}">${svg}Hooray! You’re now on the list.</p>`));
+  };
+
+  /* ─ constants from your embed snippet ─────────────────────────────────── */
+
+  const U  = "7940f7d52f6031b2ad6d4b3b1";   // audience ID
+  const ID = "5ec3803f8f";                  // list ID
+  const ROOT = "https://gmail.us2.list-manage.com/subscribe/post-json";
+
+  /* ─ event wiring ─────────────────────────────────────────────────────── */
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearError();
+
+    const email = emailInput.value.trim();
+    if (!email) return showError("Please enter a valid email address.");
+
+    /* loading state */
+    setLoading(true);
+
+    /* JSONP URL (callback name filled in below) */
+    let url = `${ROOT}?u=${U}&id=${ID}&c=?&EMAIL=${encodeURIComponent(email)}`;
+    url = url.replace("&c=?", "&c=mcCallback");
+
+    /* define callback before injecting script */
+    window.mcCallback = (resp) => {
+      setLoading(false);
+      if (resp.result === "success") {
+        showSuccess();
+      } else {
+        /* resp.msg can contain HTML — strip it */
+        const div = document.createElement("div");
+        div.innerHTML = resp.msg;
+        showError(div.textContent || "Sorry — something went wrong.");
+        btn.disabled = false;
+      }
+      delete window.mcCallback;
+      script.remove();
+    };
+
+    /* inject <script> for JSONP fetch */
+    const script = document.createElement("script");
+    script.src = url;
+    document.body.appendChild(script);
+  });
+})();
 </script>

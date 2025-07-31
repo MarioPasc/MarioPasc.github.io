@@ -57,7 +57,7 @@ defaults:
 markdown: kramdown
 permalink: pretty
 paginate: 12                                     # blog page size :contentReference[oaicite:3]{index=3}
-paginate_path: "/"
+paginate_path: "/blog/:num/"
 plugins:
   - jekyll-remote-theme                          # whitelisted on Pages :contentReference[oaicite:4]{index=4}
   - jekyll-paginate

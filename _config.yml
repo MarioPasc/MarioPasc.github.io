@@ -1,77 +1,67 @@
-################################################################################
-#  BASIC SITE META
-################################################################################
-remote_theme: thundergolfer/junior-theme          # pulls Junior straight from GitHub
-title: "Mario • Research, Portfolio & Diary"
+###############################################################################
+# BASIC SITE META
+###############################################################################
+remote_theme: thundergolfer/junior-theme        # GitHub-hosted, Pages-safe theme :contentReference[oaicite:0]{index=0}
+title:  "Mario • Research, Portfolio & Diary"
 author: "Mario"
+description: "Biomedical-imaging researcher: projects, code & musings."
+url:  "https://mariopasc.github.io/"             # ← change to your username
+baseurl: ""                                     # blank for *user* site
 email: "mario@example.com"
-description: "Biomedical-imaging researcher: projects, code, and musings."
-url: "https://mariopasc.github.io/"                # <— change to your username
-baseurl: ""                                       # blank for a *user* site
 date_format: "%b %-d, %Y"
 
-################################################################################
-#  OPTIONAL FEATURES (matching Belotti’s choices)
-################################################################################
-show_related_posts: true
-show_post_footers: true
+###############################################################################
+# FEATURES (mirrors Belotti’s production settings)
+###############################################################################
+show_related_posts:  true
+show_post_footers:  true
 show_subscribe_cta: true
-show_social_icons: false
+show_social_icons:  false
 ajaxify_contact_form: false
-enable_mathjax: true                              # turn on LaTeX in posts
-enable_anchorjs: true                             # auto-link every heading
+enable_mathjax: true                            # good for LaTeX in research posts :contentReference[oaicite:1]{index=1}
+enable_anchorjs: true
 extended_fonts: false
 
-################################################################################
-#  SOCIAL USERNAMES
-################################################################################
-github_username: marioberg
-twitter_username: mario_ai
+###############################################################################
+# SOCIAL USERNAMES
+###############################################################################
+github_username:   marioberg
+twitter_username:  mario_ai
 linkedin_username: mario-berg
 
-################################################################################
-#  TEXT STRINGS (for easy localisation)
-################################################################################
-text:
-  pagination:   { newer: "Newer",  older: "Older" }
-  post:         { updated: "Updated", minute_read: "minute read", related_posts: "More to read" }
-  index:        { coming_soon: "Coming soon…" }
-  og_locale: "en_US"
-
-################################################################################
-#  CONTENT COLLECTIONS  — these create the “sections”
-################################################################################
+###############################################################################
+# CONTENT COLLECTIONS
+###############################################################################
 collections:
-  research:    { output: true, permalink: /research/:path/ }
-  diary:       { output: true, permalink: /diary/:title/  }
-  portfolio:   { output: true, permalink: /portfolio/:path/ }
-  reviews:     { output: true }                   # just like Belotti’s “library” pages
+  research:   { output: true, permalink: /research/:path/ }
+  diary:      { output: true, permalink: /diary/:title/ }
+  portfolio:  { output: true, permalink: /portfolio/:path/ }
+  reviews:    { output: true }
 
-################################################################################
-#  DEFAULT FRONT-MATTER FOR EACH COLLECTION
-################################################################################
+###############################################################################
+# DEFAULT FRONT-MATTER (uses layouts that *exist* in the theme)
+###############################################################################
 defaults:
-  - scope: { type: research }   # research articles
-    values: { layout: research, nav_order: 2 }
-  - scope: { type: diary }      # hobby diary entries
-    values: { layout: post,     nav_order: 3 }
-  - scope: { type: portfolio }  # big visual projects
-    values: { layout: project,  nav_order: 4 }
-  - scope: { type: reviews }    # book/software reviews
-    values: { layout: review,   nav_order: 5 }
+  - scope: { type: research }
+    values: { layout: post,      nav_order: 2 }
+  - scope: { type: diary    }
+    values: { layout: post,      nav_order: 3 }
+  - scope: { type: portfolio }
+    values: { layout: portfolio, nav_order: 4 }  # portfolio.html exists :contentReference[oaicite:2]{index=2}
+  - scope: { type: reviews  }
+    values: { layout: post,      nav_order: 5 }
 
-################################################################################
-#  BUILD / SEO / ANALYTICS
-################################################################################
+###############################################################################
+# BUILD / SEO / ANALYTICS
+###############################################################################
 markdown: kramdown
 permalink: pretty
-paginate: 12
+paginate: 12                                     # blog page size :contentReference[oaicite:3]{index=3}
 paginate_path: "/blog/:num/"
-plugins:                       # all whitelisted on GitHub Pages
-  - jekyll-remote-theme        # :contentReference[oaicite:1]{index=1}
+plugins:
+  - jekyll-remote-theme                          # whitelisted on Pages :contentReference[oaicite:4]{index=4}
   - jekyll-paginate
   - jekyll-sitemap
-sass:
-  compressed: true
-google_analytics: "UA-XXXXXXX-1"                  # or leave blank
+sass: { compressed: true }
+google_analytics: ""                             # add your UA / G-tag or leave blank
 exclude: [vendor, node_modules]

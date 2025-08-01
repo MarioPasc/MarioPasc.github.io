@@ -73,6 +73,16 @@ index b263c91070b88a7474d777adb7276e8bac4c5fbf..24a821e90eb7721b704edaf135cc1c28
  sass: { compressed: true }
  google_analytics: ""                             # add your UA / G-tag or leave blank
  exclude: [vendor, node_modules]
+diff --git a/_data/tags.yml b/_data/tags.yml
+new file mode 100644
+index 0000000000000000000000000000000000000000..e5a8fef97497c85c7eac95185ce54fe6f0c4356f
+--- /dev/null
++++ b/_data/tags.yml
+@@ -0,0 +1,4 @@
++demo:
++  label: Demo
++  bg_color: "#007ACC"
++  text_color: "#fff"
 diff --git a/_includes/footer.html b/_includes/footer.html
 new file mode 100644
 index 0000000000000000000000000000000000000000..696d823168f1cf6e14ac8ab88ad41615a9209580
@@ -124,10 +134,10 @@ index 0000000000000000000000000000000000000000..d4b1c538135d12fd6b6fd9e7f7730810
 +</html>
 diff --git a/_layouts/post.html b/_layouts/post.html
 new file mode 100644
-index 0000000000000000000000000000000000000000..337ee05e31518bca917c5baffc29284a995878a9
+index 0000000000000000000000000000000000000000..0103b6c4dd3c60d27b2491097647497dd69bf39d
 --- /dev/null
 +++ b/_layouts/post.html
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,21 @@
 +---
 +layout: default
 +---
@@ -147,29 +157,20 @@ index 0000000000000000000000000000000000000000..337ee05e31518bca917c5baffc29284a
 +  <p>Thanks for reading, and please leave some feedback if you have the time.</p>
 +  <p>Also, you can follow me on Github (<a href="https://github.com/MarioPasc">https://github.com/MarioPasc</a>)</p>
 +  <hr>
-+  <div class="comment-section">
-+    <form class="comment-form" method="post">
-+      <label for="comment-name">Name</label>
-+      <input type="text" id="comment-name" name="name" required>
-+      <label for="comment-email">Email</label>
-+      <input type="email" id="comment-email" name="email" required>
-+      <label for="comment-message">Comment</label>
-+      <textarea id="comment-message" name="message" rows="4" required></textarea>
-+      <button type="submit">Submit</button>
-+    </form>
-+  </div>
++  <p class="comment-note">Do you have any comments? Email me your thoughts at <a href="mailto:mpascualg02@gmail.com">mpascualg02@gmail.com</a>!</p>
 +</article>
 diff --git a/_posts/2024-05-07-mock-entry.md b/_posts/2024-05-07-mock-entry.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..1a4fd2b2520b617f9db342547d7ae46a5714e980
+index 0000000000000000000000000000000000000000..6e21f2a783a1d13ad3dbc84312b29c8b0d64f7c8
 --- /dev/null
 +++ b/_posts/2024-05-07-mock-entry.md
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,10 @@
 +---
 +title: "Mock Entry"
 +date: 2024-05-07
 +layout: post
 +image: /images/img.png
++tag: demo
 +---
 +
 +This is a mock blog entry used to demonstrate the blog layout with an image.
@@ -204,10 +205,10 @@ index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..8eca98441e7d4d55a803cca7192e8fbe
 +A short bio will go here.
 diff --git a/assets/css/style.css b/assets/css/style.css
 new file mode 100644
-index 0000000000000000000000000000000000000000..89d363ee7347ffa54e724ac990d380a7dbfdd2b7
+index 0000000000000000000000000000000000000000..12c380e21bd528674cbff6fa928c9d506bc950b8
 --- /dev/null
 +++ b/assets/css/style.css
-@@ -0,0 +1,164 @@
+@@ -0,0 +1,151 @@
 +body {
 +  margin: 0;
 +  font-family: Arial, sans-serif;
@@ -258,7 +259,7 @@ index 0000000000000000000000000000000000000000..89d363ee7347ffa54e724ac990d380a7
 +.page-content {
 +  flex: 1;
 +  padding: 1rem;
-+  max-width: 800px;
++  max-width: 1000px;
 +  margin: 0 auto;
 +  text-align: center;
 +}
@@ -303,33 +304,47 @@ index 0000000000000000000000000000000000000000..89d363ee7347ffa54e724ac990d380a7
 +}
 +
 +.blog-list {
-+  max-width: 800px;
++  max-width: 1000px;
 +  margin: 0 auto;
 +}
 +
 +.blog-entry {
-+  display: flex;
-+  align-items: center;
-+  gap: 1rem;
++  display: grid;
++  grid-template-columns: 150px 1fr;
++  grid-template-rows: auto auto auto;
++  column-gap: 1rem;
 +  margin-bottom: 2rem;
++  text-align: left;
 +}
 +
 +.blog-entry-image {
++  grid-row: 2;
++  grid-column: 1;
 +  width: 150px;
 +  height: auto;
 +}
 +
-+.blog-entry-text {
-+  text-align: left;
-+}
-+
-+.blog-entry-text h2 {
++.blog-entry-title {
++  grid-row: 1;
++  grid-column: 2;
 +  margin: 0;
 +}
 +
 +.blog-entry-date {
++  grid-row: 2;
++  grid-column: 2;
 +  margin: 0;
 +  font-style: italic;
++}
++
++.blog-entry-tag {
++  grid-row: 3;
++  grid-column: 2;
++  display: inline-block;
++  margin-top: 0.25rem;
++  padding: 0.1rem 0.5rem;
++  border-radius: 4px;
++  font-size: 0.9rem;
 +}
 +
 +.post {
@@ -342,41 +357,14 @@ index 0000000000000000000000000000000000000000..89d363ee7347ffa54e724ac990d380a7
 +  margin-bottom: 1rem;
 +}
 +
-+.comment-section {
++.comment-note {
 +  margin-top: 1rem;
-+}
-+
-+.comment-form {
-+  max-width: 500px;
-+  margin: 0 auto;
-+  text-align: left;
-+}
-+
-+.comment-form label {
-+  display: block;
-+  margin-top: 0.5rem;
-+}
-+
-+.comment-form input,
-+.comment-form textarea {
-+  width: 100%;
-+  padding: 0.5rem;
-+  margin-top: 0.25rem;
-+  border: 1px solid #ccc;
-+  border-radius: 4px;
-+  box-sizing: border-box;
-+}
-+
-+.comment-form button {
-+  margin-top: 1rem;
-+  padding: 0.5rem 1rem;
-+  font-weight: bold;
 +}
 diff --git a/blog/index.html b/blog/index.html
-index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..0896e8b0a7e7afaefc3ab2757bcbf608c6a7ecfe 100644
+index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..4e4cddea901151526cd748f6085e05409d7db42b 100644
 --- a/blog/index.html
 +++ b/blog/index.html
-@@ -1,36 +1,25 @@
+@@ -1,36 +1,29 @@
  ---
  layout: default
 -tags: blog
@@ -390,10 +378,14 @@ index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..0896e8b0a7e7afaefc3ab2757bcbf608
 +    {% if post.image %}
 +    <img src="{{ post.image }}" alt="" class="blog-entry-image" />
 +    {% endif %}
-+    <div class="blog-entry-text">
-+      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-+      <p class="blog-entry-date"><em>{{ post.date | date: site.date_format }}</em></p>
-+    </div>
++    <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
++    <p class="blog-entry-date"><em>{{ post.date | date: site.date_format }}</em></p>
++    {% if post.tag %}
++    {% assign tag = site.data.tags[post.tag] %}
++    {% if tag %}
++    <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
++    {% endif %}
++    {% endif %}
 +  </article>
 +  {% endfor %}
 +</div>

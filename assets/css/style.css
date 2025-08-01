@@ -48,7 +48,7 @@ body {
 .page-content {
   flex: 1;
   padding: 1rem;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
@@ -93,33 +93,47 @@ body {
 }
 
 .blog-list {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .blog-entry {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto auto auto;
+  column-gap: 1rem;
   margin-bottom: 2rem;
+  text-align: left;
 }
 
 .blog-entry-image {
+  grid-row: 2;
+  grid-column: 1;
   width: 150px;
   height: auto;
 }
 
-.blog-entry-text {
-  text-align: left;
-}
-
-.blog-entry-text h2 {
+.blog-entry-title {
+  grid-row: 1;
+  grid-column: 2;
   margin: 0;
 }
 
 .blog-entry-date {
+  grid-row: 2;
+  grid-column: 2;
   margin: 0;
   font-style: italic;
+}
+
+.blog-entry-tag {
+  grid-row: 3;
+  grid-column: 2;
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }
 
 .post {
@@ -132,33 +146,6 @@ body {
   margin-bottom: 1rem;
 }
 
-.comment-section {
+.comment-note {
   margin-top: 1rem;
-}
-
-.comment-form {
-  max-width: 500px;
-  margin: 0 auto;
-  text-align: left;
-}
-
-.comment-form label {
-  display: block;
-  margin-top: 0.5rem;
-}
-
-.comment-form input,
-.comment-form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.comment-form button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
 }

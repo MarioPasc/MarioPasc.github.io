@@ -205,10 +205,10 @@ index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..8eca98441e7d4d55a803cca7192e8fbe
 +A short bio will go here.
 diff --git a/assets/css/style.css b/assets/css/style.css
 new file mode 100644
-index 0000000000000000000000000000000000000000..12c380e21bd528674cbff6fa928c9d506bc950b8
+index 0000000000000000000000000000000000000000..e91484c7e265be09651a788f604515bcaa65c10b
 --- /dev/null
 +++ b/assets/css/style.css
-@@ -0,0 +1,151 @@
+@@ -0,0 +1,148 @@
 +body {
 +  margin: 0;
 +  font-family: Arial, sans-serif;
@@ -309,37 +309,34 @@ index 0000000000000000000000000000000000000000..12c380e21bd528674cbff6fa928c9d50
 +}
 +
 +.blog-entry {
-+  display: grid;
-+  grid-template-columns: 150px 1fr;
-+  grid-template-rows: auto auto auto;
-+  column-gap: 1rem;
++  display: flex;
++  align-items: flex-start;
++  gap: 1rem;
 +  margin-bottom: 2rem;
 +  text-align: left;
 +}
 +
 +.blog-entry-image {
-+  grid-row: 2;
-+  grid-column: 1;
 +  width: 150px;
 +  height: auto;
 +}
 +
++.blog-entry-content {
++  display: flex;
++  flex-direction: column;
++}
++
 +.blog-entry-title {
-+  grid-row: 1;
-+  grid-column: 2;
 +  margin: 0;
 +}
 +
 +.blog-entry-date {
-+  grid-row: 2;
-+  grid-column: 2;
 +  margin: 0;
 +  font-style: italic;
 +}
 +
 +.blog-entry-tag {
-+  grid-row: 3;
-+  grid-column: 2;
++  align-self: flex-start;
 +  display: inline-block;
 +  margin-top: 0.25rem;
 +  padding: 0.1rem 0.5rem;
@@ -361,10 +358,10 @@ index 0000000000000000000000000000000000000000..12c380e21bd528674cbff6fa928c9d50
 +  margin-top: 1rem;
 +}
 diff --git a/blog/index.html b/blog/index.html
-index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..4e4cddea901151526cd748f6085e05409d7db42b 100644
+index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..da48dc2dd1f20f105c661c075de669d7e2a62883 100644
 --- a/blog/index.html
 +++ b/blog/index.html
-@@ -1,36 +1,29 @@
+@@ -1,36 +1,31 @@
  ---
  layout: default
 -tags: blog
@@ -378,14 +375,16 @@ index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..4e4cddea901151526cd748f6085e0540
 +    {% if post.image %}
 +    <img src="{{ post.image }}" alt="" class="blog-entry-image" />
 +    {% endif %}
-+    <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-+    <p class="blog-entry-date"><em>{{ post.date | date: site.date_format }}</em></p>
-+    {% if post.tag %}
-+    {% assign tag = site.data.tags[post.tag] %}
-+    {% if tag %}
-+    <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
-+    {% endif %}
-+    {% endif %}
++    <div class="blog-entry-content">
++      <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
++      <p class="blog-entry-date"><em>{{ post.date | date: site.date_format }}</em></p>
++      {% if post.tag %}
++      {% assign tag = site.data.tags[post.tag] %}
++      {% if tag %}
++      <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
++      {% endif %}
++      {% endif %}
++    </div>
 +  </article>
 +  {% endfor %}
 +</div>

@@ -121,3 +121,44 @@ body {
   margin: 0;
   font-style: italic;
 }
+
+.post {
+  text-align: left;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.comment-section {
+  margin-top: 1rem;
+}
+
+.comment-form {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.comment-form label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.comment-form button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}

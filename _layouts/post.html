@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<article class="post">
+  <header>
+    <h1>{{ page.title }}</h1>
+    <p class="post-date"><em>{{ page.date | date: site.date_format }}</em></p>
+    {% if page.image %}
+    <img src="{{ page.image }}" alt="" class="post-image">
+    {% endif %}
+  </header>
+  <div class="post-content">
+    {{ content }}
+  </div>
+  <hr>
+  <p>Mario Pascual González</p>
+  <p>Thanks for reading, and please leave some feedback if you have the time.</p>
+  <p>Also, you can follow me on Github (<a href="https://github.com/MarioPasc">https://github.com/MarioPasc</a>)</p>
+  <hr>
+  <div class="comment-section">
+    <form class="comment-form" method="post">
+      <label for="comment-name">Name</label>
+      <input type="text" id="comment-name" name="name" required>
+      <label for="comment-email">Email</label>
+      <input type="email" id="comment-email" name="email" required>
+      <label for="comment-message">Comment</label>
+      <textarea id="comment-message" name="message" rows="4" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</article>

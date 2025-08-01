@@ -12,13 +12,17 @@ title: Blog
     {% endif %}
     <div class="blog-entry-content">
       <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p class="blog-entry-date"><em>{{ post.date | date: site.date_format }}</em></p>
-      {% if post.tag %}
-      {% assign tag = site.data.tags[post.tag] %}
-      {% if tag %}
-      <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
-      {% endif %}
-      {% endif %}
+      
+      <!-- Group date and tag in a meta container -->
+      <div class="blog-entry-meta">
+        <p class="blog-entry-date">{{ post.date | date: site.date_format }}</p>
+        {% if post.tag %}
+        {% assign tag = site.data.tags[post.tag] %}
+        {% if tag %}
+        <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
+        {% endif %}
+        {% endif %}
+      </div>
     </div>
   </article>
   {% endfor %}

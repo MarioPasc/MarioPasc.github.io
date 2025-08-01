@@ -91,3 +91,33 @@ body {
 .social-links a:hover::after {
   transform: scaleX(0);
 }
+
+.blog-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-entry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.blog-entry-image {
+  width: 150px;
+  height: auto;
+}
+
+.blog-entry-text {
+  text-align: left;
+}
+
+.blog-entry-text h2 {
+  margin: 0;
+}
+
+.blog-entry-date {
+  margin: 0;
+  font-style: italic;
+}

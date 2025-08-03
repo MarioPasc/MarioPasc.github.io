@@ -30,3 +30,30 @@ permalink: /research/
 </div>
 
 ---
+
+# Experience 
+
+## [Computational Intelligence and Image Analysis Group]([https://ibima.eu/es/project/f-02/]) (University of Málaga)
+
+
+<div style="display: flex; align-items: flex-start; gap: 20px;">
+  <div style="flex: 0 0 300px;">
+    <figure style="margin: 0;">
+      <img src="/images/research/icai.jpeg" alt="Description of image" style="width: 100%; height: auto; border-radius: 8px;">
+      <figcaption style="margin-top: 8px; font-size: 0.9em; color: #666; text-align: center; font-style: italic;">
+        Lab 3.3.5-B, School of Computer Engineering
+      </figcaption>
+    </figure>
+  </div>
+  <div style="flex: 1;">
+    <p>
+      I first encountered Artificial Intelligence during my fifth semester in the Intelligent Systems course. There, I met [Ezequiel López-Rubio, PhD](https://orcid.org/0000-0001-8231-5687), who recognized my enthusiasm for AI and agreed to mentor me in the field. Under his guidance, I began developing projects that gradually strengthened my deep learning programming skills, with the ultimate goal of preparing me for my bachelor's thesis research.
+    </p>
+    <p>
+      At the end of my third year, Ezequiel and [Esteban-José Palomo Ferrer, PhD](https://orcid.org/0000-0002-8547-9393) offered me a Research Assistant position to work on Deep Learning approaches for detecting and characterizing stenosis lesions in invasive coronary angiography videos. This position, affiliated with the [Biomedical Research Institute of Málaga (IBIMA)](https://ibima.eu/es/), provides me with invaluable hands-on research experience in medical computer vision, where I continue to work today.
+    </p>
+
+  </div>
+</div>
+
+

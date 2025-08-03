@@ -33,7 +33,7 @@ permalink: /research/
 
 # Experience 
 
-## [Computational Intelligence and Image Analysis Group]([https://ibima.eu/es/project/f-02/]) (University of Málaga)
+## [Computational Intelligence and Image Analysis Group](https://ibima.eu/es/project/f-02/) (University of Málaga)
 
 
 <div style="display: flex; align-items: flex-start; gap: 20px;">

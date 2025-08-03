@@ -15,7 +15,7 @@ permalink: /research/
       I spent my early days playing with Legos and memorizing the Star Wars saga. When I was old enough, I received my first Lego Mindstorms set, which was truly a game changer. Through it, I learned to program basic instructions, read sensor data, and debug my numerous mistakes. Most importantly, it sparked a fundamental question that continues to drive my research today: <b>How do machines interact with our world?</b>
     </p>
     <p>
-      I¡m currently enrolled in a Bioinformatics B.Sc. at the University of Málaga. Thanks to opportunities provided by many brilliant professors, I have been fortunate to conduct research in Computer Vision for Biomedical Applications since my third year as an undergraduate, while spending much of my free time exploring robotics, genomic analysis, and mathematics.
+      I'm currently enrolled in a Bioinformatics B.Sc. at the University of Málaga. Thanks to opportunities provided by many brilliant professors, I have been fortunate to conduct research in Computer Vision for Biomedical Applications since my third year as an undergraduate, while spending much of my free time exploring robotics, genomic analysis, and mathematics.
     </p>
     
   </div>

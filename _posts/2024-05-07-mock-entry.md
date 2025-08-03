@@ -1,10 +1,8 @@
 ---
-title: "Mock Entry"
-date: 2024-05-07
+title: "Simple ESP-32 Humidity and Temperature Module"
+date: 01-08-2025
 layout: post
-image: /images/img.png
-tag: demo
+image: /images/blog/img.png
+tag: esp32
 ---
-
-This is a mock blog entry used to demonstrate the blog layout with an image.
 

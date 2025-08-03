@@ -1,4 +1,4 @@
-demo:
-  label: Demo
+esp32:
+  label: ESP-32
   bg_color: "#007ACC"
   text_color: "#fff"

@@ -47,7 +47,7 @@ permalink: /research/
   </div>
   <div style="flex: 1;">
     <p>
-      I first encountered Artificial Intelligence during my fifth semester in the Intelligent Systems course. There, I met <a href="https://orcid.org/0000-0001-8231-5687">Ezequiel López-Rubio, PhD</a>, who recognized my enthusiasm for AI and agreed to mentor me in the field. Under his guidance, I began developing projects that gradually strengthened my deep learning programming skills, with the ultimate goal of preparing me for my bachelor's thesis research.
+      I first encountered Artificial Intelligence during the fifth semester of my Bioinformatics B.Sc, while being enrolled in the course "Intelligent Systems". There, I met <a href="https://orcid.org/0000-0001-8231-5687">Ezequiel López-Rubio, PhD</a>, who recognized my enthusiasm for AI and agreed to mentor me in the field. Under his guidance, I began developing projects that gradually strengthened my deep learning programming skills, with the ultimate goal of preparing me for my bachelor's thesis research.
     </p>
     <p>
       At the end of my third year, Ezequiel and <a href="https://orcid.org/0000-0002-8547-9393">Esteban-José Palomo Ferrer, PhD</a> offered me a Research Assistant position to work on Deep Learning approaches for detecting and characterizing stenosis lesions in invasive coronary angiography videos. This position, affiliated with the <a href="https://ibima.eu/es/">Biomedical Research Institute of Málaga (IBIMA)</a>, provides me with invaluable hands-on research experience in medical computer vision, where I continue to work today.

@@ -31,9 +31,7 @@ permalink: /research/
 
 ---
 
-## (2021-Present)
-## <a href="https://ibima.eu/es/project/f-02/"> Computational Intelligence and Image Analysis Group</a> 
-## (University of Málaga)
+## <span style="display: block;">(2021-Present)</span><a href="https://ibima.eu/es/project/f-02/">Computational Intelligence and Image Analysis Group</a><span style="display: block; font-size: 0.9em;">(University of Málaga)</span>
 
 
 <div style="display: flex; align-items: flex-start; gap: 20px;">

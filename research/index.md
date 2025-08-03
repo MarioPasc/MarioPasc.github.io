@@ -31,9 +31,7 @@ permalink: /research/
 
 ---
 
-# Experience 
-
-## <a href="https://ibima.eu/es/project/f-02/"> Computational Intelligence and Image Analysis Group</a> (University of Málaga)
+## (2021-Present) <a href="https://ibima.eu/es/project/f-02/"> Computational Intelligence and Image Analysis Group</a> (University of Málaga)
 
 
 <div style="display: flex; align-items: flex-start; gap: 20px;">

@@ -67,27 +67,3 @@ google_analytics: ""                             # add your UA / G-tag or leave 
 exclude: [vendor, node_modules]
 kramdown:
   input: GFM
-  hard_wrap: false
-  gfm_emojis: false
-  auto_id_prefix: 
-  auto_id_stripping: false
-  auto_ids: true
-  entity_output: as_char
-  footnote_backlink: &#8617;
-  footnote_backlink_inline: "false"
-  footnote_nr: 1
-  footnote_prefix: 
-  header_offset: 0
-  html_to_native: false
-  latex_headers: section,subsection,subsubsection,paragraph,subparagraph,subparagraph
-  line_width: 72
-  math_engine: mathjax
-  parse_block_html: false
-  parse_span_html: true
-  remove_block_html_tags: true
-  remove_line_breaks_for_cjk: false
-  remove_span_html_tags: false
-  smart_quotes: lsquo,rsquo,ldquo,rdquo
-  syntax_highlighter: rouge
-  template: 
-  transliterated_header_ids: false

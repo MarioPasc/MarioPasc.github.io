@@ -99,22 +99,34 @@ body {
 
 .blog-entry {
   display: flex;
+<<<<<<< ours
   align-items: stretch;
   gap: 1.5rem;
   margin-bottom: 2rem;
   text-align: left;
   height: 150px; /* Fix the height to match typical image height */
+=======
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  text-align: left;
+>>>>>>> theirs
 }
 
 .blog-entry-image {
   width: 150px;
+<<<<<<< ours
   height: 150px;
   object-fit: cover; /* Ensures image maintains aspect ratio */
+=======
+  height: auto;
+>>>>>>> theirs
 }
 
 .blog-entry-content {
   display: flex;
   flex-direction: column;
+<<<<<<< ours
   justify-content: flex-start; /* Align content to top */
   height: 100%;
   padding: 0.5rem 0;
@@ -125,17 +137,27 @@ body {
   font-weight: bold;
   text-decoration: underline;
   font-size: 1.2rem;
+=======
+}
+
+.blog-entry-title {
+  margin: 0;
+>>>>>>> theirs
 }
 
 .blog-entry-date {
   margin: 0;
   font-style: italic;
+<<<<<<< ours
   font-size: 0.9rem;
+=======
+>>>>>>> theirs
 }
 
 .blog-entry-tag {
   align-self: flex-start;
   display: inline-block;
+<<<<<<< ours
   padding: 0.1rem 0.5rem;
   border-radius: 4px;
   font-size: 0.9rem;
@@ -146,6 +168,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+=======
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+>>>>>>> theirs
 }
 
 .post {
@@ -161,3 +189,47 @@ body {
 .comment-note {
   margin-top: 1rem;
 }
+<<<<<<< ours
+=======
+
+.publications {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.publication {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pub-actions {
+  margin-top: 0.5rem;
+}
+
+.pub-link,
+.copy-ref {
+  margin-right: 1rem;
+  text-decoration: underline;
+  color: #0066cc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.copy-ref:focus {
+  outline: 1px dashed #0066cc;
+}
+
+.pub-comments {
+  margin-top: 0.5rem;
+}
+
+.pub-comments summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+>>>>>>> theirs

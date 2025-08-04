@@ -54,4 +54,34 @@ permalink: /research/
   </div>
 </div>
 
+## Publications
 
+<div class="publications">
+  <div class="publication">
+    <p class="citation">M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, and A. Ortega-Gómez, "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment," <em>Computers in Biology and Medicine</em>, vol. 196, p. 110697, 2025, doi: 10.1016/j.compbiomed.2025.110697.</p>
+    <div class="pub-actions">
+      <a class="pub-link" href="https://doi.org/10.1016/j.compbiomed.2025.110697" target="_blank">Paper</a>
+      <a class="pub-link" href="https://github.com/MarioPasc/Coronary_Angiography_Detection" target="_blank">Code</a>
+      <button class="copy-ref" data-ref='M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, and A. Ortega-Gómez, "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment," Computers in Biology and Medicine, vol. 196, p. 110697, 2025, doi: 10.1016/j.compbiomed.2025.110697.'>Copy citation</button>
+    </div>
+    <details class="pub-comments">
+      <summary>Personal Comments</summary>
+      <p>Write your personal thoughts about the work here.</p>
+    </details>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.copy-ref').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var text = this.getAttribute('data-ref');
+      navigator.clipboard.writeText(text).then(() => {
+        var original = this.textContent;
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = original; }, 2000);
+      });
+    });
+  });
+});
+</script>

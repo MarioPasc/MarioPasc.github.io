@@ -205,10 +205,10 @@ index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..8eca98441e7d4d55a803cca7192e8fbe
 +A short bio will go here.
 diff --git a/assets/css/style.css b/assets/css/style.css
 new file mode 100644
-index 0000000000000000000000000000000000000000..e91484c7e265be09651a788f604515bcaa65c10b
+index 0000000000000000000000000000000000000000..bfbca9d9be3f05e75756b2cc835fd31abb28630e
 --- /dev/null
 +++ b/assets/css/style.css
-@@ -0,0 +1,148 @@
+@@ -0,0 +1,189 @@
 +body {
 +  margin: 0;
 +  font-family: Arial, sans-serif;
@@ -357,6 +357,47 @@ index 0000000000000000000000000000000000000000..e91484c7e265be09651a788f604515bc
 +.comment-note {
 +  margin-top: 1rem;
 +}
++
++.publications {
++  max-width: 800px;
++  margin: 0 auto;
++  text-align: left;
++}
++
++.publication {
++  border: 1px solid #ddd;
++  border-radius: 6px;
++  padding: 1rem;
++  margin-bottom: 1.5rem;
++}
++
++.pub-actions {
++  margin-top: 0.5rem;
++}
++
++.pub-link,
++.copy-ref {
++  margin-right: 1rem;
++  text-decoration: underline;
++  color: #0066cc;
++  background: none;
++  border: none;
++  cursor: pointer;
++  font: inherit;
++}
++
++.copy-ref:focus {
++  outline: 1px dashed #0066cc;
++}
++
++.pub-comments {
++  margin-top: 0.5rem;
++}
++
++.pub-comments summary {
++  cursor: pointer;
++  font-weight: bold;
++}
 diff --git a/blog/index.html b/blog/index.html
 index d7f8a776ce4f936fe5e53a484dc9ed821f1dccb8..da48dc2dd1f20f105c661c075de669d7e2a62883 100644
 --- a/blog/index.html
@@ -454,10 +495,10 @@ index 0000000000000000000000000000000000000000..54f2168ccc8a3009d655970310280e2e
 +Stay tuned for updates as new projects and writings are added.
 diff --git a/research/index.md b/research/index.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..54460f4dea73475afe613a8af56c3d4927f84a85
+index 0000000000000000000000000000000000000000..5d6e425e7bfad3af3739e0d0c6ae868378280c42
 --- /dev/null
 +++ b/research/index.md
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,41 @@
 +---
 +layout: default
 +title: Research
@@ -466,7 +507,39 @@ index 0000000000000000000000000000000000000000..54460f4dea73475afe613a8af56c3d49
 +
 +# Research
 +
-+Research articles will be listed here.
++Below is a selection of my publications from different research stays.
++
++## Publications
++
++<div class="publications">
++  <div class="publication">
++    <p class="citation">M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, and A. Ortega-Gómez, "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment," <em>Computers in Biology and Medicine</em>, vol. 196, p. 110697, 2025, doi: 10.1016/j.compbiomed.2025.110697.</p>
++    <div class="pub-actions">
++      <a class="pub-link" href="https://doi.org/10.1016/j.compbiomed.2025.110697" target="_blank">Paper</a>
++      <a class="pub-link" href="https://github.com/MarioPasc/Coronary_Angiography_Detection" target="_blank">Code</a>
++      <button class="copy-ref" data-ref='M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, and A. Ortega-Gómez, "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment," Computers in Biology and Medicine, vol. 196, p. 110697, 2025, doi: 10.1016/j.compbiomed.2025.110697.'>Copy citation</button>
++    </div>
++    <details class="pub-comments">
++      <summary>Personal Comments</summary>
++      <p>Write your personal thoughts about the work here.</p>
++    </details>
++  </div>
++</div>
++
++<script>
++document.addEventListener('DOMContentLoaded', function() {
++  document.querySelectorAll('.copy-ref').forEach(function(btn) {
++    btn.addEventListener('click', function() {
++      var text = this.getAttribute('data-ref');
++      navigator.clipboard.writeText(text).then(() => {
++        var original = this.textContent;
++        this.textContent = 'Copied!';
++        setTimeout(() => { this.textContent = original; }, 2000);
++      });
++    });
++  });
++});
++</script>
  
 EOF
 )

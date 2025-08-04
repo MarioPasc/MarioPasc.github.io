@@ -21,7 +21,7 @@ permalink: /research/
   </div>
   <div style="flex: 0 0 300px;">
     <figure style="margin: 0;">
-      <img src="assets/images/research/little_me.jpeg" alt="Research workspace" style="width: 100%; height: auto; border-radius: 8px;">
+      <img src="/assets/images/research/little_me.jpeg" alt="Research workspace" style="width: 100%; height: auto; border-radius: 8px;">
       <figcaption style="margin-top: 8px; font-size: 0.9em; color: #666; text-align: center; font-style: italic;">
         Hospital Universitario Puerta de Hierro, Madrid, Spain (2004)
       </figcaption>
@@ -37,7 +37,7 @@ permalink: /research/
 <div style="display: flex; align-items: flex-start; gap: 20px;">
   <div style="flex: 0 0 300px;">
     <figure style="margin: 0;">
-      <img src="assets/images/research/icai.jpeg" alt="Description of image" style="width: 100%; height: auto; border-radius: 8px;">
+      <img src="/assets/images/research/icai.jpeg" alt="Description of image" style="width: 100%; height: auto; border-radius: 8px;">
       <figcaption style="margin-top: 8px; font-size: 0.9em; color: #666; text-align: center; font-style: italic;">
         Lab 3.3.5-B, School of Computer Engineering
       </figcaption>

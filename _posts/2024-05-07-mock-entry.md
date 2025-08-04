@@ -6,3 +6,10 @@ image: /images/blog/img.png
 tag: esp32
 ---
 
+```python
+from numpy import fft
+
+a = np.asanarray([0.5, 0.9])
+fft.shift(a)
+
+```

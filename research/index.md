@@ -54,7 +54,7 @@ permalink: /research/
   </div>
 </div>
 
-## Publications
+### Publications during my stay
 
 <div class="publications">
   <div class="publication">
@@ -62,11 +62,21 @@ permalink: /research/
     <div class="pub-actions">
       <a class="pub-link" href="https://doi.org/10.1016/j.compbiomed.2025.110697" target="_blank">Paper</a>
       <a class="pub-link" href="https://github.com/MarioPasc/Coronary_Angiography_Detection" target="_blank">Code</a>
-      <button class="copy-ref" data-ref='M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, and A. Ortega-Gómez, "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment," Computers in Biology and Medicine, vol. 196, p. 110697, 2025, doi: 10.1016/j.compbiomed.2025.110697.'>Copy citation</button>
+      <button class="copy-ref" data-ref='@article{pascual2025hyperparameter,
+  title={Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment},  author={Pascual-Gonzalez, Mario and Jimenez-Partinen, Ariadna and Palomo, Esteban J and Lopez-Rubio, Ezequiel and Ortega-Gomez, Almudena},
+  journal={Computers in Biology and Medicine},
+  volume={196},
+  pages={110697},
+  year={2025},
+  publisher={Elsevier}
+}
+'>Copy citation</button>
     </div>
     <details class="pub-comments">
       <summary>Personal Comments</summary>
-      <p>Write your personal thoughts about the work here.</p>
+      <p>
+        My first scientific publication. Leaving the statistical analysis aside, the code provides an easy tool that is able to integrate the hyperparameter optimization of any YOLO variant using the <a href="https://optuna.readthedocs.io/en/stable/"> <em>Optuna</em></a> framework. You only have to define your trainer at `optimization/engine/trainers`. The script `optimization/engine/hpo.py` will catch your trainer class and optimize it with the configuration you defined (see example at `optimization/cfg/files/picasso/yaml`), where you must write your trainer class in the `model_source` entry.
+      </p>
     </details>
   </div>
 </div>

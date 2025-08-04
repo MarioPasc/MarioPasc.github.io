@@ -75,7 +75,8 @@ permalink: /research/
     <details class="pub-comments">
       <summary>Personal Comments</summary>
       <p>
-        My first scientific publication. Leaving the statistical analysis aside, the code provides an easy tool that is able to integrate the hyperparameter optimization of any YOLO variant using the <a href="https://optuna.readthedocs.io/en/stable/"> <em>Optuna</em></a> framework. You only have to define your trainer at `optimization/engine/trainers`. The script `optimization/engine/hpo.py` will catch your trainer class and optimize it with the configuration you defined (see example at `optimization/cfg/files/picasso/yaml`), where you must write your trainer class in the `model_source` entry.
+        My first scientific publication. Leaving the statistical analysis aside, the code provides an easy tool that is able to integrate the hyperparameter optimization of any YOLO variant using the <a href="https://optuna.readthedocs.io/en/stable/"> <em>Optuna</em></a> framework. You only have to define your trainer at <code>optimization/engine/trainers</code>. The script <code>optimization/engine/hpo.py</code> will catch your trainer class and optimize it with the configuration you defined (see example at <code>optimization/cfg/files/picasso/yaml</code>), where you must write your trainer class in the <code>model_source</code> entry.
+
       </p>
     </details>
   </div>

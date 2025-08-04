@@ -23,22 +23,24 @@
 
 <script>
 function highlightCode() {
-  document.querySelectorAll('.code-block code').forEach(function(block) {
-    let lang = block.getAttribute('data-lang') || 'python';
-    let code = block.innerHTML;
+  document.querySelectorAll('pre code, .code-block code, code[data-lang]').forEach(function(block) {
+    let lang = block.getAttribute('data-lang') || block.className.replace('language-', '') || 'python';
+    let code = block.textContent || block.innerText; // Use textContent to avoid HTML conflicts
 
     if (lang === 'python') {
-      code = code.replace(/\b(def|class|if|else|elif|for|while|try|except|import|from|return|break|continue|pass|lambda|with|as|in|not|and|or|is|None|True|False)\b/g, '<span class="keyword">$1</span>');
-      code = code.replace(/(['"])([^'"]*)\1/g, '<span class="string">$1$2$1</span>');
+      // Process in order: comments, strings, then keywords
       code = code.replace(/(#.*$)/gm, '<span class="comment">$1</span>');
+      code = code.replace(/(['"])((?:\\.|(?!\1)[^\\])*)\1/g, '<span class="string">$1$2$1</span>');
+      code = code.replace(/\b(def|class|if|else|elif|for|while|try|except|import|from|return|break|continue|pass|lambda|with|as|in|not|and|or|is|None|True|False)\b/g, '<span class="keyword">$1</span>');
       code = code.replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>');
     } else if (lang === 'cpp') {
-      code = code.replace(/\b(int|float|double|char|bool|void|string|if|else|for|while|do|switch|case|break|continue|return|class|struct|public|private|protected|virtual|static|const|namespace|using|include|define|ifdef|ifndef|endif)\b/g, '<span class="keyword">$1</span>');
-      code = code.replace(/(["'])([^"']*)\1/g, '<span class="string">$1$2$1</span>');
       code = code.replace(/(\/\/.*$|\/\*[\s\S]*?\*\/)/gm, '<span class="comment">$1</span>');
+      code = code.replace(/(["'])((?:\\.|(?!\1)[^\\])*)\1/g, '<span class="string">$1$2$1</span>');
+      code = code.replace(/\b(int|float|double|char|bool|void|string|if|else|for|while|do|switch|case|break|continue|return|class|struct|public|private|protected|virtual|static|const|namespace|using|include|define|ifdef|ifndef|endif)\b/g, '<span class="keyword">$1</span>');
       code = code.replace(/\b(\d+\.?\d*f?)\b/g, '<span class="number">$1</span>');
       code = code.replace(/(#\w+)/g, '<span class="preprocessor">$1</span>');
     }
+    
     block.innerHTML = code;
   });
 }

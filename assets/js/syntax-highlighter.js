@@ -1,5 +1,5 @@
 /**
- * Minimal, whitespace‑safe Syntax Highlighter
+ * Minimal, whitespace-safe Syntax Highlighter
  * Languages: Python, C/C++ (basic)
  * - Preserves indentation and newlines (uses textContent, never normalizes).
  * - Escapes HTML BEFORE injecting <span> wrappers.
@@ -12,9 +12,9 @@ class SyntaxHighlighter {
         comments: /#.*/gm,
         strings: [
           /("""[\s\S]*?""")/g,
-          /(\'\'\'[\s\S]*?\'\'\')/g,
+          /('''[\s\S]*?''')/g,
           /("([^"\\]|\\.)*")/g,
-          /(\'([^'\\]|\\.)*\')/g
+          /('([^'\\]|\\.)*')/g
         ],
         keywords: /\b(False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\b/g,
         builtins: /\b(abs|all|any|ascii|bin|bool|bytearray|bytes|callable|chr|classmethod|compile|complex|dict|dir|divmod|enumerate|eval|exec|filter|float|format|frozenset|getattr|globals|hasattr|hash|help|hex|id|input|int|isinstance|issubclass|iter|len|list|locals|map|max|memoryview|min|next|object|oct|open|ord|pow|print|property|range|repr|reversed|round|set|setattr|slice|sorted|staticmethod|str|sum|super|tuple|type|vars|zip)\b/g,
@@ -24,7 +24,7 @@ class SyntaxHighlighter {
         comments: /\/\/.*$|\/\*[\s\S]*?\*\//gm,
         strings: [
           /("([^"\\]|\\.)*")/g,
-          /(\'([^'\\]|\\.)*\')/g
+          /('([^'\\]|\\.)*')/g
         ],
         preprocessor: /^(?:\s*)#\s*[A-Za-z_]+\b.*$/gm,
         keywords: /\b(alignas|alignof|and|and_eq|asm|auto|bitand|bitor|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|not|not_eq|nullptr|operator|or|or_eq|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while|xor|xor_eq)\b/g,
@@ -86,5 +86,5 @@ class SyntaxHighlighter {
   }
 }
 
-// bootstrap
+// Initialize the syntax highlighter
 new SyntaxHighlighter();

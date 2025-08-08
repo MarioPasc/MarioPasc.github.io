@@ -29,7 +29,7 @@ using namespace std;
 
 int main() {
     int x = 42;
-    cout << "Hello World!" << endl;
+    cout &lt;&lt; "Hello World!" &lt;&lt; endl;
     return 0;
 }
   </code>

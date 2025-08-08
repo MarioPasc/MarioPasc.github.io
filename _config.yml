@@ -47,7 +47,7 @@ collections:
 ###############################################################################
 defaults:
   - scope: 
-      path: "content/blog"
+      path: "content/_blog"
     values: 
       layout: post
   - scope: 
@@ -55,14 +55,14 @@ defaults:
     values: 
       layout: default
   - scope: 
+      type: blog
+    values: 
+      layout: post
+  - scope: 
       type: research
     values: 
       layout: post
       nav_order: 2
-  - scope: 
-      type: blog
-    values: 
-      layout: post
 
 ###############################################################################
 # BUILD / SEO / ANALYTICS

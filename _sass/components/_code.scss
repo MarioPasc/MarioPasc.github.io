@@ -1,5 +1,17 @@
-// Code block component styles
-@import '../base/variables';
+// Code block component styles (self-contained, safe if site variables are missing)
+
+// Fallback variables (overridden if already defined elsewhere)
+$spacing-sm: 0.5rem !default;
+$spacing-md: 0.75rem !default;
+$color-code-bg: #0b1021 !default;         // dark-ish background
+$color-border: #2b2f3a !default;
+$color-border-light: #3a3f4b !default;
+$color-code-fg: #e6e6e6 !default;         // main code color
+$color-code-keyword: #c678dd !default;    // purple
+$color-code-string: #98c379 !default;     // green
+$color-code-comment: #5c6370 !default;    // grey
+$color-code-number: #d19a66 !default;     // orange
+$color-code-builtin: #61afef !default;    // blue
 
 .code-block {
   background: $color-code-bg;
@@ -13,35 +25,35 @@
   code {
     display: block;
     padding: $spacing-md;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                 "Liberation Mono", "Courier New", monospace;
-    font-size: 14px;
-    line-height: 1.45;
-    white-space: pre;   // <-- critical for indentation/newlines
-    tab-size: 4;
-    -moz-tab-size: 4;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: $color-code-fg;
+
+    // CRUCIAL: preserve indentation and newlines (no soft wrap)
+    white-space: pre;
+    tab-size: 4; // better tab rendering
   }
 
-  // Language label on the top-right
-  &::before {
+  // Optional top-right language tag (if you ever add one)
+  &::after {
     content: attr(data-lang);
     position: absolute;
-    top: .35rem;
-    right: .5rem;
-    font-size: .75rem;
-    color: $color-text-light;
-    background: $color-background;
-    padding: .2rem .4rem;
+    top: 0.25rem;
+    right: 0.4rem;
+    font-size: 0.65rem;
+    opacity: 0.7;
+    padding: 0.15rem 0.35rem;
     border-radius: 3px;
     border: 1px solid $color-border-light;
     text-transform: uppercase;
   }
 
-  // Token colours - using actual color values for reliability
-  .keyword      { color: $color-code-keyword; font-weight: 600; }
-  .string       { color: $color-code-string; }
-  .comment      { color: $color-code-comment; font-style: italic; }
-  .number       { color: $color-code-number; }
-  .built-in     { color: $color-code-builtin; font-weight: 600; }
+  // Token colours
+  .keyword   { color: $color-code-keyword; font-weight: 600; }
+  .string    { color: $color-code-string; }
+  .comment   { color: $color-code-comment; font-style: italic; }
+  .number    { color: $color-code-number; }
+  .built-in  { color: $color-code-builtin; font-weight: 600; }
   .preprocessor { color: $color-code-keyword; }
 }

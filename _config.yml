@@ -32,31 +32,26 @@ linkedin_username: mario-pascual-gonzalez
 ###############################################################################
 # CONTENT COLLECTIONS
 ###############################################################################
-collections_dir: content/collections
+collections_dir: content
 
 collections:
+  blog:
+    output: true
+    permalink: /blog/:title/
   research:   
     output: true
     permalink: /research/:path/
-  diary:      
-    output: true
-    permalink: /diary/:title/
-  portfolio:  
-    output: true
-    permalink: /portfolio/:path/
-  reviews:    
-    output: true
 
 ###############################################################################
 # DEFAULT FRONT-MATTER (uses layouts that *exist* in the theme)
 ###############################################################################
 defaults:
   - scope: 
-      path: "content/_posts"
+      path: "content/blog"
     values: 
       layout: post
   - scope: 
-      path: "content/pages"
+      path: "content"
     values: 
       layout: default
   - scope: 
@@ -65,20 +60,9 @@ defaults:
       layout: post
       nav_order: 2
   - scope: 
-      type: diary
+      type: blog
     values: 
       layout: post
-      nav_order: 3
-  - scope: 
-      type: portfolio
-    values: 
-      layout: portfolio
-      nav_order: 4
-  - scope: 
-      type: reviews
-    values: 
-      layout: post
-      nav_order: 5
 
 ###############################################################################
 # BUILD / SEO / ANALYTICS

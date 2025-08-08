@@ -1,10 +1,15 @@
 ---
 title: "Simple ESP-32 Humidity and Temperature Module"
-date: 01-08-2025
+date: 2025-08-01
 layout: post
-image: /images/blog/img.png
 tag: esp32
 ---
+
+# Simple ESP-32 Humidity and Temperature Module
+
+This is a sample blog post demonstrating the code highlighting functionality.
+
+## Python Example
 
 <div class="code-block">
   <code data-lang="python">
@@ -18,6 +23,7 @@ print(fibonacci(10))
   </code>
 </div>
 
+## C++ Example
 
 <div class="code-block">
   <code data-lang="cpp">
@@ -31,3 +37,5 @@ int main() {
 }
   </code>
 </div>
+
+This demonstrates how to create technical blog posts with syntax highlighting.

@@ -3,9 +3,10 @@ layout: default
 title: Blog
 ---
 
-{% if paginator.posts %}
+{% assign blog_posts = site.blog | sort: 'date' | reverse %}
+{% if blog_posts.size > 0 %}
 <div class="blog-list">
-  {% for post in paginator.posts %}
+  {% for post in blog_posts %}
   <article class="blog-entry">
     {% if post.image %}
     <img src="{{ post.image }}" alt="" class="blog-entry-image" />
@@ -27,8 +28,6 @@ title: Blog
   </article>
   {% endfor %}
 </div>
-
-{% include pagination.html %}
 {% else %}
 <p>No posts yet.</p>
 {% endif %}

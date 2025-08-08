@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} - {{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  {% include head/syntax-highlighter.html %}
 </head>
 <body>
   {% include components/navigation.html %}
@@ -15,6 +14,6 @@
   {% include components/footer.html %}
   
   <!-- JavaScript -->
-  <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/syntax-highlighter.js' | relative_url }}"></script>
 </body>
 </html>

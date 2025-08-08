@@ -9,79 +9,39 @@
   overflow-x: auto;
   position: relative;
 
+  // The <code> is block-level and preserves whitespace exactly
   code {
-    display: block;              /* critical for line breaks */
+    display: block;
     padding: $spacing-md;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                 "Liberation Mono", "Courier New", monospace;
     font-size: 14px;
     line-height: 1.45;
-    white-space: pre;            /* preserve indentation/newlines */
+    white-space: pre;   // <-- critical for indentation/newlines
     tab-size: 4;
     -moz-tab-size: 4;
   }
 
+  // Language label on the top-right
   &::before {
     content: attr(data-lang);
     position: absolute;
-    top: 0.35rem;
-    right: $spacing-sm;
-    font-size: 0.75rem;
-    color: $color-text-light;
-    background: $color-background;
-    padding: 0.2rem 0.4rem;
+    top: .35rem;
+    right: .5rem;
+    font-size: .75rem;
+    color: #666;
+    background: #fff;
+    padding: .2rem .4rem;
     border-radius: 3px;
-    border: 1px solid $color-border-light;
+    border: 1px solid #ddd;
     text-transform: uppercase;
   }
 
-  .keyword { 
-    color: #d73a49; 
-    font-weight: 600; 
-  }
-  
-  .string { 
-    color: #032f62; 
-  }
-  
-  .comment { 
-    color: #6a737d; 
-    font-style: italic; 
-  }
-  
-  .number { 
-    color: #005cc5; 
-  }
-  
-  .function { 
-    color: #005cc5; 
-    font-weight: 600; 
-  }
-  
-  .operator { 
-    color: #d73a49; 
-  }
-  
-  .preprocessor { 
-    color: #d73a49; 
-  }
-  
-  .built-in { 
-    color: #005cc5; 
-    font-weight: 600; 
-  }
-}
-
-// Theme for pre code blocks
-pre code {
-  display: block;
-  background: $color-code-bg;
-  padding: $spacing-md;
-  border-radius: 4px;
-  overflow-x: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 14px;
-  line-height: 1.45;
-  white-space: pre;
-  tab-size: 4;
-  -moz-tab-size: 4;
+  // Token colours
+  .keyword      { color: #d73a49; font-weight: 600; }
+  .string       { color: #032f62; }
+  .comment      { color: #6a737d; font-style: italic; }
+  .number       { color: #005cc5; }
+  .built-in     { color: #005cc5; font-weight: 600; }
+  .preprocessor { color: #d73a49; }
 }

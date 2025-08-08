@@ -10,6 +10,7 @@
   font-size: 14px;
   line-height: 1.4;
   position: relative;
+  white-space: pre-wrap;
 }
 
 .code-block::before {
@@ -53,6 +54,13 @@
   color: var(--color-code-keyword, #d73a49); 
 }
 
+/* Ensure code elements preserve whitespace */
+.code-block code,
+pre code,
+code[data-lang] {
+  white-space: pre;
+}
+
 /* Theme for pre code blocks */
 pre code {
   display: block;
@@ -63,4 +71,5 @@ pre code {
   font-family: 'Courier New', monospace;
   font-size: 14px;
   line-height: 1.4;
+  white-space: pre;
 }

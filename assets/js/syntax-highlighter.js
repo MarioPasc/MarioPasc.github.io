@@ -60,25 +60,44 @@ class SyntaxHighlighter {
       .replace(/>/g, '&gt;');
 
     // Tokenize: comments → strings → preprocessor → numbers → keywords → builtins
+    // Use non-greedy matching and avoid conflicts with existing spans
     if (lang.comments) {
-      html = html.replace(lang.comments, m => `<span class="comment">${m}</span>`);
+      html = html.replace(lang.comments, match => {
+        if (match.includes('<span')) return match; // Skip if already processed
+        return `<span class="comment">${match}</span>`;
+      });
     }
     if (lang.strings) {
       for (const pat of lang.strings) {
-        html = html.replace(pat, m => `<span class="string">${m}</span>`);
+        html = html.replace(pat, match => {
+          if (match.includes('<span')) return match; // Skip if already processed
+          return `<span class="string">${match}</span>`;
+        });
       }
     }
     if (lang.preprocessor) {
-      html = html.replace(lang.preprocessor, m => `<span class="preprocessor">${m}</span>`);
+      html = html.replace(lang.preprocessor, match => {
+        if (match.includes('<span')) return match; // Skip if already processed
+        return `<span class="preprocessor">${match}</span>`;
+      });
     }
     if (lang.numbers) {
-      html = html.replace(lang.numbers, m => `<span class="number">${m}</span>`);
+      html = html.replace(lang.numbers, match => {
+        if (match.includes('<span')) return match; // Skip if already processed
+        return `<span class="number">${match}</span>`;
+      });
     }
     if (lang.keywords) {
-      html = html.replace(lang.keywords, m => `<span class="keyword">${m}</span>`);
+      html = html.replace(lang.keywords, match => {
+        if (match.includes('<span')) return match; // Skip if already processed
+        return `<span class="keyword">${match}</span>`;
+      });
     }
     if (lang.builtins) {
-      html = html.replace(lang.builtins, m => `<span class="built-in">${m}</span>`);
+      html = html.replace(lang.builtins, match => {
+        if (match.includes('<span')) return match; // Skip if already processed
+        return `<span class="built-in">${match}</span>`;
+      });
     }
 
     block.innerHTML = html;

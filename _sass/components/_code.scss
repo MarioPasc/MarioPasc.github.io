@@ -29,19 +29,19 @@
     top: .35rem;
     right: .5rem;
     font-size: .75rem;
-    color: #666;
-    background: #fff;
+    color: $color-text-light;
+    background: $color-background;
     padding: .2rem .4rem;
     border-radius: 3px;
-    border: 1px solid #ddd;
+    border: 1px solid $color-border-light;
     text-transform: uppercase;
   }
 
-  // Token colours
-  .keyword      { color: #d73a49; font-weight: 600; }
-  .string       { color: #032f62; }
-  .comment      { color: #6a737d; font-style: italic; }
-  .number       { color: #005cc5; }
-  .built-in     { color: #005cc5; font-weight: 600; }
-  .preprocessor { color: #d73a49; }
+  // Token colours - using actual color values for reliability
+  .keyword      { color: $color-code-keyword; font-weight: 600; }
+  .string       { color: $color-code-string; }
+  .comment      { color: $color-code-comment; font-style: italic; }
+  .number       { color: $color-code-number; }
+  .built-in     { color: $color-code-builtin; font-weight: 600; }
+  .preprocessor { color: $color-code-keyword; }
 }

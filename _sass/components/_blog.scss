@@ -1,0 +1,68 @@
+// Blog-related component styles
+@import '../base/variables';
+
+.blog-list {
+  max-width: $container-md;
+  margin: 0 auto;
+}
+
+.blog-entry {
+  display: flex;
+  align-items: stretch;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  text-align: left;
+  height: 150px;
+
+  &-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    padding: $spacing-sm 0;
+  }
+
+  &-title {
+    margin: 0 0 $spacing-xs 0;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: $font-size-large;
+
+    a {
+      color: $color-text;
+      
+      &:hover {
+        color: $color-accent;
+      }
+    }
+  }
+
+  &-meta {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &-date {
+    margin: 0;
+    font-style: italic;
+    font-size: $font-size-small;
+    color: $color-text-light;
+  }
+
+  &-tag {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 0.1rem $spacing-sm;
+    border-radius: 4px;
+    font-size: $font-size-small;
+    margin-top: $spacing-xs;
+  }
+}

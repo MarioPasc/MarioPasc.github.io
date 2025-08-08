@@ -1,0 +1,35 @@
+// Color variables
+$color-primary: #000;
+$color-accent: #007acc;
+$color-success: #28a745;
+$color-text: #333;
+$color-text-light: #666;
+$color-text-lighter: #777;
+$color-background: #fff;
+$color-border: #e1e1e1;
+$color-border-light: #f0f0f0;
+
+// Code syntax highlighting colors
+$color-code-bg: #f8f8f8;
+$color-code-keyword: #d73a49;
+$color-code-string: #032f62;
+$color-code-comment: #6a737d;
+$color-code-number: #005cc5;
+$color-code-function: #6f42c1;
+$color-code-builtin: #005cc5;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Container widths
+$container-sm: 800px;
+$container-md: 1000px;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;

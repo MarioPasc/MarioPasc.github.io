@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} - {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-  {% include syntax-highlighter.html %}
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  {% include head/syntax-highlighter.html %}
 </head>
 <body>
-  {% include nav.html %}
+  {% include components/navigation.html %}
   <main class="page-content">
     {{ content }}
   </main>
-  {% include footer.html %}
+  {% include components/footer.html %}
+  
+  <!-- JavaScript -->
+  <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
 </body>
 </html>

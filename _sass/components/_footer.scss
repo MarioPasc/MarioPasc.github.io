@@ -1,0 +1,42 @@
+// Footer component styles
+@import '../base/variables';
+
+.site-footer {
+  background: $color-background;
+  text-align: center;
+  padding: $spacing-md 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xl;
+}
+
+.social-links a {
+  color: $color-primary;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transform-origin: center;
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    color: $color-accent;
+    
+    &::after {
+      transform: scaleX(0);
+    }
+  }
+}

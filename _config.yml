@@ -32,24 +32,53 @@ linkedin_username: mario-pascual-gonzalez
 ###############################################################################
 # CONTENT COLLECTIONS
 ###############################################################################
+collections_dir: content/collections
+
 collections:
-  research:   { output: true, permalink: /research/:path/ }
-  diary:      { output: true, permalink: /diary/:title/ }
-  portfolio:  { output: true, permalink: /portfolio/:path/ }
-  reviews:    { output: true }
+  research:   
+    output: true
+    permalink: /research/:path/
+  diary:      
+    output: true
+    permalink: /diary/:title/
+  portfolio:  
+    output: true
+    permalink: /portfolio/:path/
+  reviews:    
+    output: true
 
 ###############################################################################
 # DEFAULT FRONT-MATTER (uses layouts that *exist* in the theme)
 ###############################################################################
 defaults:
-  - scope: { type: research }
-    values: { layout: post,      nav_order: 2 }
-  - scope: { type: diary    }
-    values: { layout: post,      nav_order: 3 }
-  - scope: { type: portfolio }
-    values: { layout: portfolio, nav_order: 4 }  # portfolio.html exists :contentReference[oaicite:2]{index=2}
-  - scope: { type: reviews  }
-    values: { layout: post,      nav_order: 5 }
+  - scope: 
+      path: "content/_posts"
+    values: 
+      layout: post
+  - scope: 
+      path: "content/pages"
+    values: 
+      layout: default
+  - scope: 
+      type: research
+    values: 
+      layout: post
+      nav_order: 2
+  - scope: 
+      type: diary
+    values: 
+      layout: post
+      nav_order: 3
+  - scope: 
+      type: portfolio
+    values: 
+      layout: portfolio
+      nav_order: 4
+  - scope: 
+      type: reviews
+    values: 
+      layout: post
+      nav_order: 5
 
 ###############################################################################
 # BUILD / SEO / ANALYTICS
@@ -62,7 +91,8 @@ plugins:
   - jekyll-remote-theme                          # whitelisted on Pages :contentReference[oaicite:4]{index=4}
   - jekyll-paginate
   - jekyll-sitemap
-sass: { compressed: true }
+sass: 
+  style: compressed
 google_analytics: ""                             # add your UA / G-tag or leave blank
 exclude: [vendor, node_modules]
 kramdown:

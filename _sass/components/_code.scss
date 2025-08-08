@@ -1,0 +1,76 @@
+// Code block component styles
+@import '../base/variables';
+
+.code-block {
+  background: $color-code-bg;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  padding: $spacing-md;
+  margin: $spacing-md 0;
+  overflow-x: auto;
+  font-family: $font-family-mono;
+  font-size: 14px;
+  line-height: $line-height-base;
+  position: relative;
+
+  &::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: $spacing-sm;
+    right: $spacing-sm;
+    font-size: 0.75rem;
+    color: $color-text-light;
+    background: $color-background;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    border: 1px solid $color-border-light;
+    text-transform: uppercase;
+  }
+
+  .keyword { 
+    color: $color-code-keyword; 
+    font-weight: bold; 
+  }
+  
+  .string { 
+    color: $color-code-string; 
+  }
+  
+  .comment { 
+    color: $color-code-comment; 
+    font-style: italic; 
+  }
+  
+  .number { 
+    color: $color-code-number; 
+  }
+  
+  .function { 
+    color: $color-code-function; 
+    font-weight: bold; 
+  }
+  
+  .operator { 
+    color: $color-code-keyword; 
+  }
+  
+  .preprocessor { 
+    color: $color-code-keyword; 
+  }
+  
+  .built-in { 
+    color: $color-code-builtin; 
+  }
+}
+
+// Theme for pre code blocks
+pre code {
+  display: block;
+  background: $color-code-bg;
+  padding: $spacing-md;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: $font-family-mono;
+  font-size: 14px;
+  line-height: $line-height-base;
+}

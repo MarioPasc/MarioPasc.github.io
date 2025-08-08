@@ -1,0 +1,27 @@
+// Typography variables and styles
+$font-family-base: 'Inter', Arial, sans-serif;
+$font-family-mono: 'Courier New', monospace;
+
+// Font sizes
+$font-size-base: 1rem;
+$font-size-small: 0.9rem;
+$font-size-large: 1.2rem;
+
+// Line heights
+$line-height-base: 1.4;
+$line-height-tight: 1.2;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.5px;
+  margin: 0 0 1rem 0;
+}
+
+code, pre {
+  font-family: $font-family-mono;
+}

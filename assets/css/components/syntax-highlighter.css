@@ -27,25 +27,25 @@
   text-transform: uppercase;
 }
 
-.code-block .keywords { 
+.code-block .keyword { 
   color: var(--color-code-keyword, #d73a49); 
   font-weight: bold; 
 }
 
-.code-block .strings { 
+.code-block .string { 
   color: var(--color-code-string, #032f62); 
 }
 
-.code-block .comments { 
+.code-block .comment { 
   color: var(--color-code-comment, #6a737d); 
   font-style: italic; 
 }
 
-.code-block .numbers { 
+.code-block .number { 
   color: var(--color-code-number, #005cc5); 
 }
 
-.code-block .builtins { 
+.code-block .built-in { 
   color: var(--color-code-builtin, #005cc5); 
   font-weight: bold; 
 }

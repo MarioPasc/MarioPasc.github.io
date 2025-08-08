@@ -58,7 +58,8 @@ class SyntaxHighlighter {
     if (block.classList.contains('highlighted')) return;
     
     const lang = this.getLanguage(block);
-    const code = block.textContent || block.innerText;
+    // Preserve original whitespace by using textContent
+    const code = block.textContent;
     
     // Add language indicator to parent
     if (block.parentElement.classList.contains('code-block')) {
@@ -80,6 +81,12 @@ class SyntaxHighlighter {
   highlight(code, language) {
     const lang = this.languages[language] || this.languages.python;
     let highlightedCode = code;
+    
+    // Escape HTML entities first to prevent issues
+    highlightedCode = highlightedCode
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
     
     // Process in order: comments first, then strings, then keywords
     if (lang.comments) {

@@ -24,7 +24,7 @@ print(fibonacci(10))
 
 <div class="code-block">
   <code data-lang="cpp">
-#include <iostream>
+#include &lt;iostream&gt;
 using namespace std;
 
 int main() {

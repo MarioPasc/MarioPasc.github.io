@@ -1,143 +1,90 @@
 /**
- * Enhanced Syntax Highlighter
- * Supports Python, C++, JavaScript, and more
+ * Minimal, whitespace‑safe Syntax Highlighter
+ * Languages: Python, C/C++ (basic)
+ * - Preserves indentation and newlines (uses textContent, never normalizes).
+ * - Escapes HTML BEFORE injecting <span> wrappers.
+ * - Processes in this order: comments → strings → preprocessor → numbers → keywords → builtins.
  */
-
 class SyntaxHighlighter {
   constructor() {
     this.languages = {
       python: {
-        keywords: /(def|class|if|else|elif|for|while|try|except|finally|import|from|return|break|continue|pass|lambda|with|as|in|not|and|or|is|None|True|False|global|nonlocal|yield|async|await)\b/g,
-        builtins: /(print|len|range|enumerate|zip|map|filter|sum|max|min|abs|round|str|int|float|list|dict|set|tuple)\b/g,
+        comments: /#.*/gm,
         strings: [
-          /("""[\s\S]*?""")/g,  // Triple quotes
-          /('''[\s\S]*?''')/g,  // Triple quotes
-          /(['"])((?:\\.|(?!\1)[^\\])*)\1/g  // Regular strings
+          /("""[\s\S]*?""")/g,
+          /(\'\'\'[\s\S]*?\'\'\')/g,
+          /("([^"\\]|\\.)*")/g,
+          /(\'([^'\\]|\\.)*\')/g
         ],
-        comments: /(#.*$)/gm,
-        numbers: /\b(\d+\.?\d*)\b/g
+        keywords: /\b(False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\b/g,
+        builtins: /\b(abs|all|any|ascii|bin|bool|bytearray|bytes|callable|chr|classmethod|compile|complex|dict|dir|divmod|enumerate|eval|exec|filter|float|format|frozenset|getattr|globals|hasattr|hash|help|hex|id|input|int|isinstance|issubclass|iter|len|list|locals|map|max|memoryview|min|next|object|oct|open|ord|pow|print|property|range|repr|reversed|round|set|setattr|slice|sorted|staticmethod|str|sum|super|tuple|type|vars|zip)\b/g,
+        numbers: /\b\d+(?:\.\d+)?\b/g
       },
-      
       cpp: {
-        keywords: /(int|float|double|char|bool|void|string|auto|const|static|class|struct|enum|namespace|using|if|else|for|while|do|switch|case|default|break|continue|return|public|private|protected|virtual|override|template|typename|sizeof|new|delete|this|true|false|nullptr)\b/g,
-        builtins: /(cout|cin|endl|printf|scanf|malloc|free|sizeof|std)\b/g,
+        comments: /\/\/.*$|\/\*[\s\S]*?\*\//gm,
         strings: [
-          /(["'])((?:\\.|(?!\1)[^\\])*)\1/g
+          /("([^"\\]|\\.)*")/g,
+          /(\'([^'\\]|\\.)*\')/g
         ],
-        comments: /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm,
-        preprocessor: /(#\w+)/g,
-        numbers: /\b(\d+\.?\d*f?)\b/g
-      },
-      
-      javascript: {
-        keywords: /(function|var|let|const|if|else|for|while|do|switch|case|break|continue|return|class|extends|constructor|super|this|new|typeof|instanceof|true|false|null|undefined|async|await|try|catch|finally|throw)\b/g,
-        builtins: /(console|document|window|Array|Object|String|Number|Boolean|Date|Math|JSON|Promise)\b/g,
-        strings: [
-          /(["'`])((?:\\.|(?!\1)[^\\])*)\1/g
-        ],
-        comments: /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm,
-        numbers: /\b(\d+\.?\d*)\b/g
+        preprocessor: /^(?:\s*)#\s*[A-Za-z_]+\b.*$/gm,
+        keywords: /\b(alignas|alignof|and|and_eq|asm|auto|bitand|bitor|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|not|not_eq|nullptr|operator|or|or_eq|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while|xor|xor_eq)\b/g,
+        builtins: /\b(std|size_t|string|cout|cin|endl)\b/g,
+        numbers: /\b\d+(?:\.\d+)?\b/g
       }
     };
-    
-    this.init();
-  }
-  
-  init() {
     document.addEventListener('DOMContentLoaded', () => this.highlightAll());
-    this.setupMutationObserver();
   }
-  
+
   highlightAll() {
-    const codeBlocks = document.querySelectorAll('.code-block code, pre code, code[data-lang]');
-    codeBlocks.forEach(block => this.highlightBlock(block));
+    const blocks = document.querySelectorAll('.code-block code[data-lang]');
+    blocks.forEach(block => this.highlightBlock(block));
   }
-  
+
   highlightBlock(block) {
-    // Skip if already highlighted
     if (block.classList.contains('highlighted')) return;
-    
-    const lang = this.getLanguage(block);
-    // Preserve original whitespace by using textContent
-    const code = block.textContent;
-    
-    // Add language indicator to parent
-    if (block.parentElement.classList.contains('code-block')) {
-      block.parentElement.setAttribute('data-lang', lang);
-    }
-    
-    const highlightedCode = this.highlight(code, lang);
-    block.innerHTML = highlightedCode;
-    block.classList.add('highlighted');
-  }
-  
-  getLanguage(block) {
-    return block.getAttribute('data-lang') || 
-           block.className.replace('language-', '') || 
-           block.parentElement.className.replace('language-', '') || 
-           'python';
-  }
-  
-  highlight(code, language) {
-    const lang = this.languages[language] || this.languages.python;
-    let highlightedCode = code;
-    
-    // Escape HTML entities first to prevent issues
-    highlightedCode = highlightedCode
+
+    const langKey = (block.getAttribute('data-lang') || '').toLowerCase();
+    const lang = this.languages[langKey] || this.languages.python;
+
+    // Preserve exact whitespace
+    let code = block.textContent;
+
+    // Add language label to parent if present
+    const parent = block.closest('.code-block');
+    if (parent) parent.setAttribute('data-lang', langKey || 'text');
+
+    // Escape HTML entities so raw code is safe
+    let html = code
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
-    
-    // Process in order: comments first, then strings, then keywords
+
+    // Tokenize: comments → strings → preprocessor → numbers → keywords → builtins
     if (lang.comments) {
-      highlightedCode = highlightedCode.replace(lang.comments, '<span class="comment">$1</span>');
+      html = html.replace(lang.comments, m => `<span class="comment">${m}</span>`);
     }
-    
     if (lang.strings) {
-      lang.strings.forEach(pattern => {
-        highlightedCode = highlightedCode.replace(pattern, (match, ...args) => {
-          if (args.length > 1) {
-            return `<span class="string">${args[0]}${args[1]}${args[0]}</span>`;
-          }
-          return `<span class="string">${match}</span>`;
-        });
-      });
+      for (const pat of lang.strings) {
+        html = html.replace(pat, m => `<span class="string">${m}</span>`);
+      }
     }
-    
     if (lang.preprocessor) {
-      highlightedCode = highlightedCode.replace(lang.preprocessor, '<span class="preprocessor">$1</span>');
+      html = html.replace(lang.preprocessor, m => `<span class="preprocessor">${m}</span>`);
     }
-    
-    if (lang.builtins) {
-      highlightedCode = highlightedCode.replace(lang.builtins, '<span class="built-in">$1</span>');
-    }
-    
-    if (lang.keywords) {
-      highlightedCode = highlightedCode.replace(lang.keywords, '<span class="keyword">$1</span>');
-    }
-    
     if (lang.numbers) {
-      highlightedCode = highlightedCode.replace(lang.numbers, '<span class="number">$1</span>');
+      html = html.replace(lang.numbers, m => `<span class="number">${m}</span>`);
     }
-    
-    return highlightedCode;
-  }
-  
-  setupMutationObserver() {
-    const observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if (mutation.addedNodes.length > 0) {
-          this.highlightAll();
-        }
-      });
-    });
-    
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+    if (lang.keywords) {
+      html = html.replace(lang.keywords, m => `<span class="keyword">${m}</span>`);
+    }
+    if (lang.builtins) {
+      html = html.replace(lang.builtins, m => `<span class="built-in">${m}</span>`);
+    }
+
+    block.innerHTML = html;
+    block.classList.add('highlighted');
   }
 }
 
-// Initialize the syntax highlighter
+// bootstrap
 new SyntaxHighlighter();

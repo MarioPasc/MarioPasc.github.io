@@ -4,4 +4,6 @@ title: Home
 permalink: /
 ---
 
-{% include components/home-content.html %}
+# Welcome
+
+{% include content/home/home-content.html %}

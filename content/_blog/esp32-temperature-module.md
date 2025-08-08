@@ -5,8 +5,6 @@ layout: post
 tag: esp32
 ---
 
-# Simple ESP-32 Humidity and Temperature Module
-
 This is a sample blog post demonstrating the code highlighting functionality.
 
 ## Python Example
@@ -17,7 +15,6 @@ def fibonacci(n):
     if n <= 1:
         return n
     return fibonacci(n-1) + fibonacci(n-2)
-
 # Example usage
 print(fibonacci(10))
   </code>

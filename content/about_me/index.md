@@ -6,4 +6,4 @@ permalink: /about/
 
 # About Me
 
-A short bio will go here.
+{% include content/about_me/about-content.html %}

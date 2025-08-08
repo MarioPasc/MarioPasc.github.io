@@ -47,22 +47,24 @@ collections:
 ###############################################################################
 defaults:
   - scope: 
-      path: "content/_blog"
-    values: 
-      layout: post
-  - scope: 
-      path: "content"
-    values: 
-      layout: default
-  - scope: 
+      path: "_blog"
       type: blog
     values: 
       layout: post
   - scope: 
+      path: "_research"
       type: research
     values: 
       layout: post
       nav_order: 2
+  - scope: 
+      path: "about_me"
+    values: 
+      layout: default
+  - scope: 
+      path: "home"
+    values: 
+      layout: default
 
 ###############################################################################
 # BUILD / SEO / ANALYTICS

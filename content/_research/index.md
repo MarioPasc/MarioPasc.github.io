@@ -8,4 +8,4 @@ scripts:
 
 # Research
 
-{% include content/research/research-content.html %}
+{% include content/_research/research-content.html %}

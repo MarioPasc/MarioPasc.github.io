@@ -16,7 +16,22 @@ This blog entry serves as a tutorial, where I try to explain all my code and ste
 
 # Introduction
 
-One core course for the "Biomedical Engineering" branch of my university was "Automatic Control" where we explored machine control theory and its applications. The course had a heavy theoretical part, where we would have to analyze dynamic systems to find the stability points (known as zeros and poles), and design a PID controller to match the reference input value. Although this course had a major impact on many people in my degree (either by frightening them or by charming them), it had almost no effect on me, since I did not really have any interest in industrial automatization. However, some years later, I learned about how many of these things where used in robotics, or at least how the "mentality" (or *soft skills*) that I learned where transcribed into this other field. My flatmate, however, had a real interest in Control Theory and MC (so much that he did his final B.Sc. thesis on the matter, you can check it out<a href="https://github.com/GonzaloM786/SVM-based-closed-loop-anesthesia-control-system"> here</a>), therefore, being the susceptible human that I am, I became interested too.
+One core course for the "Biomedical Engineering" branch of my university was "Automatic Control" where we explored machine control theory and its applications. The course had a heavy theoretical part, where we would have to analyze dynamic systems to find the stability points (known as zeros and poles), and design a PID controller to match the reference input value. Although this course had a major impact on many people in my degree (either by frightening or by charming them), it had almost no effect on me, since I did not really have any interest in industrial automatization. However, some years later, I learned about how many of these things where used in robotics, or at least how the "mentality" (or *soft skills*) that I learned where transcribed into this other field. My flatmate, however, had a real interest in Control Theory and MC (so much that he did his final B.Sc. thesis on the matter, you can check it out<a href="https://github.com/GonzaloM786/SVM-based-closed-loop-anesthesia-control-system"> here</a>), therefore, being the susceptible human that I am, I became interested too.
 
 As an amateur that I am, I only know 3 possible technologies in which you can "embed a program" and integrate them in an electrical circuit (with sensors and actuators), these are: (i) Arduino; (ii) ESP32; (iii) Raspberry Pi. The Arduino boards are the easiest to get your way around while being a newbie, however, they lack the IoT component that make this field interesting, the WiFi and Bluetooth module (or at least the basic boards). The Raspberry Pi has always been presented to me as a "little computer", in which you can install a Linux kernel or distro and communicate using the SSH protocol from your main PC, so it is an overkill for little projects like this. The ESP32 however seems like a good place to start, considering my low-level programming skills are sufficient.
 
+While maintaining the best programming practices, this little project is aimed at understanding how to display data in an OLED using the I2C protocol, how to read data from a sensor through an input pin of the ESP32, and how to connect and send JSON information using the ESP32 WiFi functionality to my computer. 
+
+
+# Materials
+
+Everything used in this project can be found in the<a href="https://www.aliexpress.com/item/1005006065671964.html?spm=a2g0o.order_list.order_list_main.76.24b2194dJIaEtR"> ESP32 Development Kit</a> linked. The software used for programming is PlatformIO, which is a VSCode extension, you can find useful guides on PlatformIO <a href="https://randomnerdtutorials.com/vs-code-platformio-ide-esp32-esp8266-arduino/">here</a>.
+
+# Breadboard Setting
+
+<figure>
+<img src="/assets/images/blog/humiditytemp/humidity_temperature_display_bb.png" alt="Fritzing schematic">
+<figcaption>
+    Fritzing circuit schematic
+</figcaption>
+</figure>

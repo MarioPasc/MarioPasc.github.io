@@ -1,4 +1,5 @@
 // Base reset and typography
+@import 'variables';
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -13,7 +14,12 @@ body {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: $color-accent; // Blue color for links
+  
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8; // Slightly faded on hover
+  }
 }
 
 ul, ol {

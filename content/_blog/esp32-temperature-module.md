@@ -170,7 +170,7 @@ The main class is <code>SensorManager</code>, which owns the DHT sensor driver a
   <code data-lang="cpp">
 #include "sensor.h"
 #include "config/config.h"
-#include <esp_log.h>
+#include &lt;esp_log.h&gt;
 
 static const char* TAG = "SENSOR";
 

@@ -36,7 +36,7 @@ Everything used in this project can be found in the<a href="https://www.aliexpre
 </figcaption>
 </figure>
 
-[Fig 1](#fig1) shows the circuit schematic used for this project. I tried to tide it as much as possible, so there are some useless jumping wires here and there. The important part of the schematic is the pin allocation for each component of the circuit. We will be using PINs 21 and 22 for I2C communication with the OLED, where the pin 21 will be used for data transfer (SDA) and the pin 22 for clock signal (SCL). For I/O communication with the DHT11 sensor you can use either PIN 4 or 5. [Fig 1](#fig1) shows PIN 4, but in the end I used PIN 5, just make sure to change it in the code. I created a <code>config.h</code> file with the following configuration:
+[Fig 1](#fig1) shows the circuit schematic used for this project. I tried to tidy it up it as much as possible, so there are some useless jumping wires here and there. The important part of the schematic is the pin allocation for each component of the circuit. We will be using PINs 21 and 22 for I2C communication with the OLED, where the pin 21 will be used for data transfer (SDA) and the pin 22 for clock signal (SCL). For I/O communication with the DHT11 sensor you can use either PIN 4 or 5. [Fig 1](#fig1) shows PIN 4, but in the end I used PIN 5, just make sure to change it in the code. I created a config.h file with the following configuration:
 
 <div class="code-block">
   <code data-lang="cpp">
@@ -76,6 +76,9 @@ Everything used in this project can be found in the<a href="https://www.aliexpre
   </code>
 </div>
 
+The config.cpp file is as simple as:
+
+
 The <code>config.cpp</code> file is as simple as:
 
 <div class="code-block">
@@ -93,7 +96,9 @@ The <code>config.cpp</code> file is as simple as:
     }
 
   </code>
+</div>  </code>
 </div>
+
 
 
 

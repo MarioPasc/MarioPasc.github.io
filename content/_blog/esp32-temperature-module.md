@@ -160,3 +160,96 @@ void Display::showSensorData(const Reading& reading, size_t buffer_count, bool w
 }
   </code>
 </div>
+
+## Sensor
+
+
+The main class is <code>SensorManager</code>, which owns the DHT sensor driver and holds the last successful reading, while protecting it with a FreeRTOS mutex. The constructor initializes the class with the settings defined in <code>config.h</code>. First, it configures the DHT pin as <code>INPUT_PULLUP</code> and waits briefly, afterwards, it starts the DHT driver and waits for sensor stabilization, creating a FreeRTOS mutex (<code>xSemaphoreCreateMutex</code>) to guard the current reading. Finally, it returns true on success, and false if the mutex couldn’t be created.
+
+<div class="code-block">
+  <code data-lang="cpp">
+#include "sensor.h"
+#include "config/config.h"
+#include <esp_log.h>
+
+static const char* TAG = "SENSOR";
+
+SensorManager::SensorManager() : dht(cfg::PIN_DHT, DHT11), reading_mutex(nullptr) {}
+
+SensorManager::~SensorManager() {
+    if (reading_mutex) {
+        vSemaphoreDelete(reading_mutex);
+    }
+}
+
+bool SensorManager::init() {
+    // GPIO setup
+    pinMode(cfg::PIN_DHT, INPUT_PULLUP);
+    delay(1000);
+    
+    // Initialize DHT sensor
+    ESP_LOGI(TAG, "Initializing DHT sensor...");
+    dht.begin();
+    delay(2000);
+    
+    // Create mutex
+    reading_mutex = xSemaphoreCreateMutex();
+    if (!reading_mutex) {
+        ESP_LOGE(TAG, "Failed to create reading mutex");
+        return false;
+    }
+    
+    ESP_LOGI(TAG, "Sensor manager initialized");
+    return true;
+}
+  </code>
+</div>
+
+The only two more functionalities that we may need from the sensor class is the safe <code>SensorManager::getCurrentReading</code> and the actual reading function, <code>SensorManager::readSensor</code>. The current reading function locks the mutex, copies the most recent cached current reading into a local <code>Reading</code> variable, unlocks, and returns the copy. To take a new reading, the function asks the DHT driver for fresh temperature and humidity events: <code>dht.temperature().getEvent(...)</code> and <code>dht.humidity().getEvent(...)</code>, validating both by checking they’re not NaN. On success, it populates the output reference with temperature (ºC), humidity (%RH), and <code>timestamp = millis()</code> to get the time of the reading. It updates the cached <code>current_reading</code> under the mutex, logs the values and returns true.
+
+<div class="code-block">
+  <code data-lang="cpp">
+Reading SensorManager::getCurrentReading() {
+    Reading reading;
+    
+    if (reading_mutex) {
+        xSemaphoreTake(reading_mutex, portMAX_DELAY);
+        reading = current_reading;
+        xSemaphoreGive(reading_mutex);
+    }
+    
+    return reading;
+}
+
+bool SensorManager::readSensor(Reading& reading) {
+    sensors_event_t evT, evH;
+    
+    ESP_LOGD(TAG, "Attempting to read DHT sensor...");
+    
+    dht.temperature().getEvent(&evT);
+    dht.humidity().getEvent(&evH);
+
+    bool temp_valid = !isnan(evT.temperature);
+    bool hum_valid = !isnan(evH.relative_humidity);
+    
+    if (temp_valid && hum_valid) {
+        reading.t = evT.temperature;
+        reading.h = evH.relative_humidity;
+        reading.timestamp = millis();
+        
+        // Update current reading
+        if (reading_mutex) {
+            xSemaphoreTake(reading_mutex, portMAX_DELAY);
+            current_reading = reading;
+            xSemaphoreGive(reading_mutex);
+        }
+        
+        ESP_LOGI(TAG, "Sensor reading: %.1f °C, %.0f %%RH", reading.t, reading.h);
+        return true;
+    } else {
+        ESP_LOGW(TAG, "Invalid sensor reading - temp_valid: %d, hum_valid: %d", temp_valid, hum_valid);
+        return false;
+    }
+}
+  </code>
+</div>

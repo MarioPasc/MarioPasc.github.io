@@ -13,45 +13,77 @@ $color-code-comment: #5c6370 !default;    // grey
 $color-code-number: #d19a66 !default;     // orange
 $color-code-builtin: #61afef !default;    // blue
 
-.code-block {
+// Shared base styles for both custom blocks and fenced pre blocks
+%code-container {
   background: $color-code-bg;
   border: 1px solid $color-border;
   border-radius: 4px;
   margin: $spacing-md 0;
   overflow-x: auto;
   position: relative;
+}
+
+%code-content {
+  display: block;
+  padding: $spacing-md;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $color-code-fg;
+  white-space: pre; // preserve indentation and newlines
+  tab-size: 4;
+}
+
+%lang-badge {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0.25rem;
+  right: 0.4rem;
+  font-size: 0.65rem;
+  opacity: 0.75;
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  border: 1px solid $color-border-light;
+  text-transform: uppercase;
+  pointer-events: none;
+  background: rgba(0,0,0,0.15);
+}
+
+.code-block {
+  @extend %code-container;
 
   // The <code> is block-level and preserves whitespace exactly
   code {
-    display: block;
-    padding: $spacing-md;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: $color-code-fg;
-
-    // CRUCIAL: preserve indentation and newlines (no soft wrap)
-    white-space: pre;
-    tab-size: 4; // better tab rendering
+    @extend %code-content;
   }
 
   // Optional top-right language tag (if you ever add one)
   &::after {
-    content: attr(data-lang);     // ← read from the container attribute
-    position: absolute;
-    top: 0.25rem;
-    right: 0.4rem;
-    font-size: 0.65rem;
-    opacity: 0.7;
-    padding: 0.15rem 0.35rem;
-    border-radius: 3px;
-    border: 1px solid $color-border-light;
-    text-transform: uppercase;
-    pointer-events: none;
+    @extend %lang-badge;
   }
 
-
   // Token colours
+  .keyword   { color: $color-code-keyword; font-weight: 600; }
+  .string    { color: $color-code-string; }
+  .comment   { color: $color-code-comment; font-style: italic; }
+  .number    { color: $color-code-number; }
+  .built-in  { color: $color-code-builtin; font-weight: 600; }
+  .preprocessor { color: $color-code-keyword; }
+}
+
+// Fenced code blocks from Markdown: <pre><code class="language-xxx"></code></pre>
+pre {
+  @extend %code-container;
+
+  code {
+    @extend %code-content;
+  }
+
+  &::after {
+    @extend %lang-badge;
+  }
+
+  // Token colours inside pre
   .keyword   { color: $color-code-keyword; font-weight: 600; }
   .string    { color: $color-code-string; }
   .comment   { color: $color-code-comment; font-style: italic; }

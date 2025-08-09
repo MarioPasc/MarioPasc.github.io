@@ -3,11 +3,12 @@
  * Languages: Python, C/C++ (basic)
  * 
  * Design:
- *  - Read raw text via textContent → preserves original spacing.
+ *  - Read raw text via innerHTML reconstruction → survives accidental tags like <Arduino.h>.
  *  - Escape HTML before wrapping tokens → no accidental tags.
  *  - Tokenize to non-overlapping spans by priority → stable highlighting.
  * 
  * Usage: <div class="code-block"><code data-lang="python">...</code></div>
+ *        or fenced markdown → <pre><code class="language-python">...</code></pre>
  */
 
 /** Escape raw text for HTML injection (leaves newlines & spaces intact). */
@@ -15,8 +16,7 @@ function escapeHtml(s) {
   return s
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
+    .replaceAll('>', '&gt;');
 }
 
 /** Merge overlapping token intervals by priority (lower is stronger). */
@@ -124,9 +124,52 @@ function getLanguageSpecs(langKey) {
 function normalizeLang(raw) {
   if (!raw) return null;
   const k = String(raw).toLowerCase();
-  if (k === 'c++' || k === 'cpp' || k === 'c') return 'cpp';
+  if (k === 'c++' || k === 'cpp' || k === 'c' || k === 'hpp' || k === 'h' || k === 'cxx') return 'cpp';
   if (k === 'py' || k === 'python') return 'python';
+  if (k === 'js' || k === 'javascript') return 'javascript';
   return null;
+}
+
+// New helpers for robust extraction and selection
+function detectLanguageFromEl(code) {
+  const data = code.getAttribute('data-lang');
+  if (data) return normalizeLang(data);
+  const clsMatch = Array.from(code.classList).map(c => c.toLowerCase()).find(c => c.startsWith('language-'));
+  if (clsMatch) return normalizeLang(clsMatch.replace('language-', ''));
+  return null;
+}
+
+/**
+ * Build an escaped text from the code element's DOM so that accidentally
+ * parsed HTML tags (e.g., <arduino.h>) become literal text.
+ */
+function getEscapedFromInnerHTML(codeEl) {
+  function walk(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.nodeValue || '';
+    }
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const tag = node.tagName.toLowerCase();
+      if (tag === 'br') return '\n';
+      // If element has no textual content, represent as literal <tag>
+      const hasText = Array.from(node.childNodes).some(n => (n.nodeType === Node.TEXT_NODE && (n.nodeValue || '').trim() !== ''));
+      if (!node.firstChild || !hasText) {
+        return `<${tag}>`;
+      }
+      // Otherwise, concatenate children (ignore the element wrapper itself)
+      let s = '';
+      node.childNodes.forEach(child => { s += walk(child); });
+      return s;
+    }
+    return '';
+  }
+
+  let raw = '';
+  codeEl.childNodes.forEach(n => { raw += walk(n); });
+  // Normalize non-breaking spaces
+  raw = raw.replace(/\u00A0/g, ' ');
+  // Escape to safe HTML for injection
+  return escapeHtml(raw);
 }
 
 class SyntaxHighlighter {
@@ -139,21 +182,24 @@ class SyntaxHighlighter {
     }
   }
 
-  /** Highlight all `.code-block > code[data-lang]` elements once. */
+  /** Highlight all supported code blocks once. */
   init() {
-    const nodes = document.querySelectorAll('.code-block > code[data-lang]');
+    const nodeListA = document.querySelectorAll('.code-block > code[data-lang]');
+    const nodeListB = document.querySelectorAll('pre > code');
+    const nodes = Array.from(new Set([ ...nodeListA, ...nodeListB ]));
+
     nodes.forEach(code => {
       if (code.classList.contains('highlighted')) return; // avoid re-run
-      const lang = normalizeLang(code.dataset.lang);
+
+      const lang = detectLanguageFromEl(code);
       if (!lang) return;
 
-      // Lines (approx): add parent attribute so CSS can show the label
-      const parent = code.closest('.code-block');
-      if (parent) parent.setAttribute('data-lang', (code.getAttribute('data-lang') || 'text').toLowerCase());
+      // Set language label on closest container (.code-block or pre)
+      const parent = code.closest('.code-block, pre');
+      if (parent) parent.setAttribute('data-lang', (code.getAttribute('data-lang') || (Array.from(code.classList).find(c => c.startsWith('language-')) || 'text').replace('language-', '')).toLowerCase());
 
-      // Get raw code exactly as typed
-      const raw = code.textContent; // preserves indentation/newlines
-      const escaped = escapeHtml(raw);
+      // Get raw code robustly from innerHTML to survive accidental tags
+      const escaped = getEscapedFromInnerHTML(code);
 
       const specs = getLanguageSpecs(lang);
       const tokens = collectTokens(escaped, specs);

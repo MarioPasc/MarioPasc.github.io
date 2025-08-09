@@ -41,7 +41,7 @@ Everything used in this project can be found in the<a href="https://www.aliexpre
 <div class="code-block">
   <code data-lang="cpp">
 #pragma once
-#include <Arduino.h>
+#include &lt;Arduino.h&gt;
 namespace cfg {
     // GPIOs
     constexpr gpio_num_t PIN_DHT      = GPIO_NUM_5;

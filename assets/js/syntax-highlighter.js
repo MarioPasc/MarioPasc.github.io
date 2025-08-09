@@ -147,6 +147,10 @@ class SyntaxHighlighter {
       const lang = normalizeLang(code.dataset.lang);
       if (!lang) return;
 
+      // Lines (approx): add parent attribute so CSS can show the label
+      const parent = code.closest('.code-block');
+      if (parent) parent.setAttribute('data-lang', (code.getAttribute('data-lang') || 'text').toLowerCase());
+
       // Get raw code exactly as typed
       const raw = code.textContent; // preserves indentation/newlines
       const escaped = escapeHtml(raw);

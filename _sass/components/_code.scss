@@ -37,7 +37,7 @@ $color-code-builtin: #61afef !default;    // blue
 
   // Optional top-right language tag (if you ever add one)
   &::after {
-    content: attr(data-lang);
+    content: attr(data-lang);     // ← read from the container attribute
     position: absolute;
     top: 0.25rem;
     right: 0.4rem;
@@ -47,7 +47,9 @@ $color-code-builtin: #61afef !default;    // blue
     border-radius: 3px;
     border: 1px solid $color-border-light;
     text-transform: uppercase;
+    pointer-events: none;
   }
+
 
   // Token colours
   .keyword   { color: $color-code-keyword; font-weight: 600; }

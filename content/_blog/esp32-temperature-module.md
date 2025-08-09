@@ -1,5 +1,5 @@
 ---
-title: "Simple ESP-32 Humidity and Temperature Module"
+title: "Wi-Fi ESP-32 Humidity and Temperature Module"
 date: 2025-08-01
 layout: post
 tag: esp32
@@ -130,5 +130,33 @@ void Display::centrePrint(int16_t y, const String& txt) {
   </code>
 </div>
 
-As a sanity routine, every time the OLED gets initialized, we clear the display, set our text color, font size, display a static message (<i>"Environmental + WiFi"</i>), and return a positive boolean if the routine ended successfully.  The <code>Display::centrePrint</code> method gets the text length, stores the width of the text in <code>w</code>, and computes the offset (<code>int16_t x</code>) that it needs to set so that the text appears in the middle of the display. The display height is hard-coded by the input parameter <code>y</code>.
+As a sanity routine, every time the OLED gets initialized, we clear the display, set our text color, font size, display a static message (<i>"Environmental + WiFi"</i>), and return a positive boolean if the routine ended successfully.  The <code>Display::centrePrint</code> method gets the text length, stores the width of the text in <code>w</code>, and computes the offset (<code>int16_t x</code>) that it needs to set so that the text appears in the middle of the display. The display height is hard-coded by the input parameter <code>y</code>. 
 
+Only two more functions are needed to complete this module, which are: (i) <code>Display::showWiFiStatus</code>, to display the WiFi status regarding the connection between the ESP32 and my router, and (ii) <code>Display::showSensorData</code>, which displays temperature (T), humidity (RH), WiFi status, and the buffer that is being stored relative to the hard-coded readings per batch (10). Only the stored buffer reaches the maximum readings per batch, the <code>network</code> module parses the data into a JSON file to sent it to a python script listening on the target port. 
+
+<div class="code-block">
+  <code data-lang="cpp">
+void Display::showWiFiStatus(const String& status) {
+    oled.fillRect(0, 16, cfg::OLED_W, 32, SSD1306_BLACK);
+    centrePrint(24, "WiFi: " + status);
+    oled.display();
+}
+
+void Display::showSensorData(const Reading& reading, size_t buffer_count, bool wifi_connected) {
+    oled.fillRect(0, 16, cfg::OLED_W, 48, SSD1306_BLACK);
+
+    if (isnan(reading.t) || isnan(reading.h)) {
+        centrePrint(32, F("Sensor error"));
+    } else {
+        centrePrint(20, "T = " + String(reading.t, 1) + " C");
+        centrePrint(32, "RH = " + String(reading.h, 0) + " %");
+        
+        // Show WiFi status and buffer count
+        String status = "WiFi: " + String(wifi_connected ? "OK" : "X") + 
+                       " Buf: " + String(buffer_count) + "/" + String(cfg::READINGS_PER_BATCH);
+        centrePrint(44, status);
+    }
+    oled.display();
+}
+  </code>
+</div>

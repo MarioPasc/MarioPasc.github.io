@@ -22,6 +22,17 @@ a {
   }
 }
 
+// Exclude navigation and footer links from general link styling
+.nav-links a,
+.social-links a {
+  color: inherit; // Use the color defined in their specific components
+  
+  &:hover {
+    text-decoration: none; // Remove underline
+    opacity: 1; // Remove opacity change
+  }
+}
+
 ul, ol {
   list-style: none;
   margin: 0;

@@ -40,37 +40,39 @@ Everything used in this project can be found in the<a href="https://www.aliexpre
 
 <div class="code-block">
   <code data-lang="cpp">
-#pragma once
 
-#include <Arduino.h>
+    #pragma once
 
-namespace cfg {
-    // GPIOs
-    constexpr gpio_num_t PIN_DHT      = GPIO_NUM_5;
-    constexpr uint8_t    I2C_SDA      = 21;
-    constexpr uint8_t    I2C_SCL      = 22;
+    #include <Arduino.h>
 
-    // I2C display
-    constexpr uint8_t    OLED_ADDR    = 0x3C; // OLED I2C address, i decided to define it on my own
-    constexpr uint16_t   OLED_W       = 128;
-    constexpr uint16_t   OLED_H       = 64;
+    namespace cfg {
+        // GPIOs
+        constexpr gpio_num_t PIN_DHT      = GPIO_NUM_5;
+        constexpr uint8_t    I2C_SDA      = 21;
+        constexpr uint8_t    I2C_SCL      = 22;
 
-    // Task timing
-    constexpr TickType_t SENSOR_PERIOD = pdMS_TO_TICKS(2000); // DHT11 max 0.5 Hz
-    constexpr TickType_t UI_PERIOD     = pdMS_TO_TICKS(500);  // smoother refresh
+        // I2C display
+        constexpr uint8_t    OLED_ADDR    = 0x3C; // OLED I2C address, i decided to define it on my own
+        constexpr uint16_t   OLED_W       = 128;
+        constexpr uint16_t   OLED_H       = 64;
 
-    // From now on, WiFi credentials, defined in config.cpp
-    // WiFi credentials
-    extern const char* WIFI_SSID;
-    extern const char* WIFI_PASS;
-    
-    // Server endpoint
-    extern const char* SERVER_URL;
-    
-    // I decided to send the data in batchs to avoid network saturation
-    constexpr size_t READINGS_PER_BATCH = 10;
-    constexpr size_t NETWORK_QUEUE_SIZE = 5;
-} // namespace cfg
+        // Task timing
+        constexpr TickType_t SENSOR_PERIOD = pdMS_TO_TICKS(2000); // DHT11 max 0.5 Hz
+        constexpr TickType_t UI_PERIOD     = pdMS_TO_TICKS(500);  // smoother refresh
+
+        // From now on, WiFi credentials, defined in config.cpp
+        // WiFi credentials
+        extern const char* WIFI_SSID;
+        extern const char* WIFI_PASS;
+        
+        // Server endpoint
+        extern const char* SERVER_URL;
+        
+        // I decided to send the data in batchs to avoid network saturation
+        constexpr size_t READINGS_PER_BATCH = 10;
+        constexpr size_t NETWORK_QUEUE_SIZE = 5;
+    } // namespace cfg
+
   </code>
 </div>
 
@@ -78,16 +80,18 @@ The <code>config.cpp</code> file is as simple as:
 
 <div class="code-block">
   <code data-lang="cpp">
-#include "config.h"
 
-namespace cfg {
-    // WiFi credentials
-    const char* WIFI_SSID = "(wifi SSID)";
-    const char* WIFI_PASS = "(password)";
-    
-    // Server endpoint
-    const char* SERVER_URL = "http://(your computer IP):8080/sensor-data";
-}
+    #include "config.h"
+
+    namespace cfg {
+        // WiFi credentials
+        const char* WIFI_SSID = "(wifi SSID)";
+        const char* WIFI_PASS = "(password)";
+        
+        // Server endpoint
+        const char* SERVER_URL = "http://(your computer IP):8080/sensor-data";
+    }
+
   </code>
 </div>
 

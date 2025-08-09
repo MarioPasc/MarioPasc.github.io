@@ -457,3 +457,90 @@ void NetworkManager::networkTask() {
 As a side note, this was the most stressful module to code and debug, in the end it was because the deprecation of <code>StaticJsonDocument</code>, and me not knowing how to work with the <code>JsonDocument</code> type. There may be a lot of code here, but it narrows down to logging, data collection, and data transmision via an HTML POST operation (<code>http.POST(jsonString)</code>). Further experimentation with possible HTML errors would be good.
 
 ## Wrapper: Tasks Module
+
+After looking at several ESP32 projects on the internet, I noticed that most of them coded their components-related modules, and then integrated the functionality is a "tasks" module, where they would just orchestrate the functionality of the component with high-level functions they can use from their <code>main.cpp</code> script. Here, the main class is <code>TaskManager</code>, which coordinates sensor sampling, batching/uploads, and UI updates. It holds references to <code>SensorManager</code>, <code>NetworkManager</code>, and <code>Display</code>. It also maintains a readings buffer. During initialization, it creates the buffer mutex, logs status with ESP-IDF, and returns true on success (false if the mutex cannot be created).
+
+<div class="code-block">
+  <code data-lang="cpp">
+// filepath: tasks.cpp
+#include "tasks.h"
+#include "config/config.h"
+#include &lt;esp_log.h&gt;
+
+static const char* TAG = "TASKS";
+
+TaskManager::TaskManager(SensorManager& sensor, NetworkManager& network, Display& disp)
+    : sensor_manager(sensor), network_manager(network), display(disp), buffer_mutex(nullptr) {}
+
+TaskManager::~TaskManager() {
+    if (buffer_mutex) {
+        vSemaphoreDelete(buffer_mutex);
+    }
+}
+
+bool TaskManager::init() {
+    buffer_mutex = xSemaphoreCreateMutex();
+    if (!buffer_mutex) {
+        ESP_LOGE(TAG, "Failed to create buffer mutex");
+        return false;
+    }
+    
+    ESP_LOGI(TAG, "Task manager initialized");
+    return true;
+}
+  </code>
+</div>
+
+The two core task loops are the safe <code>TaskManager::sensorTask</code> and the UI updater <code>TaskManager::uiTask</code>. The sensor task periodically calls <code>sensor_manager.readSensor</code>; on success, it pushes the reading into the guarded buffer and, when the buffer reaches <code>cfg::READINGS_PER_BATCH</code>, it copies the buffer into a batch and tries to enqueue it via <code>network_manager.queueBatch</code>. If enqueued, it clears the buffer; otherwise it keeps data for later retries. The UI task polls the latest cached reading with <code>sensor_manager.getCurrentReading</code>, snapshots the buffer size under the mutex, and renders via <code>display.showSensorData</code>. Both tasks sleep using <code>vTaskDelay</code> with periods from <code>config.h</code>.
+
+<div class="code-block">
+  <code data-lang="cpp">
+// filepath: tasks.cpp
+void TaskManager::sensorTask() {
+    Reading reading;
+    
+    for (;;) {
+        if (sensor_manager.readSensor(reading)) {
+            // Add to buffer for batch sending
+            xSemaphoreTake(buffer_mutex, portMAX_DELAY);
+            readings_buffer.push_back(reading);
+            
+            // Check if we have enough readings to send
+            if (readings_buffer.size() >= cfg::READINGS_PER_BATCH) {
+                ReadingBatch batch = readings_buffer;   // copy
+                
+                // Try to send without clearing first (as per your request)
+                bool ok = network_manager.queueBatch(batch);
+                if (ok) {
+                    readings_buffer.clear();
+                    ESP_LOGI(TAG, "Batch queued successfully, buffer cleared");
+                } else {
+                    ESP_LOGW(TAG, "Failed to queue batch, keeping data in buffer");
+                }
+            }
+            xSemaphoreGive(buffer_mutex);
+
+            ESP_LOGI(TAG, "Sampled: %.1f °C  %.0f %%RH (Buffer: %d/%d)", 
+                     reading.t, reading.h, readings_buffer.size(), cfg::READINGS_PER_BATCH);
+        }
+
+        vTaskDelay(cfg::SENSOR_PERIOD);
+    }
+}
+
+void TaskManager::uiTask() {
+    for (;;) {
+        Reading r = sensor_manager.getCurrentReading();
+        size_t buffer_count;
+        
+        xSemaphoreTake(buffer_mutex, portMAX_DELAY);
+        buffer_count = readings_buffer.size();
+        xSemaphoreGive(buffer_mutex);
+
+        display.showSensorData(r, buffer_count, network_manager.isConnected());
+        
+        vTaskDelay(cfg::UI_PERIOD);
+    }
+}
+  </code>
+</div>

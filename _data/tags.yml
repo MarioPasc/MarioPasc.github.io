@@ -2,3 +2,7 @@ esp32:
   label: ESP-32
   bg_color: "#007ACC"
   text_color: "#fff"
+personal:
+  label: Personal
+  bg_color: "#5C2DAD"
+  text_color: "#fff"

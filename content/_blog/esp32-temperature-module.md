@@ -544,3 +544,136 @@ void TaskManager::uiTask() {
 }
   </code>
 </div>
+
+## Main script 
+
+The <code>setup()</code> method of the main script instantiates all the classes with the parameters defined in the configuration class, performs the sensor initialization routine, WiFi connection routine, and uploads the tasks for the <code>loop()</code> function. It also includes important debugging steps using the </code>&lt;esp_log.h&gt;</code> library, or at least, logging points that I found important while debugging the code, and that cause no harm to be left behind. 
+
+<div class="code-block">
+  <code data-lang="cpp">
+#include &lt;Arduino.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;esp_log.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+// Local modules
+#include "config/config.h"
+#include "types/types.h"
+#include "display/display.h"
+#include "sensor/sensor.h"
+#include "network/network.h"
+#include "tasks/tasks.h"
+
+// ───────────────────────────── Module instances ─────────────────────────────
+static const char *TAG = "APP";
+
+static TwoWire I2CBus = TwoWire(0);  // dedicated bus instance
+static Adafruit_SSD1306 oled(cfg::OLED_W, cfg::OLED_H, &I2CBus, -1);
+
+static Display display(oled);
+static SensorManager sensor_manager;
+static NetworkManager network_manager;
+static TaskManager task_manager(sensor_manager, network_manager, display);
+
+void setup()
+{
+    // Serial & logging
+    Serial.begin(115200);
+    esp_log_level_set("*", ESP_LOG_INFO);
+
+    ESP_LOGI(TAG, "=== ESP32 Environmental Monitor Starting ===");
+
+    // I²C
+    I2CBus.begin(cfg::I2C_SDA, cfg::I2C_SCL, 400000);
+
+    // Display initialization
+    if (!display.init()) {
+        fatal("Display initialization failed");
+    }
+
+    // Show WiFi connection status on display
+    display.showWiFiStatus("Connecting...");
+
+    // Network initialization
+    if (!network_manager.init()) {
+        fatal("Network manager initialization failed");
+    }
+
+    // WiFi connection with display feedback
+    bool wifi_connected = network_manager.connectWiFi();
+    if (wifi_connected) {
+        display.showWiFiStatus("Connected: " + network_manager.getLocalIP());
+        delay(2000); // Show IP for 2 seconds
+    } else {
+        display.showWiFiStatus("Failed");
+        delay(2000);
+    }
+
+    // Sensor initialization
+    if (!sensor_manager.init()) {
+        fatal("Sensor manager initialization failed");
+    }
+
+    // Task manager initialization
+    if (!task_manager.init()) {
+        fatal("Task manager initialization failed");
+    }
+
+    ESP_LOGI(TAG, "Creating tasks...");
+
+    // Create tasks
+    xTaskCreatePinnedToCore(TaskManager::sensorTaskWrapper, "SensorTask", 8192, &task_manager, 1, nullptr, 1);
+    xTaskCreatePinnedToCore(TaskManager::uiTaskWrapper, "UiTask", 4096, &task_manager, 1, nullptr, 1);
+    xTaskCreatePinnedToCore(NetworkManager::networkTaskWrapper, "NetTask", 8192, &network_manager, 1, nullptr, 1);
+
+    ESP_LOGI(TAG, "=== Initialization Complete ===");
+}
+
+void loop() { 
+    vTaskDelete(nullptr); 
+}
+    </code>
+</div>
+
+## Python Listener
+
+The Python listener is quite straightforward and could be implemented in many ways, in my case, I let the generative AI ChatGPT help me incorporate the data collection with a Matplotlib animation, where we can visualize in real time the temperature and humidity measurements and the temperature-humidity curve. The listener script should be initialized at a local computer IP (e.g., <code>http://0.0.0.0:8080</code>), using the same port and endpoint configuration implemented in the ESP32 <code>config.h</code> file. The data collection is straightforward, by creating a method <code>do_POST(self)</code> or <code>do_GET(self)</code> within a class that inherits from <code>BaseHTTPRequestHandler</code> we can obtain the latest JSON sent to the endpoint. In my case, I decided to go with a POST HTTP operation, this is the start of this class:
+
+<div class="code-block">
+  <code data-lang="cpp">
+class SensorHandler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        if self.path == '/sensor-data':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            
+            try:
+                data = json.loads(post_data.decode('utf-8'))
+                ...
+                # Data decoding and storing
+    ...
+...
+
+def start_server():
+    server = HTTPServer(('0.0.0.0', 8080), SensorHandler)
+    print("Server running on http://0.0.0.0:8080")
+    print("Waiting for sensor data...")
+    server.serve_forever()
+    </code>
+</div>
+
+<figure id="fig2">
+<img src="/assets/images/blog/humiditytemp/humidityfunction.png" alt="Plotting Functionality">
+<figcaption>
+    <i> Fig 2. Listener in real-time plots and VSCode listener console output. </i>
+</figcaption>
+</figure>
+
+[Fig 2](#fig2) showcases the final in real-time plots generated by the <a href="https://github.com/MarioPasc/ESP32_HUMIDITYTEMPERATURE/blob/master/src/listener.py">listener script</a> for the first batch of data collected by the sensor. 
+
+# Final Thoughts
+
+This year has been pretty stressful to me, as I have been lucky enough to work as a researcher for the first time in my life, and have known almost-real PhD-level suffering such as reviewer's deadlines, the constant urge to be working on something to publish, or the pursuit of excellence that has guided my life here in the first place. I was really looking forward to taking a break this summer, and spend some time for myself. This project, which is remotely far from my research area, has been a breath of fresh air for me, since I had the opportunity to remember what it was to learn something new and simple, and get a good satisfaction after a week of debugging and developing. 
+
+In the future, when I have a stable job and defined working hours, I intend to integrate all this knowledge that I'm getting from these little DIY projects to create a centralized intelligent assistant, that can send me weather alerts to my mobile phone, has a NAS server, etc. 

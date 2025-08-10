@@ -402,10 +402,10 @@ bool NetworkManager::sendDataBatch(const ReadingBatch& readings) {
     JsonDocument doc;
     doc["device_id"] = "ESP32_DHT11";
     doc["batch_time"] = millis();
-    doc["readings"].to<JsonArray>();
+    doc["readings"].to&lt;JsonArray&gt;();
 
     for (const auto& reading : readings) {
-        JsonObject obj = doc["readings"].add<JsonObject>();
+        JsonObject obj = doc["readings"].add&lt;JsonObject&gt;();
         obj["temperature"] = reading.t;
         obj["humidity"] = reading.h;
         obj["timestamp"] = reading.timestamp;
@@ -419,7 +419,7 @@ bool NetworkManager::sendDataBatch(const ReadingBatch& readings) {
 
     int httpResponseCode = http.POST(jsonString);
     
-    bool success = (httpResponseCode >= 200 && httpResponseCode < 300);
+    bool success = (httpResponseCode &gt;= 200 && httpResponseCode &lt; 300);
     
     if (success) {
         String response = http.getString();

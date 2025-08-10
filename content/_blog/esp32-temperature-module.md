@@ -641,7 +641,7 @@ void loop() {
 The Python listener is quite straightforward and could be implemented in many ways, in my case, I let the generative AI ChatGPT help me incorporate the data collection with a Matplotlib animation, where we can visualize in real time the temperature and humidity measurements and the temperature-humidity curve. The listener script should be initialized at a local computer IP (e.g., <code>http://0.0.0.0:8080</code>), using the same port and endpoint configuration implemented in the ESP32 <code>config.h</code> file. The data collection is straightforward, by creating a method <code>do_POST(self)</code> or <code>do_GET(self)</code> within a class that inherits from <code>BaseHTTPRequestHandler</code> we can obtain the latest JSON sent to the endpoint. In my case, I decided to go with a POST HTTP operation, this is the start of this class:
 
 <div class="code-block">
-  <code data-lang="cpp">
+  <code data-lang="python">
 class SensorHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == '/sensor-data':
@@ -674,6 +674,6 @@ def start_server():
 
 # Final Thoughts
 
-This year has been pretty stressful to me, as I have been lucky enough to work as a researcher for the first time in my life, and have known almost-real PhD-level suffering such as reviewer's deadlines, the constant urge to be working on something to publish, or the pursuit of excellence that has guided my life here in the first place. I was really looking forward to taking a break this summer, and spend some time for myself. This project, which is remotely far from my research area, has been a breath of fresh air for me, since I had the opportunity to remember what it was to learn something new and simple, and get a good satisfaction after a week of debugging and developing. 
+This year has been pretty stressful to me, as I have been lucky enough to work as a researcher for the first time in my life, and have known almost-real PhD-level suffering, such as reviewer's deadlines, the constant urge to be working on something to publish, or the pursuit of excellence that has guided my life here in the first place. I was really looking forward to taking a break this summer, and spend some time for myself. This project, which is remotely far from my research area, has been a breath of fresh air for me, since I had the opportunity to remember what it was to learn something new and simple, and get a good satisfaction after a week of debugging and developing. 
 
 In the future, when I have a stable job and defined working hours, I intend to integrate all this knowledge that I'm getting from these little DIY projects to create a centralized intelligent assistant, that can send me weather alerts to my mobile phone, has a NAS server, etc. 

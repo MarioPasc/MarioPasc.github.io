@@ -1,0 +1,52 @@
+/* Layout containers */
+.about-content .intro-content,
+.about-content .sub-text {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+/* First block: text left, image right */
+.about-content .intro-content .intro-text {
+  flex: 1 1 340px;
+  order: 1;
+}
+.about-content .intro-content .intro-image {
+  flex: 0 0 260px;
+  order: 2;
+}
+
+/* Sub-text block: image left, text right */
+.about-content .sub-text .sub-text-image {
+  flex: 0 0 260px;
+  order: 1;
+}
+.about-content .sub-text .sub-text-body {
+  flex: 1 1 340px;
+  order: 2;
+}
+
+/* Figures & images */
+.about-content figure {
+  margin: 0;
+}
+.about-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+
+/* Responsive stacking */
+@media (max-width: 720px) {
+  .about-content .intro-content,
+  .about-content .sub-text {
+    flex-direction: column;
+  }
+  .about-content .intro-content .intro-image,
+  .about-content .sub-text .sub-text-image {
+    order: initial;
+  }
+}

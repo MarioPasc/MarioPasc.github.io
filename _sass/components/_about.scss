@@ -1,0 +1,53 @@
+@import '../base/variables';
+
+.about-content {
+  .intro-content,
+  .sub-text {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: column;
+      gap: $spacing-lg;
+    }
+  }
+
+  .intro-text,
+  .sub-text-body {
+    flex: 1;
+  }
+
+  .intro-image,
+  .sub-text-image {
+    flex: 0 0 300px;
+    max-width: 300px;
+
+    @media (max-width: $breakpoint-md) {
+      flex: none;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    figure {
+      margin: 0;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        display: block;
+      }
+
+      figcaption {
+        margin-top: 8px;
+        font-size: $font-size-small;
+        color: $color-text-light;
+        text-align: center;
+        font-style: italic;
+      }
+    }
+  }
+}

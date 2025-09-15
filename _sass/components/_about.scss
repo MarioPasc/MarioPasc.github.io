@@ -1,6 +1,8 @@
 @import '../base/variables';
 
 .about-content {
+  text-align: left; // override global center in .page-content
+
   .intro-content,
   .sub-text {
     display: flex;
@@ -21,8 +23,8 @@
 
   .intro-image,
   .sub-text-image {
-    flex: 0 0 300px;
-    max-width: 300px;
+  flex: 0 0 260px;
+  max-width: 260px;
 
     @media (max-width: $breakpoint-md) {
       flex: none;
@@ -35,8 +37,8 @@
       margin: 0;
 
       img {
-        width: 100%;
-        height: auto;
+  width: 100%;
+  height: auto;
         border-radius: 8px;
         display: block;
       }
@@ -48,6 +50,20 @@
         text-align: center;
         font-style: italic;
       }
+    }
+  }
+
+  // Utility modifiers to swap order without changing HTML
+  &.image-right {
+    .intro-content, .sub-text {
+      .intro-image, .sub-text-image { order: 2; }
+      .intro-text, .sub-text-body { order: 1; }
+    }
+  }
+  &.image-left {
+    .intro-content, .sub-text {
+      .intro-image, .sub-text-image { order: 1; }
+      .intro-text, .sub-text-body { order: 2; }
     }
   }
 }

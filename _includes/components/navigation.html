@@ -1,8 +1,44 @@
-<nav class="site-nav">
-  <ul class="nav-links">
-    <li><a href="{{ '/' | relative_url }}">Home</a></li>
-    <li><a href="{{ '/about/' | relative_url }}">About Me</a></li>
-    <li><a href="{{ '/research/' | relative_url }}">Research</a></li>
-    <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
-  </ul>
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- Mobile menu toggle -->
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+
+    <!-- Desktop navigation -->
+    <ul class="nav-links">
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active" aria-current="page"{% endif %}>Home</a></li>
+      <li><a href="{{ '/about/' | relative_url }}"{% if page.url contains '/about' %} class="active" aria-current="page"{% endif %}>About Me</a></li>
+      <li><a href="{{ '/research/' | relative_url }}"{% if page.url contains '/research' %} class="active" aria-current="page"{% endif %}>Research</a></li>
+      <li><a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog' %} class="active" aria-current="page"{% endif %}>Blog</a></li>
+    </ul>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile navigation overlay -->
+  <div class="nav-mobile" aria-hidden="true">
+    <div class="nav-mobile-links">
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Home</a>
+      <a href="{{ '/about/' | relative_url }}"{% if page.url contains '/about' %} class="active"{% endif %}>About Me</a>
+      <a href="{{ '/research/' | relative_url }}"{% if page.url contains '/research' %} class="active"{% endif %}>Research</a>
+      <a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog' %} class="active"{% endif %}>Blog</a>
+    </div>
+  </div>
 </nav>

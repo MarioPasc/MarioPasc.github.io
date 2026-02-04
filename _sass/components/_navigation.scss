@@ -1,42 +1,279 @@
-// Navigation component styles
+// ==========================================================================
+// Navigation Component
+// ==========================================================================
 @import '../base/variables';
 
+// ==========================================================================
+// Main Navigation
+// ==========================================================================
 .site-nav {
-  background: $color-background;
+  background: var(--color-bg);
+  padding: $spacing-sm 0;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color $transition-base, box-shadow $transition-base;
+
+  // Shadow when scrolled
+  &.scrolled {
+    box-shadow: $shadow-sm;
+  }
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: $container-md;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+// ==========================================================================
+// Nav Links (Desktop)
+// ==========================================================================
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: $spacing-xl;
+  gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+
+    &.nav-open {
+      display: flex;
+    }
+  }
 }
 
 .nav-links a {
   display: block;
-  padding: $spacing-md;
-  color: $color-primary;
-  font-weight: bold;
+  padding: $spacing-sm $spacing-md;
+  color: var(--color-text);
+  font-weight: $font-weight-medium;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color $transition-fast;
+  border-radius: $radius-md;
 
+  // Underline effect
   &::after {
     content: "";
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    left: $spacing-md;
+    right: $spacing-md;
+    bottom: 4px;
     height: 2px;
-    background: currentColor;
+    background: var(--color-accent);
+    transform: scaleX(0);
     transform-origin: center;
-    transform: scaleX(1);
-    transition: transform 0.6s ease;
+    transition: transform $transition-base;
   }
 
   &:hover {
-    color: $color-accent;
-    
+    color: var(--color-accent);
+
     &::after {
-      transform: scaleX(0);
+      transform: scaleX(1);
     }
+  }
+
+  // Active state
+  &.active,
+  &[aria-current="page"] {
+    color: var(--color-accent);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Menu Toggle
+// ==========================================================================
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: $spacing-sm;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: $z-sticky + 1;
+
+  @media (max-width: $breakpoint-md) {
+    display: flex;
+  }
+
+  .hamburger {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    transition: background $transition-fast;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      transition: transform $transition-fast;
+    }
+
+    &::before {
+      top: -7px;
+    }
+
+    &::after {
+      bottom: -7px;
+    }
+  }
+
+  // Open state
+  &.active .hamburger {
+    background: transparent;
+
+    &::before {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    &::after {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// ==========================================================================
+// Mobile Navigation Overlay
+// ==========================================================================
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg);
+  z-index: $z-fixed;
+  padding-top: 80px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-base, visibility $transition-base;
+
+  @media (max-width: $breakpoint-md) {
+    display: block;
+  }
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-mobile-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-xl;
+  }
+
+  a {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-medium;
+    color: var(--color-text);
+    padding: $spacing-md;
+    transition: color $transition-fast;
+
+    &:hover,
+    &.active {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ==========================================================================
+// Theme Toggle Button
+// ==========================================================================
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: background-color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: var(--color-bg-alt);
+    border-color: var(--color-accent);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text);
+    transition: color $transition-fast;
+  }
+
+  // Sun icon (shown in dark mode)
+  .icon-sun {
+    display: none;
+  }
+
+  // Moon icon (shown in light mode)
+  .icon-moon {
+    display: block;
+  }
+
+  [data-theme="dark"] & {
+    .icon-sun {
+      display: block;
+    }
+
+    .icon-moon {
+      display: none;
+    }
+  }
+}
+
+// ==========================================================================
+// Breadcrumb Navigation
+// ==========================================================================
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-md 0;
+  font-size: $font-size-sm;
+  color: var(--color-text-light);
+
+  a {
+    color: var(--color-text-light);
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  .separator {
+    color: var(--color-text-lighter);
+    margin: 0 $spacing-xs;
+  }
+
+  .current {
+    color: var(--color-text);
+    font-weight: $font-weight-medium;
   }
 }

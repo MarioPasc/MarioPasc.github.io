@@ -1,46 +1,122 @@
-// Home page component styles
+// ==========================================================================
+// Home Page Components
+// ==========================================================================
 @import '../base/variables';
 
+// ==========================================================================
+// Hero Section
+// ==========================================================================
 .hero {
+  position: relative;
   text-align: center;
-  padding: $spacing-xl 0;
-  margin-bottom: $spacing-xl;
-  
+  padding: $spacing-3xl 0;
+  margin-bottom: $spacing-2xl;
+  background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+
+  // Subtle pattern overlay
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   .hero-content {
+    position: relative;
     max-width: $container-sm;
     margin: 0 auto;
-    
+    padding: 0 $spacing-md;
+
     h1 {
-      font-size: 2.5rem;
+      font-size: $font-size-5xl;
       margin-bottom: $spacing-md;
-      
+      background: linear-gradient(135deg, var(--color-text) 0%, var(--color-text-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
       @media (max-width: $breakpoint-md) {
-        font-size: 2rem;
+        font-size: $font-size-4xl;
+      }
+
+      @media (max-width: $breakpoint-sm) {
+        font-size: $font-size-3xl;
       }
     }
-    
+
     .hero-subtitle {
-      font-size: 1.2rem;
-      color: $color-text-light;
+      font-size: $font-size-xl;
+      color: var(--color-text-light);
       margin-bottom: $spacing-lg;
-      
+      line-height: $line-height-relaxed;
+
       @media (max-width: $breakpoint-md) {
-        font-size: 1.1rem;
+        font-size: $font-size-lg;
       }
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: $spacing-md;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   }
 }
 
+// ==========================================================================
+// Home Content Section
+// ==========================================================================
+.home-content {
+  max-width: $container-sm;
+  margin: 0 auto;
+  text-align: left;
+
+  h1 {
+    text-align: center;
+  }
+
+  p {
+    font-size: $font-size-lg;
+    line-height: $line-height-relaxed;
+    color: var(--color-text);
+  }
+}
+
+// ==========================================================================
+// Featured Content Grid
+// ==========================================================================
 .featured-content {
-  margin-bottom: $spacing-xl;
-  
+  margin-bottom: $spacing-2xl;
+
+  .section-title {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    h2 {
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      color: var(--color-text-light);
+    }
+  }
+
   .content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: $spacing-lg;
     max-width: $container-md;
     margin: 0 auto;
-    
+
     @media (max-width: $breakpoint-sm) {
       grid-template-columns: 1fr;
       gap: $spacing-md;
@@ -48,34 +124,138 @@
   }
 }
 
+// ==========================================================================
+// Feature Cards
+// ==========================================================================
 .feature-card {
-  background: $color-background;
-  border: 1px solid $color-border;
-  border-radius: 8px;
-  padding: $spacing-lg;
+  position: relative;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+    border-color: var(--color-accent);
   }
-  
-  h2 {
+
+  // Icon container
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto $spacing-md;
+    background: var(--color-bg-alt);
+    border-radius: $radius-full;
+    color: var(--color-accent);
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  h2, h3 {
     margin-top: 0;
-    margin-bottom: $spacing-md;
-    
+    margin-bottom: $spacing-sm;
+
     a {
-      color: $color-text;
-      
+      color: var(--color-text);
+      text-decoration: none;
+
       &:hover {
-        color: $color-accent;
+        color: var(--color-accent);
       }
     }
   }
-  
+
   p {
-    color: $color-text-light;
+    color: var(--color-text-light);
     margin-bottom: 0;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-top: $spacing-md;
+    color: var(--color-accent);
+    font-weight: $font-weight-medium;
+    transition: gap $transition-fast;
+
+    &:hover {
+      gap: $spacing-sm;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// ==========================================================================
+// Stats Section
+// ==========================================================================
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: $spacing-lg;
+  padding: $spacing-xl 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin: $spacing-2xl 0;
+
+  .stat-item {
+    text-align: center;
+
+    .stat-number {
+      font-size: $font-size-4xl;
+      font-weight: $font-weight-bold;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: $spacing-xs;
+    }
+
+    .stat-label {
+      font-size: $font-size-sm;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+// ==========================================================================
+// Welcome Figure
+// ==========================================================================
+.home-content + figure,
+figure.welcome-image {
+  max-width: 600px;
+  margin: $spacing-2xl auto;
+  text-align: center;
+
+  img {
+    box-shadow: $shadow-lg;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: $shadow-xl;
+    }
+  }
+
+  figcaption {
+    margin-top: $spacing-md;
+    font-size: $font-size-sm;
+    color: var(--color-text-light);
+    font-style: italic;
   }
 }

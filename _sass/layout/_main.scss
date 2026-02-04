@@ -1,14 +1,63 @@
-// Layout styles
+// ==========================================================================
+// Main Layout Styles
+// ==========================================================================
 @import '../base/variables';
 
+// ==========================================================================
+// Page Content Container
+// ==========================================================================
 .page-content {
   flex: 1;
-  padding: $spacing-md;
+  padding: $spacing-xl $spacing-md;
   max-width: $container-md;
   margin: 0 auto;
-  text-align: center;
+  width: 100%;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-lg $spacing-md;
+  }
 }
 
-.page-content .code-block {
-  text-align: left;   // don't center code
+// ==========================================================================
+// Content Alignment
+// ==========================================================================
+.page-content {
+  // Default center alignment for landing pages
+  text-align: center;
+
+  // Code blocks should be left-aligned
+  .code-block,
+  pre {
+    text-align: left;
+  }
+}
+
+// ==========================================================================
+// Section Spacing
+// ==========================================================================
+section {
+  margin-bottom: $spacing-2xl;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ==========================================================================
+// Content Width Variants
+// ==========================================================================
+.content-narrow {
+  max-width: $container-sm;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-wide {
+  max-width: $container-lg;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-full {
+  max-width: none;
 }

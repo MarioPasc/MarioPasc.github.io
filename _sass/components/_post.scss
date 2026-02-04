@@ -1,43 +1,361 @@
-// Post-related component styles
+// ==========================================================================
+// Post/Article Components
+// ==========================================================================
 @import '../base/variables';
 
+// ==========================================================================
+// Post Container
+// ==========================================================================
 .post {
   text-align: left;
+  max-width: $container-sm;
+  margin: 0 auto;
+}
 
-  &-image {
+// ==========================================================================
+// Post Header
+// ==========================================================================
+.post-header {
+  margin-bottom: $spacing-2xl;
+  text-align: center;
+
+  .post-title {
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-md;
+    line-height: $line-height-tight;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-md;
+    color: var(--color-text-light);
+    font-size: $font-size-sm;
+  }
+
+  .post-date {
+    color: var(--color-text-lighter);
+    font-style: italic;
+  }
+
+  .post-reading-time {
+    color: var(--color-text-lighter);
+
+    &::before {
+      content: "·";
+      margin-right: $spacing-md;
+    }
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+  }
+
+  .post-tag {
+    padding: $spacing-xs $spacing-sm;
+    background: var(--color-bg-alt);
+    border-radius: $radius-sm;
+    font-size: $font-size-xs;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color $transition-fast, color $transition-fast;
+
+    &:hover {
+      background: var(--color-accent);
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+
+// ==========================================================================
+// Featured Image
+// ==========================================================================
+.post-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: $spacing-xl;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+}
+
+// ==========================================================================
+// Post Content
+// ==========================================================================
+.post-content {
+  margin-bottom: $spacing-2xl;
+  line-height: $line-height-relaxed;
+
+  // Headings within content
+  h2 {
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid var(--color-border);
+
+    &:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+  }
+
+  h3 {
+    margin-top: $spacing-xl;
+  }
+
+  // Images within content
+  img {
+    display: block;
     max-width: 100%;
     height: auto;
-    margin-bottom: $spacing-md;
-    border-radius: 0.5rem;
+    margin: $spacing-lg auto;
+    border-radius: $radius-md;
+    box-shadow: $shadow-sm;
   }
 
-  &-content {
-    margin-bottom: $spacing-xl;
+  // Figures
+  figure {
+    margin: $spacing-xl 0;
+    text-align: center;
+
+    img {
+      margin: 0 auto $spacing-sm;
+    }
+
+    figcaption {
+      font-size: $font-size-sm;
+      color: var(--color-text-light);
+      font-style: italic;
+    }
   }
 
-  &-footer {
-    margin-top: $spacing-xl;
-    padding: $spacing-lg 0;
-    border-top: 1px solid $color-border;
+  // Links
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: rgba($color-accent, 0.3);
+    text-underline-offset: 2px;
+    transition: text-decoration-color $transition-fast;
+
+    &:hover {
+      text-decoration-color: var(--color-accent);
+    }
+  }
+
+  // Lists
+  ul, ol {
+    margin: $spacing-md 0;
+    padding-left: $spacing-xl;
+
+    li {
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  // Tables
+  table {
+    width: 100%;
+    margin: $spacing-lg 0;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+
+    th, td {
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid var(--color-border);
+      text-align: left;
+    }
+
+    th {
+      background: var(--color-bg-alt);
+      font-weight: $font-weight-semibold;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--color-bg-alt);
+    }
   }
 }
 
+// ==========================================================================
+// Post Footer
+// ==========================================================================
+.post-footer {
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid var(--color-border);
+}
+
+// ==========================================================================
+// Author Info
+// ==========================================================================
 .author-info {
-  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
 
-  p:first-child {
-    margin-bottom: $spacing-sm;
-    font-weight: bold;
+  @media (max-width: $breakpoint-sm) {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .author-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: $radius-full;
+    object-fit: cover;
+  }
+
+  .author-details {
+    flex: 1;
+  }
+
+  .author-name {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-xs;
+  }
+
+  .author-bio {
+    color: var(--color-text-light);
+    font-size: $font-size-sm;
+    line-height: $line-height-base;
   }
 }
 
+// ==========================================================================
+// Contact Info
+// ==========================================================================
 .contact-info {
-  margin-top: $spacing-md;
-  padding-top: $spacing-md;
-  border-top: 1px solid $color-border-light;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid var(--color-border-light);
+
+  a {
+    color: var(--color-accent);
+  }
 }
 
-.post-date {
-  color: $color-text-light;
-  font-style: italic;
+// ==========================================================================
+// Post Navigation
+// ==========================================================================
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid var(--color-border);
+
+  @media (max-width: $breakpoint-sm) {
+    flex-direction: column;
+  }
+
+  .nav-prev,
+  .nav-next {
+    flex: 1;
+    max-width: 45%;
+
+    @media (max-width: $breakpoint-sm) {
+      max-width: 100%;
+    }
+  }
+
+  .nav-next {
+    text-align: right;
+
+    @media (max-width: $breakpoint-sm) {
+      text-align: left;
+    }
+  }
+
+  .nav-label {
+    font-size: $font-size-xs;
+    color: var(--color-text-lighter);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $spacing-xs;
+  }
+
+  .nav-title {
+    color: var(--color-text);
+    font-weight: $font-weight-medium;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ==========================================================================
+// Related Posts
+// ==========================================================================
+.related-posts {
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid var(--color-border);
+
+  h3 {
+    margin-bottom: $spacing-lg;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-lg;
+  }
+
+  .related-post {
+    padding: $spacing-md;
+    background: var(--color-bg-alt);
+    border-radius: $radius-md;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-sm;
+    }
+
+    .related-title {
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-xs;
+
+      a {
+        color: var(--color-text);
+
+        &:hover {
+          color: var(--color-accent);
+          text-decoration: none;
+        }
+      }
+    }
+
+    .related-date {
+      font-size: $font-size-sm;
+      color: var(--color-text-lighter);
+    }
+  }
 }

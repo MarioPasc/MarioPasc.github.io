@@ -1,46 +1,154 @@
-// Base reset and typography
+// ==========================================================================
+// CSS Reset & Base Styles
+// ==========================================================================
 @import 'variables';
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
 
-* {
+// ==========================================================================
+// Box Sizing
+// ==========================================================================
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-  color: $color-accent; // Blue color for links
-  
-  &:hover {
-    text-decoration: underline;
-    opacity: 0.8; // Slightly faded on hover
+// ==========================================================================
+// Root & Body
+// ==========================================================================
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color $transition-base, color $transition-base;
+}
+
+// ==========================================================================
+// Focus States (Accessibility)
+// ==========================================================================
+
+// Default focus outline
+:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// Better focus for keyboard navigation only
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+// Skip link for accessibility
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: $spacing-sm $spacing-md;
+  background: var(--color-accent);
+  color: white;
+  z-index: $z-tooltip;
+  transition: top $transition-fast;
+
+  &:focus {
+    top: 0;
   }
 }
 
-// Exclude navigation and footer links from general link styling
-.nav-links a,
-.social-links a {
-  color: inherit; // Use the color defined in their specific components
-  
-  &:hover {
-    text-decoration: none; // Remove underline
-    opacity: 1; // Remove opacity change
-  }
-}
-
+// ==========================================================================
+// Lists
+// ==========================================================================
 ul, ol {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+// Content lists (restore styles)
+.content ul,
+.content ol,
+article ul,
+article ol,
+.post-content ul,
+.post-content ol {
+  list-style: revert;
+  margin: 0 0 $spacing-md 0;
+  padding-left: $spacing-xl;
+}
+
+// ==========================================================================
+// Images
+// ==========================================================================
 img {
   max-width: 100%;
   height: auto;
-  border-radius: 0.5rem;
+  border-radius: $radius-md;
+  display: block;
+
+  // Lazy loading fade-in
+  &[loading="lazy"] {
+    opacity: 0;
+    transition: opacity $transition-base;
+
+    &.loaded {
+      opacity: 1;
+    }
+  }
+}
+
+// Image hover effect
+.img-hover {
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: $shadow-lg;
+  }
+}
+
+// ==========================================================================
+// Navigation & Footer Link Overrides
+// ==========================================================================
+.nav-links a,
+.social-links a {
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+}
+
+// ==========================================================================
+// Buttons Reset
+// ==========================================================================
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+// ==========================================================================
+// Reduced Motion
+// ==========================================================================
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

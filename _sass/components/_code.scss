@@ -1,93 +1,305 @@
-// Code block component styles (self-contained, safe if site variables are missing)
+// ==========================================================================
+// Code Block Components
+// ==========================================================================
+@import '../base/variables';
 
-// Fallback variables (overridden if already defined elsewhere)
-$spacing-sm: 0.5rem !default;
-$spacing-md: 0.75rem !default;
-$color-code-bg: #0b1021 !default;         // dark-ish background
-$color-border: #2b2f3a !default;
-$color-border-light: #3a3f4b !default;
-$color-code-fg: #000000 !default;         // main code color
-$color-code-keyword: #c678dd !default;    // purple
-$color-code-string: #98c379 !default;     // green
-$color-code-comment: #5c6370 !default;    // grey
-$color-code-number: #d19a66 !default;     // orange
-$color-code-builtin: #61afef !default;    // blue
-
-// Shared base styles for both custom blocks and fenced pre blocks
-%code-container {
-  background: $color-code-bg;
-  border: 1px solid $color-border;
-  border-radius: 4px;
-  margin: $spacing-md 0;
-  overflow-x: auto;
-  position: relative;
-}
-
-%code-content {
-  display: block;
-  padding: $spacing-md;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: $color-code-fg;
-  white-space: pre; // preserve indentation and newlines
-  tab-size: 4;
-}
-
-%lang-badge {
-  content: attr(data-lang);
-  position: absolute;
-  top: 0.25rem;
-  right: 0.4rem;
-  font-size: 0.65rem;
-  opacity: 0.75;
-  padding: 0.15rem 0.35rem;
-  border-radius: 3px;
-  border: 1px solid $color-border-light;
-  text-transform: uppercase;
-  pointer-events: none;
-  background: rgba(0,0,0,0.15);
-}
-
-.code-block {
-  @extend %code-container;
-
-  // The <code> is block-level and preserves whitespace exactly
-  code {
-    @extend %code-content;
-  }
-
-  // Optional top-right language tag (if you ever add one)
-  &::after {
-    @extend %lang-badge;
-  }
-
-  // Token colours
-  .keyword   { color: $color-code-keyword; font-weight: 600; }
-  .string    { color: $color-code-string; }
-  .comment   { color: $color-code-comment; font-style: italic; }
-  .number    { color: $color-code-number; }
-  .built-in  { color: $color-code-builtin; font-weight: 600; }
-  .preprocessor { color: $color-code-keyword; }
-}
-
-// Fenced code blocks from Markdown: <pre><code class="language-xxx"></code></pre>
+// ==========================================================================
+// Code Block Container
+// ==========================================================================
+.code-block,
 pre {
-  @extend %code-container;
+  position: relative;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-lg;
+  margin: $spacing-lg 0;
+  overflow: hidden;
+
+  // Language badge
+  &[data-lang]::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $spacing-xs $spacing-sm;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-lighter);
+    font-size: $font-size-xs;
+    font-family: $font-family-base;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom-left-radius: $radius-md;
+    border-left: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
 
   code {
-    @extend %code-content;
+    display: block;
+    padding: $spacing-lg;
+    padding-top: $spacing-xl; // Space for language badge
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: $font-size-sm;
+    line-height: 1.6;
+    color: #e4e4e7;
+    white-space: pre;
+    overflow-x: auto;
+    tab-size: 2;
+
+    // Scrollbar styling
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Copy Button
+// ==========================================================================
+.code-copy-btn {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-md;
+  color: #a1a1aa;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity $transition-fast, background-color $transition-fast, color $transition-fast;
+
+  svg {
+    width: 18px;
+    height: 18px;
   }
 
-  &::after {
-    @extend %lang-badge;
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
   }
 
-  // Token colours inside pre
-  .keyword   { color: $color-code-keyword; font-weight: 600; }
-  .string    { color: $color-code-string; }
-  .comment   { color: $color-code-comment; font-style: italic; }
-  .number    { color: $color-code-number; }
-  .built-in  { color: $color-code-builtin; font-weight: 600; }
-  .preprocessor { color: $color-code-keyword; }
+  // Show on hover
+  .code-block:hover &,
+  pre:hover & {
+    opacity: 1;
+  }
+
+  // Copied state
+  &.copied {
+    background: $color-success;
+    color: white;
+    opacity: 1;
+
+    svg {
+      animation: checkmark 0.3s ease-out;
+    }
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// ==========================================================================
+// Syntax Highlighting Tokens
+// ==========================================================================
+.code-block,
+pre {
+  .keyword {
+    color: $color-code-keyword;
+    font-weight: $font-weight-medium;
+  }
+
+  .string {
+    color: $color-code-string;
+  }
+
+  .comment {
+    color: $color-code-comment;
+    font-style: italic;
+  }
+
+  .number {
+    color: $color-code-number;
+  }
+
+  .function {
+    color: $color-code-function;
+  }
+
+  .built-in,
+  .builtin {
+    color: $color-code-builtin;
+  }
+
+  .preprocessor {
+    color: $color-code-keyword;
+  }
+
+  .operator {
+    color: #89ddff;
+  }
+
+  .punctuation {
+    color: #89ddff;
+  }
+
+  .variable {
+    color: #f78c6c;
+  }
+
+  .constant {
+    color: #f78c6c;
+  }
+
+  .class-name {
+    color: #ffcb6b;
+  }
+
+  .attr-name {
+    color: #ffcb6b;
+  }
+
+  .attr-value {
+    color: $color-code-string;
+  }
+
+  .tag {
+    color: #f07178;
+  }
+}
+
+// ==========================================================================
+// Line Numbers (Optional)
+// ==========================================================================
+.code-block.line-numbers,
+pre.line-numbers {
+  padding-left: 3.5em;
+
+  code {
+    counter-reset: line;
+  }
+
+  code .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 2.5em;
+    margin-left: -3.5em;
+    margin-right: 1em;
+    padding-right: 0.5em;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+// ==========================================================================
+// Line Highlighting
+// ==========================================================================
+.code-block .line.highlight,
+pre .line.highlight {
+  background: rgba($color-accent, 0.15);
+  margin: 0 (-$spacing-lg);
+  padding: 0 $spacing-lg;
+  display: block;
+}
+
+// ==========================================================================
+// Inline Code
+// ==========================================================================
+:not(pre) > code {
+  padding: 0.2em 0.4em;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-sm;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.875em;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+// ==========================================================================
+// Code Block Header (for file names)
+// ==========================================================================
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--color-border);
+
+  .code-filename {
+    font-size: $font-size-sm;
+    color: var(--color-text-light);
+    font-family: $font-family-base;
+  }
+
+  .code-language {
+    font-size: $font-size-xs;
+    color: var(--color-text-lighter);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ==========================================================================
+// Terminal/Shell Style
+// ==========================================================================
+.code-block.terminal,
+pre.terminal {
+  background: #1a1a1a;
+
+  &::before {
+    content: "";
+    display: flex;
+    gap: 6px;
+    padding: $spacing-sm $spacing-md;
+    background: #2d2d2d;
+    border-bottom: 1px solid #3d3d3d;
+  }
+
+  &::before {
+    content: "Terminal";
+    color: #888;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  code {
+    color: #f8f8f2;
+
+    .prompt {
+      color: $color-success;
+      user-select: none;
+    }
+  }
 }

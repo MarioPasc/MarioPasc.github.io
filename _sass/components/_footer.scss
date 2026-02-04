@@ -1,42 +1,164 @@
-// Footer component styles
+// ==========================================================================
+// Footer Component
+// ==========================================================================
 @import '../base/variables';
 
+// ==========================================================================
+// Main Footer
+// ==========================================================================
 .site-footer {
-  background: $color-background;
-  text-align: center;
-  padding: $spacing-md 0;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  padding: $spacing-xl 0;
+  margin-top: auto;
 }
 
+.footer-content {
+  max-width: $container-md;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  text-align: center;
+}
+
+// ==========================================================================
+// Social Links
+// ==========================================================================
 .social-links {
   display: flex;
   justify-content: center;
-  gap: $spacing-xl;
+  flex-wrap: wrap;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
 }
 
 .social-links a {
-  color: $color-primary;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: var(--color-text);
+  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color $transition-fast, background-color $transition-fast;
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background: currentColor;
-    transform-origin: center;
-    transform: scaleX(1);
-    transition: transform 0.3s ease;
+  // Icon
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: transform $transition-fast;
   }
 
   &:hover {
-    color: $color-accent;
-    
-    &::after {
-      transform: scaleX(0);
+    color: var(--color-accent);
+    background: var(--color-bg-alt);
+
+    svg {
+      transform: scale(1.1);
     }
+  }
+
+  // Underline effect
+  &::after {
+    content: "";
+    position: absolute;
+    left: $spacing-md;
+    right: $spacing-md;
+    bottom: 4px;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform $transition-base;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+// ==========================================================================
+// Footer Navigation
+// ==========================================================================
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+
+  a {
+    color: var(--color-text-light);
+    font-size: $font-size-sm;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ==========================================================================
+// Copyright
+// ==========================================================================
+.footer-copyright {
+  font-size: $font-size-sm;
+  color: var(--color-text-lighter);
+
+  a {
+    color: var(--color-text-light);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ==========================================================================
+// Back to Top Button
+// ==========================================================================
+.back-to-top {
+  position: fixed;
+  bottom: $spacing-xl;
+  right: $spacing-xl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity $transition-base, visibility $transition-base, transform $transition-base, background-color $transition-fast;
+  box-shadow: $shadow-lg;
+  z-index: $z-fixed;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    background: $color-accent-dark;
+    transform: translateY(-2px);
+    box-shadow: $shadow-xl;
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    width: 44px;
+    height: 44px;
   }
 }

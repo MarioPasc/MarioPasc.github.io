@@ -1,23 +1,14 @@
 ---
-# front-matter fence so Jekyll runs Sass on this file
+# Custom overrides - Jekyll will process this
 ---
 
-/* --------------------------------------------------------------------------
-   Override or add styles *after* the theme’s compiled CSS.
-   We do NOT @import the theme here – GitHub Pages already ships it, and
-   importing “{{ site.theme }}” is what broke the build.            :contentReference[oaicite:7]{index=7}
------------------------------------------------------------------------------*/
+/* ==========================================================================
+   Custom Overrides
+   Add any site-specific style overrides here.
+   These styles load after the main stylesheet.
+   ========================================================================== */
 
-/* ---- Colours ------------------------------------------------------------ */
-$brand-accent: #007acc;
-
-/* ---- Typography --------------------------------------------------------- */
-body            { font-family: 'Inter', sans-serif; }
-h1, h2, h3, h4  { letter-spacing: -.5px; }
-
-/* ---- Navigation --------------------------------------------------------- */
-.nav__item      { padding: .25rem .75rem; transition: color .3s ease; }
-.nav__item:hover{ color: $brand-accent; }
-
-/* ---- Images ------------------------------------------------------------- */
-img { border-radius: .5rem; }
+/* Example: Custom accent color override */
+/* :root {
+  --color-accent: #your-color;
+} */

@@ -30,14 +30,11 @@ body {
 // ==========================================================================
 // Focus States (Accessibility)
 // ==========================================================================
-
-// Default focus outline
 :focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-// Better focus for keyboard navigation only
 :focus:not(:focus-visible) {
   outline: none;
 }
@@ -47,19 +44,22 @@ body {
   outline-offset: 2px;
 }
 
-// Skip link for accessibility
+// ==========================================================================
+// Skip Link (must be hidden by default)
+// ==========================================================================
 .skip-link {
-  position: absolute;
-  top: -100%;
-  left: 0;
+  position: absolute !important;
+  top: -100px !important;
+  left: 0 !important;
   padding: $spacing-sm $spacing-md;
   background: var(--color-accent);
-  color: white;
-  z-index: $z-tooltip;
+  color: white !important;
+  z-index: 9999;
+  text-decoration: none;
   transition: top $transition-fast;
 
   &:focus {
-    top: 0;
+    top: 0 !important;
   }
 }
 
@@ -92,26 +92,6 @@ img {
   height: auto;
   border-radius: $radius-md;
   display: block;
-
-  // Lazy loading fade-in
-  &[loading="lazy"] {
-    opacity: 0;
-    transition: opacity $transition-base;
-
-    &.loaded {
-      opacity: 1;
-    }
-  }
-}
-
-// Image hover effect
-.img-hover {
-  transition: transform $transition-base, box-shadow $transition-base;
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: $shadow-lg;
-  }
 }
 
 // ==========================================================================

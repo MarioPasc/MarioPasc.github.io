@@ -7,44 +7,46 @@
 // Main Navigation
 // ==========================================================================
 .site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-lg;
   background: var(--color-bg);
-  padding: $spacing-sm 0;
+  padding: $spacing-sm $spacing-md;
   position: sticky;
   top: 0;
   z-index: $z-sticky;
   border-bottom: 1px solid var(--color-border);
   transition: background-color $transition-base, box-shadow $transition-base;
 
-  // Shadow when scrolled
   &.scrolled {
     box-shadow: $shadow-sm;
   }
 }
 
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: $container-md;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
-}
-
 // ==========================================================================
-// Nav Links (Desktop)
+// Nav Links
 // ==========================================================================
 .nav-links {
   display: flex;
   justify-content: center;
   gap: $spacing-lg;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
   @media (max-width: $breakpoint-md) {
-    display: none;
-
-    &.nav-open {
-      display: flex;
-    }
+    gap: $spacing-md;
   }
+
+  @media (max-width: $breakpoint-sm) {
+    gap: $spacing-sm;
+  }
+}
+
+.nav-links li {
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
@@ -55,6 +57,12 @@
   position: relative;
   transition: color $transition-fast;
   border-radius: $radius-md;
+  text-decoration: none;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-sm;
+    font-size: $font-size-sm;
+  }
 
   // Underline effect
   &::after {
@@ -68,10 +76,16 @@
     transform: scaleX(0);
     transform-origin: center;
     transition: transform $transition-base;
+
+    @media (max-width: $breakpoint-sm) {
+      left: $spacing-sm;
+      right: $spacing-sm;
+    }
   }
 
   &:hover {
     color: var(--color-accent);
+    text-decoration: none;
 
     &::after {
       transform: scaleX(1);
@@ -90,63 +104,58 @@
 }
 
 // ==========================================================================
-// Mobile Menu Toggle
+// Theme Toggle Button
 // ==========================================================================
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
+.theme-toggle {
+  display: flex;
   align-items: center;
-  width: 44px;
-  height: 44px;
-  padding: $spacing-sm;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   background: transparent;
-  border: none;
+  border: 1px solid var(--color-border);
+  border-radius: $radius-full;
   cursor: pointer;
-  z-index: $z-sticky + 1;
+  transition: background-color $transition-fast, border-color $transition-fast;
+  flex-shrink: 0;
 
-  @media (max-width: $breakpoint-md) {
-    display: flex;
+  &:hover {
+    background: var(--color-bg-alt);
+    border-color: var(--color-accent);
   }
 
-  .hamburger {
-    position: relative;
-    width: 24px;
-    height: 2px;
-    background: var(--color-text);
-    transition: background $transition-fast;
-
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 24px;
-      height: 2px;
-      background: var(--color-text);
-      transition: transform $transition-fast;
-    }
-
-    &::before {
-      top: -7px;
-    }
-
-    &::after {
-      bottom: -7px;
-    }
+  &:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 
-  // Open state
-  &.active .hamburger {
-    background: transparent;
+  svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-text);
+    transition: color $transition-fast;
+  }
 
-    &::before {
-      transform: translateY(7px) rotate(45deg);
-    }
+  // Sun icon (shown in dark mode)
+  .icon-sun {
+    display: none;
+  }
 
-    &::after {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+  // Moon icon (shown in light mode)
+  .icon-moon {
+    display: block;
+  }
+}
+
+// Dark mode icon swap
+[data-theme="dark"] .theme-toggle {
+  .icon-sun {
+    display: block;
+  }
+
+  .icon-moon {
+    display: none;
   }
 }
 
@@ -167,10 +176,6 @@
   visibility: hidden;
   transition: opacity $transition-base, visibility $transition-base;
 
-  @media (max-width: $breakpoint-md) {
-    display: block;
-  }
-
   &.open {
     opacity: 1;
     visibility: visible;
@@ -190,59 +195,11 @@
     color: var(--color-text);
     padding: $spacing-md;
     transition: color $transition-fast;
+    text-decoration: none;
 
     &:hover,
     &.active {
       color: var(--color-accent);
-    }
-  }
-}
-
-// ==========================================================================
-// Theme Toggle Button
-// ==========================================================================
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: $radius-full;
-  cursor: pointer;
-  transition: background-color $transition-fast, border-color $transition-fast;
-
-  &:hover {
-    background: var(--color-bg-alt);
-    border-color: var(--color-accent);
-  }
-
-  svg {
-    width: 20px;
-    height: 20px;
-    color: var(--color-text);
-    transition: color $transition-fast;
-  }
-
-  // Sun icon (shown in dark mode)
-  .icon-sun {
-    display: none;
-  }
-
-  // Moon icon (shown in light mode)
-  .icon-moon {
-    display: block;
-  }
-
-  [data-theme="dark"] & {
-    .icon-sun {
-      display: block;
-    }
-
-    .icon-moon {
-      display: none;
     }
   }
 }
@@ -261,6 +218,7 @@
   a {
     color: var(--color-text-light);
     transition: color $transition-fast;
+    text-decoration: none;
 
     &:hover {
       color: var(--color-accent);

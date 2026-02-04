@@ -77,7 +77,8 @@ plugins:
   - jekyll-remote-theme                          # whitelisted on Pages :contentReference[oaicite:4]{index=4}
   - jekyll-paginate
   - jekyll-sitemap
-sass: 
+sass:
+  sass_dir: _sass
   style: compressed
 google_analytics: ""                             # add your UA / G-tag or leave blank
 exclude: [vendor, node_modules]

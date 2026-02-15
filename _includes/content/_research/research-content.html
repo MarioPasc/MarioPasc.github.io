@@ -7,12 +7,15 @@
       </p>
       <p>
         I spent my early days playing with Legos and memorizing the Star Wars saga. When I was old enough, I received my first Lego Mindstorms set, which was truly a game changer. Through it, I learned to program basic instructions, read sensor data, and debug my numerous mistakes. Most importantly, it sparked a fundamental question that continues to drive my research today: 
-      <p>
-        <strong>How do machines interact with our world?</strong>
-      </p>
       </p>
       <p>
-        I'm currently enrolled in a Bioinformatics B.Sc. at the University of Málaga. Thanks to opportunities provided by many brilliant professors, I have been fortunate to conduct research in Computer Vision for Biomedical Applications since my third year as an undergraduate, while spending much of my free time exploring robotics, genomic analysis, and mathematics.
+        <strong>How can we teach machines to see and understand the world the way we do?</strong>
+      </p>
+      <p>
+        I'm currently enrolled in a Bioinformatics B.Sc. at the University of Málaga, where I've been conducting research in Computer Vision for Biomedical Applications since my third year. My work sits at the intersection of generative modeling and medical imaging&mdash;I'm drawn to understanding how learned representations and latent spaces can capture the structure of complex biomedical data. Lately, I've been exploring diffusion models, mean flow, and other generative frameworks as tools for tasks where labeled data is scarce and the stakes are high, such as lesion detection in angiography and MRI synthesis for neurological conditions.
+      </p>
+      <p>
+        Outside of my main research, I enjoy spending time going for hikes, playing tenis, and reading math books.
       </p>
     </div>
     
@@ -85,6 +88,64 @@
           <summary>Personal Comments</summary>
           <p>
             My first scientific publication. Leaving the statistical analysis aside, the code provides an easy tool that is able to integrate the hyperparameter optimization of any YOLO variant using the <a href="https://optuna.readthedocs.io/en/stable/"><em>Optuna</em></a> framework. You only have to define your trainer at <code>optimization/engine/trainers</code>. The script <code>optimization/engine/hpo.py</code> will catch your trainer class and optimize it with the configuration you defined (see example at <code>optimization/cfg/files/picasso/yaml</code>), where you must write your trainer class in the <code>model_source</code> entry.
+          </p>
+        </details>
+      </article>
+
+      <article class="publication">
+        <p class="citation">
+          M. Pascual-González, A. Jiménez-Partinen, R. M. Luque-Baena, F. Nagib-Raya, and E. López-Rubio, "SLIM-Diff: Shared Latent Image-Mask Diffusion with Lp loss for Data-Scarce Epilepsy FLAIR MRI," <em>arXiv preprint arXiv:2602.03372</em>, 2026.
+        </p>
+        
+        <div class="pub-actions">
+          <a class="pub-link" href="https://arxiv.org/abs/2602.03372" target="_blank">Paper</a>
+          <a class="pub-link" href="https://github.com/MarioPasc/slim-diff" target="_blank">Code</a>
+          <a class="pub-link" href="https://zenodo.org/records/18466775" target="_blank">Zenodo</a>
+          <a class="pub-link" href="https://pypi.org/project/slim-diff/" target="_blank">PyPI</a>
+          <button class="copy-ref" data-ref='@misc{pascualgonzález2026slimdiffsharedlatentimagemask,
+  title={SLIM-Diff: Shared Latent Image-Mask Diffusion with Lp loss for Data-Scarce Epilepsy FLAIR MRI},
+  author={Mario Pascual-González and Ariadna Jiménez-Partinen and R. M. Luque-Baena and Fátima Nagib-Raya and Ezequiel López-Rubio},
+  year={2026},
+  eprint={2602.03372},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2602.03372}
+}'>Copy citation</button>
+        </div>
+        
+        <details class="pub-comments">
+          <summary>Personal Comments</summary>
+          <p>
+            Preprint, sent to the IEEE ICIP 2026 conference. The code provides a PyPI package that allows you to easily train your own diffusion model with the SLIM-Diff architecture, which is especially designed for data-scarce image-to-image translation tasks. The paper includes a detailed description of the architecture and the training procedure, as well as an extensive ablation study on the different components of the model.
+          </p>
+        </details>
+      </article>
+
+      <article class="publication">
+        <p class="citation">
+          M. Pascual-González, E. López-Rubio, F. Sendra-Portero, and A. Pérez-Lara, "Optimizando el preprocesamiento de la imagen por resonancia magnética: estimación ciega de ruido con campos aleatorios gaussianos," in <em>III Congreso Nacional de Estudiantes de Radiología y Medicina Física</em>, F. Sendra Portero, D. Domínguez Pinos, T. Rudolphi Solero, L. de la Peña Fernández, and M. J. Ruiz Gómez, Eds. Málaga, España: Asociación de Profesores Universitarios de Radiología y Medicina Física (APURF), 2025, pp. 5–6. ISBN 978-1-300-31039-6.
+        </p>
+        
+        <div class="pub-actions">
+          <a class="pub-link" href="https://www.biznaga.org/SLbiblio/2025-libro-III-congreso-estudiantes-APURF.pdf" target="_blank">Paper</a>
+          <button class="copy-ref" data-ref='@inproceedings{PascualGonzalez2025,
+  author={Mario Pascual González and Ezequiel López Rubio and Francisco Sendra Portero and Almudena Pérez Lara},
+  title={Optimizando el Preprocesamiento de la Imagen por Resonancia Magnética: Estimación Ciega de Ruido con Campos Aleatorios Gaussianos},
+  booktitle={III Congreso Nacional de Estudiantes de Radiología y Medicina Física},
+  editor={Francisco Sendra Portero and Dolores Domínguez Pinos and Teodoro Rudolphi Solero and Lourdes de la Peña Fernández and Miguel José Ruiz Gómez},
+  year={2025},
+  pages={5--6},
+  publisher={Asociación de Profesores Universitarios de Radiología y Medicina Física (APURF)},
+  address={Málaga, España},
+  isbn={978-1-300-31039-6},
+  organization={Universidad de Málaga}
+}'>Copy citation</button>
+        </div>
+        
+        <details class="pub-comments">
+          <summary>Personal Comments</summary>
+          <p>
+            This is a conference paper that I presented at the III Congreso Nacional de Estudiantes de Radiología y Medicina Física, held in Málaga in 2025. The paper describes a method for blind noise estimation in MRI images using Gaussian random fields, which can be used to optimize the preprocessing of MRI images for subsequent analysis. The code is not publicly available, but the paper provides a detailed description of the method and the results obtained on a dataset of MRI images, this was a "fun" experiment, where I learned a lot about statistical properties of MRI noise and its physics.
           </p>
         </details>
       </article>

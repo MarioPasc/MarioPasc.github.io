@@ -2,17 +2,14 @@
 // Navigation Component
 // ==========================================================================
 @import '../base/variables';
+@import '../base/typography';
 
 // ==========================================================================
 // Main Navigation
 // ==========================================================================
 .site-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $spacing-lg;
   background: var(--color-bg);
-  padding: $spacing-sm $spacing-md;
+  padding: 0 $spacing-lg;
   position: sticky;
   top: 0;
   z-index: $z-sticky;
@@ -24,23 +21,45 @@
   }
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: $container-lg;
+  margin: 0 auto;
+  height: 60px;
+}
+
+// ==========================================================================
+// Nav Brand
+// ==========================================================================
+.nav-brand {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xl;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+}
+
 // ==========================================================================
 // Nav Links
 // ==========================================================================
 .nav-links {
   display: flex;
-  justify-content: center;
-  gap: $spacing-lg;
+  gap: $spacing-sm;
   margin: 0;
   padding: 0;
   list-style: none;
 
   @media (max-width: $breakpoint-md) {
-    gap: $spacing-md;
-  }
-
-  @media (max-width: $breakpoint-sm) {
-    gap: $spacing-sm;
+    display: none;
   }
 }
 
@@ -52,19 +71,15 @@
 .nav-links a {
   display: block;
   padding: $spacing-sm $spacing-md;
-  color: var(--color-text);
+  color: var(--color-text-light);
   font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   position: relative;
   transition: color $transition-fast;
-  border-radius: $radius-md;
   text-decoration: none;
 
-  @media (max-width: $breakpoint-sm) {
-    padding: $spacing-sm;
-    font-size: $font-size-sm;
-  }
-
-  // Underline effect
   &::after {
     content: "";
     position: absolute;
@@ -76,11 +91,6 @@
     transform: scaleX(0);
     transform-origin: center;
     transition: transform $transition-base;
-
-    @media (max-width: $breakpoint-sm) {
-      left: $spacing-sm;
-      right: $spacing-sm;
-    }
   }
 
   &:hover {
@@ -92,7 +102,6 @@
     }
   }
 
-  // Active state
   &.active,
   &[aria-current="page"] {
     color: var(--color-accent);
@@ -104,14 +113,23 @@
 }
 
 // ==========================================================================
+// Nav Actions (theme toggle + hamburger)
+// ==========================================================================
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// ==========================================================================
 // Theme Toggle Button
 // ==========================================================================
 .theme-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   background: transparent;
   border: 1px solid var(--color-border);
@@ -125,37 +143,61 @@
     border-color: var(--color-accent);
   }
 
-  &:focus {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
-
   svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     color: var(--color-text);
     transition: color $transition-fast;
   }
 
-  // Sun icon (shown in dark mode)
-  .icon-sun {
-    display: none;
-  }
-
-  // Moon icon (shown in light mode)
-  .icon-moon {
-    display: block;
-  }
+  .icon-sun { display: none; }
+  .icon-moon { display: block; }
 }
 
-// Dark mode icon swap
 [data-theme="dark"] .theme-toggle {
-  .icon-sun {
-    display: block;
+  .icon-sun { display: block; }
+  .icon-moon { display: none; }
+}
+
+// ==========================================================================
+// Hamburger Menu Button
+// ==========================================================================
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+
+  @media (max-width: $breakpoint-md) {
+    display: flex;
   }
 
-  .icon-moon {
-    display: none;
+  .hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 1px;
+    transition: transform $transition-base, opacity $transition-fast;
+  }
+
+  &.active {
+    .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
   }
 }
 
@@ -177,6 +219,7 @@
   transition: opacity $transition-base, visibility $transition-base;
 
   &.open {
+    display: block;
     opacity: 1;
     visibility: visible;
   }
@@ -190,6 +233,7 @@
   }
 
   a {
+    font-family: $font-family-heading;
     font-size: $font-size-2xl;
     font-weight: $font-weight-medium;
     color: var(--color-text);

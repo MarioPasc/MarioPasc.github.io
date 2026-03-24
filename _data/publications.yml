@@ -1,0 +1,74 @@
+- id: pascualgonzalez2026slimdiff
+  title: "SLIM-Diff: Shared Latent Image-Mask Diffusion with Lp loss for Data-Scarce Epilepsy FLAIR MRI"
+  authors: "M. Pascual-González, A. Jiménez-Partinen, R. M. Luque-Baena, F. Nagib-Raya, E. López-Rubio"
+  venue: "arXiv preprint arXiv:2602.03372"
+  year: 2026
+  doi: ""
+  arxiv: "2602.03372"
+  paper: ""
+  github: "https://github.com/MarioPasc/slim-diff"
+  zenodo: "https://zenodo.org/records/18466775"
+  pypi: "https://pypi.org/project/slim-diff/"
+  featured: true
+  bibtex: |
+    @misc{pascualgonzález2026slimdiffsharedlatentimagemask,
+      title={SLIM-Diff: Shared Latent Image-Mask Diffusion with Lp loss for Data-Scarce Epilepsy FLAIR MRI},
+      author={Mario Pascual-González and Ariadna Jiménez-Partinen and R. M. Luque-Baena and Fátima Nagib-Raya and Ezequiel López-Rubio},
+      year={2026},
+      eprint={2602.03372},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2602.03372}
+    }
+  comments: "Preprint, sent to the IEEE ICIP 2026 conference. The code provides a PyPI package that allows you to easily train your own diffusion model with the SLIM-Diff architecture, which is especially designed for data-scarce image-to-image translation tasks. The paper includes a detailed description of the architecture and the training procedure, as well as an extensive ablation study on the different components of the model."
+
+- id: pascual2025hyperparameter
+  title: "Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment"
+  authors: "M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, A. Ortega-Gómez"
+  venue: "Computers in Biology and Medicine"
+  year: 2025
+  doi: "10.1016/j.compbiomed.2025.110697"
+  arxiv: ""
+  paper: ""
+  github: "https://github.com/MarioPasc/Coronary_Angiography_Detection"
+  zenodo: ""
+  pypi: ""
+  featured: true
+  bibtex: |
+    @article{pascual2025hyperparameter,
+      title={Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment},
+      author={Pascual-Gonzalez, Mario and Jimenez-Partinen, Ariadna and Palomo, Esteban J and Lopez-Rubio, Ezequiel and Ortega-Gomez, Almudena},
+      journal={Computers in Biology and Medicine},
+      volume={196},
+      pages={110697},
+      year={2025},
+      publisher={Elsevier}
+    }
+  comments: "My first scientific publication. Leaving the statistical analysis aside, the code provides an easy tool that is able to integrate the hyperparameter optimization of any YOLO variant using the <a href=\"https://optuna.readthedocs.io/en/stable/\"><em>Optuna</em></a> framework. You only have to define your trainer at <code>optimization/engine/trainers</code>. The script <code>optimization/engine/hpo.py</code> will catch your trainer class and optimize it with the configuration you defined (see example at <code>optimization/cfg/files/picasso/yaml</code>), where you must write your trainer class in the <code>model_source</code> entry."
+
+- id: pascualgonzalez2025mri
+  title: "Optimizando el preprocesamiento de la imagen por resonancia magnética: estimación ciega de ruido con campos aleatorios gaussianos"
+  authors: "M. Pascual-González, E. López-Rubio, F. Sendra-Portero, A. Pérez-Lara"
+  venue: "III Congreso Nacional de Estudiantes de Radiología y Medicina Física"
+  year: 2025
+  doi: ""
+  arxiv: ""
+  paper: "https://www.biznaga.org/SLbiblio/2025-libro-III-congreso-estudiantes-APURF.pdf"
+  github: ""
+  zenodo: ""
+  pypi: ""
+  featured: false
+  bibtex: |
+    @inproceedings{PascualGonzalez2025,
+      author={Mario Pascual González and Ezequiel López Rubio and Francisco Sendra Portero and Almudena Pérez Lara},
+      title={Optimizando el Preprocesamiento de la Imagen por Resonancia Magnética: Estimación Ciega de Ruido con Campos Aleatorios Gaussianos},
+      booktitle={III Congreso Nacional de Estudiantes de Radiología y Medicina Física},
+      editor={Francisco Sendra Portero and Dolores Domínguez Pinos and Teodoro Rudolphi Solero and Lourdes de la Peña Fernández and Miguel José Ruiz Gómez},
+      year={2025},
+      pages={5--6},
+      publisher={Asociación de Profesores Universitarios de Radiología y Medicina Física (APURF)},
+      address={Málaga, España},
+      isbn={978-1-300-31039-6},
+      organization={Universidad de Málaga}
+    }
+  comments: "This is a conference paper that I presented at the III Congreso Nacional de Estudiantes de Radiología y Medicina Física, held in Málaga in 2025. The paper describes a method for blind noise estimation in MRI images using Gaussian random fields, which can be used to optimize the preprocessing of MRI images for subsequent analysis. The code is not publicly available, but the paper provides a detailed description of the method and the results obtained on a dataset of MRI images, this was a \"fun\" experiment, where I learned a lot about statistical properties of MRI noise and its physics."

@@ -1,14 +1,27 @@
 @import '../base/variables';
+@import '../base/typography';
 
 .about-content {
-  text-align: left; // override global center in .page-content
+  max-width: $container-sm;
+  margin: 0 auto;
+  text-align: left;
+
+  h1 {
+    font-family: $font-family-heading;
+    text-align: center;
+    margin-bottom: $spacing-xl;
+  }
+
+  p {
+    line-height: $line-height-relaxed;
+  }
 
   .intro-content,
   .sub-text {
     display: flex;
     align-items: flex-start;
-    gap: $spacing-xl;
-    margin-bottom: $spacing-xl;
+    gap: $spacing-2xl;
+    margin-bottom: $spacing-2xl;
 
     @media (max-width: $breakpoint-md) {
       flex-direction: column;
@@ -23,8 +36,8 @@
 
   .intro-image,
   .sub-text-image {
-  flex: 0 0 260px;
-  max-width: 260px;
+    flex: 0 0 280px;
+    max-width: 280px;
 
     @media (max-width: $breakpoint-md) {
       flex: none;
@@ -37,33 +50,20 @@
       margin: 0;
 
       img {
-  width: 100%;
-  height: auto;
-        border-radius: 8px;
+        width: 100%;
+        height: auto;
+        border-radius: $radius-lg;
+        box-shadow: $shadow-md;
         display: block;
       }
 
       figcaption {
-        margin-top: 8px;
-        font-size: $font-size-small;
-        color: $color-text-light;
+        margin-top: $spacing-sm;
+        font-size: $font-size-sm;
+        color: var(--color-text-light);
         text-align: center;
         font-style: italic;
       }
-    }
-  }
-
-  // Utility modifiers to swap order without changing HTML
-  &.image-right {
-    .intro-content, .sub-text {
-      .intro-image, .sub-text-image { order: 2; }
-      .intro-text, .sub-text-body { order: 1; }
-    }
-  }
-  &.image-left {
-    .intro-content, .sub-text {
-      .intro-image, .sub-text-image { order: 1; }
-      .intro-text, .sub-text-body { order: 2; }
     }
   }
 }

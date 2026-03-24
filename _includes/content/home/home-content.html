@@ -1,10 +1,51 @@
-<section class="home-content">
-  <h1>Welcome</h1>
-  <p>I'm Mario, a Bioinformatics student at the University of Málaga with a passion for technology and discovery. Right now, my main research interest lies in the application of Computer Vision to solve biomedical problems.</p>
-  <p>This website is a space to share my journey, from my current research in medical imaging to personal projects and blog posts on topics that I find interesting. </p>
-  <p>Feel free to look around, and I hope you find something that sparks your curiosity.</p>
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-name">Mario Pascual Gonz&aacute;lez</h1>
+    <p class="hero-subtitle">Biomedical Imaging Researcher</p>
+    <p class="hero-affiliation">University of M&aacute;laga</p>
+    <p class="hero-tagline">Exploring how machines can see and understand the world through the lens of medical imaging &mdash; from coronary angiography to MRI synthesis.</p>
+    <div class="hero-social">
+      <a href="https://github.com/MarioPasc" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/mario-pascual-gonzalez/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      </a>
+      <a href="https://orcid.org/0009-0001-2178-4647" target="_blank" rel="noopener noreferrer" aria-label="ORCID">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </a>
+      <a href="https://x.com/ratpenant" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+      </a>
+    </div>
+  </div>
 </section>
 
-<figure>
-  <img src="/assets/images/welcome/welcomeimage.png" alt="Welcome image">
-</figure>
+<section class="home-section">
+  <h2 class="section-heading">Selected Publications</h2>
+  {% include publications.html filter="featured" %}
+  <p class="section-more"><a href="{{ '/research/' | relative_url }}">View all publications &rarr;</a></p>
+</section>
+
+<section class="home-section">
+  <h2 class="section-heading">Recent Posts</h2>
+  {% assign recent_posts = site.blog | sort: 'date' | reverse %}
+  <div class="blog-grid home-blog-grid">
+    {% for post in recent_posts limit:3 %}
+    <article class="blog-card">
+      <div class="blog-card-content">
+        <h3 class="blog-card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p class="blog-card-excerpt">{{ post.description | default: post.content | strip_html | truncate: 150 }}</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">{{ post.date | date: site.date_format }}</span>
+          {% if post.tag %}
+            {% assign tag = site.data.tags[post.tag] %}
+            {% if tag %}<span class="blog-card-tag">{{ tag.label }}</span>{% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="section-more"><a href="{{ '/blog/' | relative_url }}">View all posts &rarr;</a></p>
+</section>

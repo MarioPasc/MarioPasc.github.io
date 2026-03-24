@@ -1,0 +1,71 @@
+{% comment %}
+  Publications include — renders publication cards from _data/publications.yml
+
+  Parameters:
+    filter: "featured" — only show featured publications
+    limit: number — max publications to show
+{% endcomment %}
+
+{% assign pubs = site.data.publications | sort: "year" | reverse %}
+
+{% if include.filter == "featured" %}
+  {% assign filtered_pubs = "" | split: "" %}
+  {% for pub in pubs %}
+    {% if pub.featured == true %}
+      {% assign filtered_pubs = filtered_pubs | push: pub %}
+    {% endif %}
+  {% endfor %}
+  {% assign pubs = filtered_pubs %}
+{% endif %}
+
+{% if include.limit %}
+  {% assign pubs = pubs | slice: 0, include.limit %}
+{% endif %}
+
+<div class="publications-list">
+{% for pub in pubs %}
+  <article class="pub-card" id="pub-{{ pub.id }}">
+    <div class="pub-card-body">
+      <h4 class="pub-title">{{ pub.title }}</h4>
+      <p class="pub-authors">
+        {% assign author_parts = pub.authors | split: ", " %}
+        {% for author in author_parts %}
+          {% if author contains "Pascual" %}
+            <strong>{{ author }}</strong>{% unless forloop.last %}, {% endunless %}
+          {% else %}
+            {{ author }}{% unless forloop.last %}, {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </p>
+      <p class="pub-venue"><em>{{ pub.venue }}</em>, {{ pub.year }}</p>
+
+      <div class="pub-actions">
+        {% if pub.doi != "" %}
+          <a class="pub-link" href="https://doi.org/{{ pub.doi }}" target="_blank" rel="noopener noreferrer">Paper</a>
+        {% elsif pub.arxiv != "" %}
+          <a class="pub-link" href="https://arxiv.org/abs/{{ pub.arxiv }}" target="_blank" rel="noopener noreferrer">Paper</a>
+        {% elsif pub.paper != "" %}
+          <a class="pub-link" href="{{ pub.paper }}" target="_blank" rel="noopener noreferrer">Paper</a>
+        {% endif %}
+        {% if pub.github != "" %}
+          <a class="pub-link" href="{{ pub.github }}" target="_blank" rel="noopener noreferrer">Code</a>
+        {% endif %}
+        {% if pub.zenodo != "" %}
+          <a class="pub-link" href="{{ pub.zenodo }}" target="_blank" rel="noopener noreferrer">Zenodo</a>
+        {% endif %}
+        {% if pub.pypi != "" %}
+          <a class="pub-link" href="{{ pub.pypi }}" target="_blank" rel="noopener noreferrer">PyPI</a>
+        {% endif %}
+        <button class="copy-ref" data-ref="{{ pub.bibtex | strip | escape }}" aria-label="Copy BibTeX citation">Copy citation</button>
+      </div>
+
+      {% if pub.comments != "" %}
+        <details class="pub-comments">
+          <summary>Personal Comments</summary>
+          <p>{{ pub.comments }}</p>
+        </details>
+      {% endif %}
+    </div>
+  </article>
+{% endfor %}
+</div>

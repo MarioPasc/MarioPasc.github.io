@@ -4,32 +4,51 @@ title: Blog
 permalink: /blog/
 ---
 
-{% assign blog_posts = site.blog | sort: 'date' | reverse %}
-{% if blog_posts.size > 0 %}
-<div class="blog-list">
-  {% for post in blog_posts %}
-  <article class="blog-entry">
-    {% if post.image %}
-    <img src="{{ post.image }}" alt="" class="blog-entry-image" />
-    {% endif %}
-    <div class="blog-entry-content">
-      <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      
-      <!-- Group date and tag in a meta container -->
-      <div class="blog-entry-meta">
-        <p class="blog-entry-date">{{ post.date | date: site.date_format }}</p>
-        {% if post.tag %}
-        {% assign tag = site.data.tags[post.tag] %}
-        {% if tag %}
-        <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
-        {% endif %}
-        {% endif %}
-      </div>
-    </div>
-  </article>
-  {% endfor %}
-</div>
-{% else %}
-<p>No posts yet.</p>
-{% endif %}
+<div class="blog-page">
+  <header class="blog-header">
+    <h1>Blog</h1>
+    <p class="blog-subtitle">Thoughts on research, technology, and life.</p>
+  </header>
 
+  <!-- Tag filter bar -->
+  <div class="tag-filter" role="group" aria-label="Filter posts by tag">
+    <button class="tag-filter-btn active" data-tag="all">All</button>
+    {% for tag_entry in site.data.tags %}
+      <button class="tag-filter-btn" data-tag="{{ tag_entry[0] }}">{{ tag_entry[1].label }}</button>
+    {% endfor %}
+  </div>
+
+  {% assign blog_posts = site.blog | sort: 'date' | reverse %}
+  {% if blog_posts.size > 0 %}
+  <div class="blog-grid">
+    {% for post in blog_posts %}
+    <article class="blog-card" data-tag="{{ post.tag }}">
+      <div class="blog-card-content">
+        <h2 class="blog-card-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+        <p class="blog-card-excerpt">
+          {{ post.description | default: post.content | strip_html | truncate: 150 }}
+        </p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">{{ post.date | date: site.date_format }}</span>
+          {% assign word_count = post.content | number_of_words %}
+          {% assign reading_time = word_count | divided_by: 200 | plus: 1 %}
+          <span class="blog-card-reading-time">{{ reading_time }} min read</span>
+          {% if post.tag %}
+            {% assign tag = site.data.tags[post.tag] %}
+            {% if tag %}
+              <span class="blog-card-tag">{{ tag.label }}</span>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="blog-empty">
+    <p>No posts yet. Check back soon.</p>
+  </div>
+  {% endif %}
+</div>

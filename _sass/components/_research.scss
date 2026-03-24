@@ -4,18 +4,15 @@
 @import '../base/variables';
 
 // ==========================================================================
-// Publications List
+// Publications List (data-driven)
 // ==========================================================================
-.publications {
+.publications-list {
   max-width: $container-sm;
   margin: 0 auto;
   text-align: left;
 }
 
-// ==========================================================================
-// Publication Card
-// ==========================================================================
-.publication {
+.pub-card {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: $radius-lg;
@@ -27,33 +24,27 @@
     border-color: var(--color-accent);
     box-shadow: $shadow-sm;
   }
+}
 
-  h3, h4 {
+.pub-card-body {
+  .pub-title {
+    font-size: $font-size-lg;
     margin-top: 0;
     margin-bottom: $spacing-sm;
+    line-height: $line-height-snug;
   }
 
   .pub-authors {
     color: var(--color-text-light);
     font-size: $font-size-sm;
     margin-bottom: $spacing-xs;
+    line-height: 1.5;
   }
 
   .pub-venue {
     color: var(--color-text-lighter);
     font-size: $font-size-sm;
-    font-style: italic;
-    margin-bottom: $spacing-sm;
-  }
-
-  .pub-year {
-    display: inline-block;
-    padding: $spacing-xs $spacing-sm;
-    background: var(--color-bg-alt);
-    border-radius: $radius-sm;
-    font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
-    color: var(--color-text-light);
+    margin-bottom: $spacing-md;
   }
 }
 

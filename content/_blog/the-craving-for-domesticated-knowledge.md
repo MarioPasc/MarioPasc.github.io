@@ -3,6 +3,7 @@ title: "My Craving for Domesticated STEM Knowledge"
 date: 2025-08-10
 layout: post
 tag: personal
+description: "Reflections on the value of foundational mathematics, the frustrations of AI research, and why I want to pursue a degree in pure math."
 ---
 
 ---

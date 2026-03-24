@@ -2,24 +2,46 @@
 layout: default
 ---
 <article class="post">
-  <header>
-    <h1>{{ page.title }}</h1>
-    <p class="post-date"><em>{{ page.date | date: site.date_format }}</em></p>
-    {% if page.image %}
-    <img src="{{ page.image }}" alt="" class="post-image">
-    {% endif %}
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-meta">
+      <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: site.date_format }}
+      </time>
+      {% assign word_count = content | number_of_words %}
+      {% assign reading_time = word_count | divided_by: 200 | plus: 1 %}
+      <span class="post-reading-time">{{ reading_time }} min read</span>
+      {% if page.tag %}
+        {% assign tag = site.data.tags[page.tag] %}
+        {% if tag %}
+          <span class="post-tag">{{ tag.label }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
   </header>
+
+  {% if page.image %}
+    <img src="{{ page.image }}" alt="" class="post-image">
+  {% endif %}
+
   <div class="post-content">
     {{ content }}
   </div>
+
   <hr>
+
   <footer class="post-footer">
-    <div class="author-info">
-      <p><strong>About the Author</strong></p>
-      <p>Mario Pascual González is just a curious person. You can find more of his work on <a href="https://github.com/MarioPasc">GitHub</a>.</p>
-    </div>
-    <div class="contact-info">
-      <p>Have questions or feedback? Feel free to reach out at <a href="mailto:mpascualg02@gmail.com">mpascualg02@gmail.com</a>.</p>
+    <div class="author-card">
+      <h3 class="author-card-title">About the Author</h3>
+      <p class="author-card-text">
+        Mario Pascual Gonz&aacute;lez is a biomedical imaging researcher at the University of M&aacute;laga,
+        exploring how generative models and computer vision can solve medical imaging problems.
+      </p>
+      <div class="author-card-links">
+        <a href="https://github.com/MarioPasc" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/mario-pascual-gonzalez/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:mpascualg02@gmail.com">Email</a>
+      </div>
     </div>
   </footer>
 </article>

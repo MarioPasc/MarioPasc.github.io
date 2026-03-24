@@ -3,6 +3,7 @@ title: "Wi-Fi ESP-32 Humidity and Temperature Module"
 date: 2025-08-01
 layout: post
 tag: esp32
+description: "Building a WiFi-connected temperature and humidity monitor with ESP32, DHT11 sensor, and OLED display — a full tutorial from circuit to code."
 ---
 
 ---

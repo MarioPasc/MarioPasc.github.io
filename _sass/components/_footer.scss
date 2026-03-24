@@ -35,19 +35,18 @@
   display: inline-flex;
   align-items: center;
   gap: $spacing-xs;
-  color: var(--color-text);
-  font-weight: $font-weight-medium;
-  padding: $spacing-sm $spacing-md;
-  border-radius: $radius-md;
-  position: relative;
+  color: var(--color-text-light);
+  padding: $spacing-sm;
+  border-radius: $radius-full;
   transition: color $transition-fast, background-color $transition-fast;
 
-  // Icon
   svg {
     width: 20px;
     height: 20px;
     transition: transform $transition-fast;
   }
+
+  span { display: none; }
 
   &:hover {
     color: var(--color-accent);
@@ -57,23 +56,30 @@
       transform: scale(1.1);
     }
   }
+}
 
-  // Underline effect
-  &::after {
-    content: "";
-    position: absolute;
-    left: $spacing-md;
-    right: $spacing-md;
-    bottom: 4px;
-    height: 2px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform $transition-base;
+// Claude attribution
+.footer-built-with {
+  font-size: $font-size-sm;
+  color: var(--color-text-lighter);
+  margin-top: $spacing-xs;
+
+  a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover {
+      color: var(--color-accent);
+    }
   }
 
-  &:hover::after {
-    transform: scaleX(1);
+  .claude-logo {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: $radius-sm;
   }
 }
 

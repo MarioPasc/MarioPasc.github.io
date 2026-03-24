@@ -8,13 +8,13 @@
 // ==========================================================================
 .page-content {
   flex: 1;
-  padding: $spacing-xl $spacing-md;
-  max-width: $container-md;
+  padding: $spacing-xl 0 $spacing-xl 0;
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
 
   @media (max-width: $breakpoint-md) {
-    padding: $spacing-lg $spacing-md;
+    padding: $spacing-lg 0 $spacing-lg 0;
   }
 }
 
@@ -22,14 +22,7 @@
 // Content Alignment
 // ==========================================================================
 .page-content {
-  // Default center alignment for landing pages
-  text-align: center;
-
-  // Code blocks should be left-aligned
-  .code-block,
-  pre {
-    text-align: left;
-  }
+  text-align: left;
 }
 
 // ==========================================================================

@@ -23,7 +23,7 @@
       // Update meta theme-color for mobile browsers
       const metaThemeColor = document.querySelector('meta[name="theme-color"]');
       if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', newTheme === 'dark' ? '#0f0f1a' : '#007acc');
+        metaThemeColor.setAttribute('content', newTheme === 'dark' ? '#121220' : '#1a1a2e');
       }
     });
   }

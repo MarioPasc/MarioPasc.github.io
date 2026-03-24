@@ -8,53 +8,43 @@ Run a full site build, then visually inspect the result with Playwright.
 ## Phase 1: Build Check
 
 ```bash
+export PATH="$HOME/.rbenv/bin:$PATH" && eval "$(rbenv init - bash)"
 cd /home/mpascual/misc/MarioPasc.github.io && bundle exec jekyll build 2>&1
 ```
 
-Check the output for:
-- **Build errors**: missing layouts, Liquid syntax errors, YAML frontmatter issues, broken includes
-- **Warnings**: deprecated features, missing metadata, empty collections
-- **Exit code**: non-zero means the build failed — fix errors before proceeding
-
-If the build fails, report the errors, suggest fixes, and stop. Do not proceed to visual verification.
+Check for build errors (missing layouts, Liquid syntax, YAML issues). If the build fails, report errors and stop.
 
 ## Phase 2: Visual Inspection
 
-If the build succeeded, ensure the local server is running (use the `serve` skill if needed), then use the **Playwright MCP** to inspect the pages that were changed.
+Ensure the local server is running (use `/serve` if needed), then use **Playwright MCP** to inspect changed pages.
 
 ### Viewports to test
 
-| Name | Width × Height |
+| Name | Width x Height |
 |------|---------------|
-| Mobile | 375 × 812 |
-| Tablet | 768 × 1024 |
-| Desktop | 1440 × 900 |
+| Mobile | 375 x 812 |
+| Tablet | 768 x 1024 |
+| Desktop | 1440 x 900 |
 
 ### Inspection checklist
 
 For each affected page, at each viewport:
 
-1. **Navigate** to the page on `http://localhost:4000/<path>`
-2. **Take a screenshot** via `browser_take_screenshot`
-3. **Check for**:
-   - Text overflow or horizontal scrolling
-   - Overlapping or misaligned elements
-   - Missing images or broken asset paths
-   - Navigation menu rendering correctly (especially mobile hamburger)
-   - MathJax equations rendering (if the page uses LaTeX)
-   - Dark mode consistency (if the change touches colours/backgrounds): toggle the `prefers-color-scheme` and screenshot again
-4. **Take a snapshot** via `browser_snapshot` to read the accessibility tree — check for missing alt text, broken aria labels, empty links
+1. Navigate to `http://127.0.0.1:4000/<path>`
+2. Take a screenshot via `browser_take_screenshot`
+3. Check for: text overflow, overlapping elements, missing images, nav rendering, MathJax equations
+4. If the change touches colours/backgrounds: click the theme toggle to switch dark mode and screenshot again
 
 ### Which pages to check
 
-- If the change is in `_sass/`, `_includes/`, or `_layouts/` → check the homepage, one blog post, and one research page (broad impact)
-- If the change is in `content/_blog/` → check only the affected blog post + the blog listing page
-- If the change is in `content/_research/` → check only the affected research page + the research listing
-- If the change is in `_config.yml` or `_data/` → check all top-level pages (homepage, blog listing, research listing)
+- Changes in `_sass/`, `_includes/`, or `_layouts/` → check homepage, a blog post, and research page
+- Changes in `content/_blog/` → check the affected post + blog listing
+- Changes in `content/_research/` → check research page
+- Changes in `_config.yml` or `_data/` → check all top-level pages
 
 ## Phase 3: Report
 
-Summarise findings clearly:
-- **Build**: passed/failed + any warnings
-- **Visual**: for each viewport, note any issues found or confirm it looks correct
-- **Recommendation**: "ready to push" or "needs fixes" with specific action items
+Summarise:
+- **Build**: passed/failed + warnings
+- **Visual**: any issues per viewport, or confirm correct
+- **Recommendation**: "ready to push" or "needs fixes" with specifics

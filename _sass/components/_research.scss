@@ -7,9 +7,22 @@
 // Publications List (data-driven)
 // ==========================================================================
 .publications-list {
-  max-width: $container-sm;
-  margin: 0 auto;
   text-align: left;
+}
+
+// Two-column grid layout
+.publications-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  .pub-card {
+    margin-bottom: 0;
+  }
 }
 
 .pub-card {
@@ -28,7 +41,8 @@
 
 .pub-card-body {
   .pub-title {
-    font-size: $font-size-lg;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
     margin-top: 0;
     margin-bottom: $spacing-sm;
     line-height: $line-height-snug;
@@ -44,7 +58,42 @@
   .pub-venue {
     color: var(--color-text-lighter);
     font-size: $font-size-sm;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  .pub-citations {
+    font-size: $font-size-xs;
+    color: var(--color-text-lighter);
+    margin-bottom: $spacing-sm;
+  }
+}
+
+// Quartile badges
+.pub-quartile {
+  display: inline-block;
+  padding: 2px $spacing-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-sm;
+  margin-bottom: $spacing-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.pub-quartile-q1 {
+    background: rgba($color-success, 0.12);
+    color: $color-success;
+  }
+  &.pub-quartile-q2 {
+    background: rgba($color-accent, 0.12);
+    color: var(--color-accent);
+  }
+  &.pub-quartile-q3 {
+    background: rgba($color-warning, 0.12);
+    color: $color-warning;
+  }
+  &.pub-quartile-q4 {
+    background: rgba($color-error, 0.12);
+    color: $color-error;
   }
 }
 
@@ -176,7 +225,9 @@
 // Research Intro Section
 // ==========================================================================
 .research-intro {
-  margin-bottom: $spacing-2xl;
+  max-width: $container-md;
+  margin: 0 auto $spacing-2xl;
+  padding: 0 $spacing-md;
 
   .intro-content {
     display: flex;
@@ -235,13 +286,18 @@
 .section-divider {
   border: none;
   border-top: 1px solid var(--color-border);
-  margin: $spacing-2xl 0;
+  margin: $spacing-2xl auto;
+  max-width: $container-md;
 }
 
 // ==========================================================================
 // Research Experience
 // ==========================================================================
 .research-experience {
+  max-width: $container-md;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
   .experience-header {
     margin-bottom: $spacing-lg;
     text-align: left;

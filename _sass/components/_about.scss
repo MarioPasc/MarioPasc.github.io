@@ -2,8 +2,9 @@
 @import '../base/typography';
 
 .about-content {
-  max-width: $container-sm;
+  max-width: $container-md;
   margin: 0 auto;
+  padding: 0 $spacing-md;
   text-align: left;
 
   h1 {

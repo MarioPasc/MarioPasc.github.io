@@ -259,6 +259,38 @@
   }
 
   // ==========================================================================
+  // Citation Copy Buttons
+  // ==========================================================================
+  function initCitationCopy() {
+    document.querySelectorAll('.copy-ref').forEach(function(btn) {
+      btn.addEventListener('click', async function() {
+        var citation = btn.getAttribute('data-ref');
+        var originalText = btn.textContent;
+
+        try {
+          await navigator.clipboard.writeText(citation);
+        } catch (err) {
+          var textArea = document.createElement('textarea');
+          textArea.value = citation;
+          textArea.style.position = 'fixed';
+          textArea.style.opacity = '0';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
+
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  }
+
+  // ==========================================================================
   // Initialize All Features
   // ==========================================================================
   function init() {
@@ -268,6 +300,7 @@
     initStickyNav();
     initScrollReveal();
     initCodeCopy();
+    initCitationCopy();
     initLazyImages();
     initSmoothScroll();
   }

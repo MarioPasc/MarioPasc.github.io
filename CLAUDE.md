@@ -4,11 +4,16 @@ This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-Jekyll-based personal portfolio and research blog for a biomedical-imaging researcher. Hosted on GitHub Pages at `https://mariopasc.github.io/`. The site has two content collections (blog and research), uses a remote theme, and supports LaTeX rendering via MathJax.
+Jekyll-based personal portfolio and research blog for a biomedical-imaging researcher. Hosted on GitHub Pages at `https://mariopasc.github.io/`. The site has two content collections (blog and research), a data-driven publications system, and supports LaTeX rendering via MathJax.
+
+## Design System
+
+- **Fonts**: Lora (serif, headings) + Source Sans 3 (sans-serif, body) + JetBrains Mono (code)
+- **Palette**: Navy primary (`#1a1a2e`), academic gold accent (`#c9a84c`), warm off-white background (`#fafaf5`)
+- **Dark mode**: Full palette inversion via CSS custom properties on `[data-theme="dark"]`
+- **Layout**: Brand-left / links-right navigation, centered reading columns, card-based content
 
 ## Available Tech Stack
-
-You have the following tools available. Use them proactively — do not ask for permission before using tools you already have access to.
 
 ### Runtime & Build
 
@@ -19,74 +24,104 @@ You have the following tools available. Use them proactively — do not ask for 
 | **Jekyll 4.3** | Static site generator | `bundle exec jekyll -v` |
 | **Node.js 22+** (via nvm) | MCP servers, npm packages | `node -v` |
 | **Git** | Version control, push to GitHub | `git --version` |
-| **Python 3** | Auxiliary scripting if needed | `python3 --version` |
 
 ### MCP Servers
 
-You have three MCP servers registered. Use them as part of your workflow — they are your eyes and hands.
-
-| Server | Transport | Tools | When to use |
-|--------|-----------|-------|-------------|
-| **playwright** | stdio | `browser_navigate`, `browser_take_screenshot`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_resize` | Preview the site visually, take screenshots at different viewports, verify layout changes |
-| **github** | HTTP | Push, PR creation, deploy status, issue management | Push commits, check if GitHub Pages deploy succeeded, create PRs |
-| **chrome-devtools** | stdio | CSS inspection, console logs, network requests, performance traces | Debug CSS issues, check computed styles, diagnose rendering problems |
+| Server | Tools | When to use |
+|--------|-------|-------------|
+| **playwright** | `browser_navigate`, `browser_take_screenshot`, `browser_snapshot`, `browser_click`, `browser_resize` | Preview the site visually, take screenshots at different viewports |
+| **github** | Push, PR creation, deploy status, issue management | Push commits, check deploy status |
+| **chrome-devtools** | CSS inspection, console logs, network requests | Debug CSS issues, check computed styles |
 
 ### Shell Utilities
 
-You have permission to use: `bundle`, `ruby`, `gem`, `git`, `ls`, `cat`, `head`, `tail`, `wc`, `mkdir`, `cp`, `mv`, `touch`, `echo`, `curl`, `wget`, `npm`, `npx`, `node`, `python3`, `jq`, `sed`, `awk`, `sort`, `uniq`, `diff`, `grep`, `rg`, `find`, `xargs`, `tee`, `lsof`, `gh`.
+Allowed: `bundle`, `ruby`, `gem`, `git`, `ls`, `cat`, `head`, `tail`, `wc`, `mkdir`, `cp`, `mv`, `touch`, `echo`, `curl`, `wget`, `npm`, `npx`, `node`, `python3`, `jq`, `sed`, `awk`, `sort`, `uniq`, `diff`, `grep`, `rg`, `find`, `xargs`, `tee`, `lsof`, `gh`.
 
-**Denied** (safety): `git push --force`, `git reset --hard`, `rm -rf`, `sudo`, `chmod`, `chown`, `kill`/`killall`/`pkill`, `shutdown`, `reboot`, `dd`.
+**Denied**: `git push --force`, `git reset --hard`, `rm -rf`, `sudo`, `chmod`, `chown`, `kill`/`killall`/`pkill`, `shutdown`, `reboot`, `dd`.
 
 ## Development Commands
 
 ```bash
-# Install dependencies (run once after clone or Gemfile changes)
-bundle install
-
-# Local development server (serves at http://localhost:4000)
-bundle exec jekyll serve --livereload
-
-# Build only (output to _site/)
-bundle exec jekyll build
-
-# Check for port conflicts
-lsof -i :4000
+bundle install                          # Install dependencies
+bundle exec jekyll serve --livereload   # Local dev server at localhost:4000
+bundle exec jekyll build                # Build to _site/
+lsof -i :4000                           # Check for port conflicts
+npm run lint                            # Run ESLint + Stylelint
 ```
 
 ## Architecture
 
 ```
 MarioPasc.github.io/
-├── _config.yml              # Site config: theme, collections, plugins, defaults
+├── index.html                  # Homepage (includes home-content.html)
+├── about.md                    # About page (includes about-content.html)
+├── blog/index.html             # Blog listing with tag filter
+├── _config.yml                 # Site config: collections, plugins, defaults
 ├── _data/
-│   ├── navigation.yml       # Nav menu structure
-│   └── tags.yml             # Tag definitions for blog posts
-├── _includes/               # Liquid partials (header, footer, etc.)
-├── _layouts/                # Page layouts (post, default)
+│   ├── navigation.yml          # Nav menu structure
+│   ├── tags.yml                # Tag definitions (esp32, personal)
+│   ├── publications.csv        # Publications data (CSV, editable in spreadsheets)
+│   └── groups.yml              # Research groups/affiliations metadata
+├── _includes/
+│   ├── components/
+│   │   ├── navigation.html     # Brand-left, links-right nav + hamburger
+│   │   └── footer.html         # Social icons, copyright, Claude attribution
+│   ├── publications.html       # Reusable pub cards (params: filter, group_id, layout)
+│   ├── bibtex-entry.html       # Auto-generates BibTeX from structured fields
+│   ├── home-content.html       # Hero + featured publications + recent posts
+│   ├── about-content.html      # Bio, images, career
+│   └── research-content.html   # Research narrative + dynamic groups + publications
+├── _layouts/
+│   ├── default.html            # Base layout (fonts, scripts, nav, footer)
+│   └── post.html               # Blog post (reading time, tag, author card)
 ├── _sass/
-│   └── base/
-│       └── _variables.scss  # Design tokens: colours, spacing, fonts
+│   ├── base/
+│   │   ├── _variables.scss     # Design tokens: colours, spacing, fonts
+│   │   ├── _reset.scss         # CSS reset & accessibility
+│   │   └── _typography.scss    # Lora headings, Source Sans body
+│   ├── layout/
+│   │   └── _main.scss          # Page content container
+│   ├── components/
+│   │   ├── _navigation.scss    # Sticky nav, hamburger, mobile overlay
+│   │   ├── _footer.scss        # Footer, back-to-top, Claude attribution
+│   │   ├── _buttons.scss       # Button system
+│   │   ├── _blog.scss          # Blog page, tag filter, blog cards
+│   │   ├── _post.scss          # Post reading column, author card, MathJax
+│   │   ├── _research.scss      # Research sections, publication cards
+│   │   ├── _code.scss          # Code blocks, syntax highlighting
+│   │   ├── _home.scss          # Hero, home sections
+│   │   ├── _about.scss         # About page layout
+│   │   └── _animations.scss    # Scroll reveal, hover effects
+│   └── utilities/
+│       └── _helpers.scss       # Utility classes
 ├── assets/
-│   ├── css/                 # Compiled SCSS output
-│   ├── js/                  # Vanilla ES6+ scripts
-│   └── images/              # Static images
-├── content/
-│   ├── _blog/               # Blog posts (collection)
-│   └── _research/           # Research project pages (collection)
-├── blog/                    # Blog listing page
-├── Gemfile                  # Ruby dependencies
-├── .claude/                 # Claude Code config, skills, settings
-│   ├── settings.json        # Shared permissions (committed)
-│   ├── settings.local.json  # Local-only permissions (gitignored)
-│   └── skills/              # Custom slash-command skills
-└── CLAUDE.md                # This file
+│   ├── css/main.scss           # Main entry point (imports all SCSS)
+│   ├── js/
+│   │   ├── main.js             # Core: dark mode, nav, scroll, citations
+│   │   ├── tag-filter.js       # Blog tag filter (client-side)
+│   │   └── syntax-highlighter.js
+│   └── images/
+│       ├── about_me/           # Portrait, judo photos
+│       ├── blog/               # Per-post image directories
+│       ├── research/           # Lab photos
+│       └── claude-color.png    # Claude logo for footer
+├── content/                    # Collections directory
+│   ├── _blog/                  # Blog posts (markdown)
+│   └── _research/              # Research pages
+│       └── index.md            # Main research page
+├── Gemfile                     # Ruby dependencies
+├── package.json                # Node (ESLint, Stylelint)
+├── .gitignore
+├── CLAUDE.md                   # This file
+└── .claude/                    # Claude Code config & skills
+    ├── settings.json
+    └── skills/                 # Slash-command skills
 ```
 
 ### Key Config
 
-- **Theme**: `thundergolfer/junior-theme` (GitHub-hosted remote theme via `jekyll-remote-theme`)
 - **Collections**: `blog` → `content/_blog/`, `research` → `content/_research/`
-- **Plugins**: `jekyll-remote-theme`, `jekyll-paginate`, `jekyll-sitemap`
+- **Plugins**: `jekyll-paginate`, `jekyll-sitemap`
 - **Markdown**: kramdown with GFM input
 - **Sass**: compressed output, source in `_sass/`
 
@@ -99,29 +134,63 @@ MarioPasc.github.io/
 title: "Post Title"
 date: YYYY-MM-DD
 layout: post
-tag: tag-name        # must exist in _data/tags.yml or be added there
+tag: tag-name           # must exist in _data/tags.yml
+description: "Preview text for cards (optional, falls back to first 150 chars)"
 ---
 ```
 
-### Research pages (`content/_research/`)
+### Publications (`_data/publications.csv`)
 
-```yaml
----
-title: "Project Title"
-date: YYYY-MM-DD
-layout: post          # or layout: default
-scripts:              # optional, for page-specific JS
-  - /assets/js/my-script.js
----
-```
+Add a new row to the CSV — the site rebuilds automatically. Editable in Excel/Google Sheets.
 
-### Math rendering
+**CSV columns** (24 total):
 
-MathJax is enabled globally. Use `$$...$$` for display math and `\\(...\\)` for inline math. Test rendering locally before pushing.
+| Column | Required | Description |
+|--------|----------|-------------|
+| `id` | Yes | BibTeX key / HTML anchor |
+| `type` | Yes | `article`, `preprint`, `inproceedings`, `poster`, `thesis` |
+| `title` | Yes | Paper title |
+| `authors` | Yes | Comma-separated: `M. Surname, A. Other` (Pascual auto-bolded) |
+| `year` | Yes | Publication year |
+| `venue` | Yes | Journal/conference name |
+| `volume` | No | Journal volume |
+| `pages` | No | Page range |
+| `doi` | No | DOI identifier |
+| `arxiv` | No | arXiv ID (e.g., `2602.03372`) |
+| `isbn` | No | ISBN |
+| `publisher` | No | Publisher name |
+| `address` | No | Publication location |
+| `primary_class` | No | arXiv class (e.g., `cs.CV`) |
+| `paper_url` | No | Direct PDF link (fallback if no DOI/arXiv) |
+| `code_url` | No | GitHub/code repo URL |
+| `zenodo_url` | No | Zenodo link |
+| `pypi_url` | No | PyPI package |
+| `project_url` | No | Project website |
+| `quartile` | No | Journal quartile (`Q1`-`Q4`), shown as badge |
+| `citations` | No | Citation count |
+| `featured` | No | `true` = shown on homepage |
+| `group_id` | Yes | Links to `_data/groups.yml` entry |
+| `personal_comments` | No | Free text (HTML allowed) |
+
+BibTeX is **auto-generated** from the structured fields — no need to write it manually.
+
+### Research Groups (`_data/groups.yml`)
+
+Each group/affiliation has: `id`, `name`, `institution`, `url`, `period`, `image`, `image_caption`, `sort_order`, `description_html`. The research page renders groups dynamically in `sort_order`.
+
+### Publications include
+
+- `{% include publications.html %}` — all publications
+- `{% include publications.html filter="featured" %}` — featured only (homepage)
+- `{% include publications.html group_id="icai" layout="grid" %}` — by group, two-column
 
 ### Tags
 
-Existing tags are defined in `_data/tags.yml`. Current tags include: `esp32`, `personal`. When creating content, prefer existing tags; if a new tag is needed, add it to `_data/tags.yml` first.
+Defined in `_data/tags.yml`. Current: `esp32`, `personal`. Add new tags there before using in posts.
+
+### Math rendering
+
+MathJax is enabled globally. Use `$$...$$` for display math and `\\(...\\)` for inline math.
 
 ## Style & Code Guidelines
 
@@ -129,76 +198,40 @@ Existing tags are defined in `_data/tags.yml`. Current tags include: `esp32`, `p
 
 - Use semantic HTML5 (`<article>`, `<section>`, `<nav>`, `<header>`, `<footer>`)
 - Include accessibility attributes (`aria-label`, `aria-current`, `role`)
-- Liquid templates: use `{% include %}` for reusable partials
 
 ### SCSS
 
-- **Always use existing variables** from `_sass/base/_variables.scss` for colours, spacing, fonts
-- Support dark mode via CSS custom properties — test both themes when adding visual elements
-- Keep selectors flat and specific; avoid deep nesting (max 3 levels)
-- Output is compressed — write clean, well-commented source
+- **Always use existing variables** from `_sass/base/_variables.scss`
+- Use `$font-family-heading` (Lora) for headings, `$font-family-base` (Source Sans) for body
+- Support dark mode via CSS custom properties — test both themes
+- Keep selectors flat; avoid deep nesting (max 3 levels)
 
 ### JavaScript
 
 - Vanilla ES6+ only — no frameworks, no jQuery, no build step
-- Scripts go in `assets/js/` and are included via `scripts:` frontmatter
+- All scripts loaded in `_layouts/default.html` with `defer`
 
 ## Agentic Workflow
 
-When making any visual or structural change, follow this loop. Do not skip steps.
+When making any visual or structural change, follow this loop:
 
-### The Loop: Edit → Preview → Inspect → Fix → Push → Verify
-
-1. **Edit** — Make the code change (SCSS, HTML, Liquid, JS, content).
-
-2. **Local build check** — Run `bundle exec jekyll build 2>&1` and check for errors. Fix any build failures before proceeding.
-
-3. **Start local server** — Run `bundle exec jekyll serve` in the background if not already running. Verify it is listening on `localhost:4000`.
-
-4. **Visual inspection with Playwright** — Use the Playwright MCP to:
-   - Navigate to the relevant page on `http://localhost:4000`
-   - Take screenshots at **three viewports**: mobile (375×812), tablet (768×1024), desktop (1440×900)
-   - If the change involves dark mode, toggle the colour scheme and screenshot again
-   - Check for layout breakage, overflow, misaligned elements, missing content
-
-5. **Fix issues** — If any visual problems are found, fix them and repeat from step 2.
-
-6. **Commit and push** — Stage changes with `git add -A`, write a descriptive commit message following conventional style (`feat:`, `fix:`, `style:`, `content:`, `refactor:`), and push to `main`.
-
-7. **Wait for deploy** — GitHub Pages typically deploys in 30–90 seconds. Wait 60 seconds, then check deploy status via the GitHub MCP or by polling `https://api.github.com/repos/MarioPasc/MarioPasc.github.io/pages/builds`.
-
-8. **Production verification** — Use Playwright to navigate to `https://mariopasc.github.io/<path>` and take a final screenshot. Compare against the local preview. If discrepancies exist, diagnose and fix.
-
-### When to use Chrome DevTools MCP
-
-Use the Chrome DevTools MCP server (not Playwright) when you need to:
-- Inspect computed CSS values on a specific element
-- Check the browser console for JavaScript errors
-- Analyse network requests (e.g., MathJax CDN loading, font files)
-- Record a performance trace to diagnose slow page loads
+1. **Edit** — Make the code change
+2. **Build check** — `bundle exec jekyll build 2>&1`
+3. **Start server** — `bundle exec jekyll serve` if not running
+4. **Visual inspection** — Playwright screenshots at mobile (375×812), tablet (768×1024), desktop (1440×900). Toggle dark mode if relevant.
+5. **Fix issues** — Repeat from step 2
+6. **Commit and push** — Conventional commits (`feat:`, `fix:`, `style:`, `content:`, `refactor:`)
+7. **Verify deploy** — Check GitHub Pages build status, then screenshot production
 
 ### Commit Conventions
 
-```
-<type>: <short description>
-
-<optional body explaining why>
-```
-
 Types: `feat`, `fix`, `style`, `content`, `refactor`, `docs`, `chore`
-
-Examples:
-- `content: add new blog post on diffusion models`
-- `style: fix mobile nav overflow on research listing`
-- `feat: add citation copy button to research pages`
 
 ## Troubleshooting
 
 | Problem | Solution |
 |---------|----------|
-| `jekyll serve` fails with address in use | `lsof -i :4000` then stop the conflicting process |
-| Remote theme not loading locally | Run `bundle install` — `jekyll-remote-theme` gem must be present |
-| MathJax not rendering | Check that `enable_mathjax: true` is in `_config.yml`; use `$$` delimiters, not `$` |
-| Playwright screenshot is blank | Server may not be ready; wait 2 seconds after `jekyll serve` before navigating |
-| Git push rejected | Pull first: `git pull --rebase origin main` |
-| SCSS changes not visible | Jekyll caches compiled CSS; restart the server or `rm -r _site/` and rebuild |
+| `jekyll serve` fails with address in use | `lsof -i :4000` then stop the process |
+| MathJax not rendering | Check `enable_mathjax: true` in `_config.yml`; use `$$` delimiters |
+| Playwright screenshot is blank | Wait 2-4 seconds after `jekyll serve` before navigating |
+| SCSS changes not visible | Restart server or `rm -r _site/` and rebuild |

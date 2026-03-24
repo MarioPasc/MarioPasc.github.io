@@ -55,13 +55,15 @@
       "Bash(tee:*)",
       "Bash(lsof:*)",
       "Bash(gh:*)",
+      "Bash(*)",
       "Read",
       "Edit",
       "Write",
       "Glob",
       "Grep",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "playwright:*)"
     ],
     "deny": [
       "Bash(git push --force:*)",

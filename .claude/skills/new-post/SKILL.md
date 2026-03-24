@@ -9,29 +9,26 @@ Use `$ARGUMENTS` as the post title. If no arguments provided, ask the user for a
 
 ## Steps
 
-1. **Read existing tags** from `_data/tags.yml` and scan existing posts in `content/_blog/` to know all available tags.
+1. **Read existing tags** from `_data/tags.yml` to know available tags.
 
 2. **Generate a slug** from the title: lowercase, hyphens for spaces, strip special characters, max 60 chars.
    Example: `"My Thoughts on Flow Matching"` → `my-thoughts-on-flow-matching`
 
-3. **Create the file** at `content/_blog/<slug>.md` with this frontmatter:
+3. **Create the file** at `content/_blog/<slug>.md`:
 
 ```yaml
 ---
 title: "<Title>"
-date: <today's date in YYYY-MM-DD format>
+date: <today's date YYYY-MM-DD>
 layout: post
 tag: <selected tag>
+description: "<1-2 sentence preview for blog cards>"
 ---
-```
 
-4. **Add the post structure**:
-
-```markdown
-
+---
 **Abstract**
 
-<brief summary — ask the user or leave a placeholder>
+<brief summary>
 
 ---
 
@@ -40,15 +37,20 @@ tag: <selected tag>
 <content starts here>
 ```
 
-5. **Tag selection**: Present the existing tags to the user. If none fit, create a new tag entry in `_data/tags.yml` following the existing format before using it.
+4. **Tag selection**: Present existing tags to the user. If none fit, add a new tag entry to `_data/tags.yml` first.
 
-6. **Build check**: Run `bundle exec jekyll build 2>&1` to verify the new post compiles without errors.
+5. **Build check**:
+   ```bash
+   export PATH="$HOME/.rbenv/bin:$PATH" && eval "$(rbenv init - bash)"
+   bundle exec jekyll build 2>&1
+   ```
 
-7. **Local preview**: If the server is running, use Playwright to navigate to the new post's URL (`http://localhost:4000/blog/<slug>/`) and take a screenshot to confirm it renders correctly.
+6. **Local preview**: If server is running, use Playwright to navigate to `http://127.0.0.1:4000/blog/<slug>/` and take a screenshot.
 
 ## Notes
 
-- The blog collection is at `content/_blog/` (not `_posts/`)
-- Permalink pattern: `/blog/:title/` (from `_config.yml`)
-- MathJax is available: use `$$...$$` for display math, `\\(...\\)` for inline
-- For posts with code: use fenced code blocks with language identifiers (```python, ```bash, etc.)
+- Blog collection: `content/_blog/` (not `_posts/`)
+- Permalink: `/blog/:title/`
+- The `description` field is used for card previews on the blog listing and homepage; falls back to first 150 chars if absent
+- MathJax available: `$$...$$` for display math, `\\(...\\)` for inline
+- Code blocks: use fenced blocks with language identifiers

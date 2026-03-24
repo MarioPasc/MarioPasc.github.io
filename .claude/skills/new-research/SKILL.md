@@ -11,33 +11,22 @@ Use `$ARGUMENTS` as the project title. If no arguments provided, ask the user fo
 
 1. **Generate a slug** from the title: lowercase, hyphens for spaces, strip special characters, max 60 chars.
 
-2. **Create the file** at `content/_research/<slug>.md` with this frontmatter:
+2. **Create the file** at `content/_research/<slug>.md`:
 
 ```yaml
 ---
 title: "<Title>"
-date: <today's date in YYYY-MM-DD format>
-layout: post
+date: <today's date YYYY-MM-DD>
+layout: default
 ---
-```
-
-If the page needs custom JavaScript (e.g., interactive visualisations), add:
-```yaml
-scripts:
-  - /assets/js/<script-name>.js
-```
-
-3. **Structure the content** for a scientific audience:
-
-```markdown
 
 ## Abstract
 
-<One-paragraph summary of the project>
+<One-paragraph summary>
 
 ## Motivation
 
-<Why this research matters, gap in the literature>
+<Why this research matters>
 
 ## Methods
 
@@ -49,9 +38,8 @@ scripts:
 
 ## Resources
 
-- **Code**: [GitHub repository](https://github.com/MarioPasc/<repo>)
-- **Paper**: [arXiv / journal link](<url>)
-- **Dataset**: [Source](<url>)
+- **Code**: [GitHub](https://github.com/MarioPasc/<repo>)
+- **Paper**: [Link](<url>)
 
 ## Citation
 
@@ -59,19 +47,24 @@ scripts:
 @article{pascual2025...,
   title={...},
   author={Pascual-González, Mario and ...},
-  journal={...},
   year={2025}
 }
 ```
 ```
 
-4. **Build check**: Run `bundle exec jekyll build 2>&1` to verify compilation.
+3. **Also add to publications data** — If this research has a publication, add an entry to `_data/publications.yml` following the format documented in CLAUDE.md. Set `featured: true` to show on the homepage.
 
-5. **Local preview**: If the server is running, use Playwright to navigate to the new page's URL (`http://localhost:4000/research/<slug>/`) and take a screenshot.
+4. **Build check**:
+   ```bash
+   export PATH="$HOME/.rbenv/bin:$PATH" && eval "$(rbenv init - bash)"
+   bundle exec jekyll build 2>&1
+   ```
+
+5. **Local preview**: If server running, use Playwright to navigate to `http://127.0.0.1:4000/research/<slug>/` and screenshot.
 
 ## Notes
 
-- The research collection outputs to `/research/:path/` (from `_config.yml`)
-- MathJax is enabled globally: `$$...$$` for display math, `\\(...\\)` for inline math
-- For heavy LaTeX content, test rendering locally — some edge cases (aligned environments, custom macros) may need `\begin{aligned}` inside `$$`
-- Image assets for research pages go in `assets/images/research/<slug>/`
+- Research collection outputs to `/research/:path/`
+- MathJax: `$$...$$` for display math, `\\(...\\)` for inline
+- Image assets: `assets/images/research/<slug>/`
+- The main research page (`content/_research/index.md`) uses `_includes/research-content.html` which pulls publications from `_data/publications.yml`

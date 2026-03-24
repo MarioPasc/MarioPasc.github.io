@@ -1,36 +1,28 @@
 ###############################################################################
-# BASIC SITE META
+# SITE META
 ###############################################################################
-remote_theme: thundergolfer/junior-theme        # GitHub-hosted, Pages-safe theme :contentReference[oaicite:0]{index=0}
 title:  "Mario • Research, Portfolio & Diary"
-author: "Mario"
+author: "Mario Pascual González"
 description: "Biomedical-imaging researcher: projects, code & musings."
-url:  "https://mariopasc.github.io/"             # ← change to your username
-baseurl: ""                                     # blank for *user* site
-email: "mario@example.com"
+url:  "https://mariopasc.github.io/"
+baseurl: ""
+email: "mpascualg02@gmail.com"
 date_format: "%b %-d, %Y"
 
 ###############################################################################
-# FEATURES (mirrors Belotti’s production settings)
+# FEATURES
 ###############################################################################
-show_related_posts:  true
-show_post_footers:  true
-show_subscribe_cta: true
-show_social_icons:  false
-ajaxify_contact_form: false
-enable_mathjax: true                            # good for LaTeX in research posts :contentReference[oaicite:1]{index=1}
-enable_anchorjs: true
-extended_fonts: false
+enable_mathjax: true
 
 ###############################################################################
-# SOCIAL USERNAMES
+# SOCIAL
 ###############################################################################
 github_username:   MarioPasc
 twitter_username:  ratpenant
 linkedin_username: mario-pascual-gonzalez
 
 ###############################################################################
-# CONTENT COLLECTIONS
+# COLLECTIONS
 ###############################################################################
 collections_dir: content
 
@@ -38,49 +30,38 @@ collections:
   blog:
     output: true
     permalink: /blog/:title/
-  research:   
+  research:
     output: true
     permalink: /research/:path/
 
 ###############################################################################
-# DEFAULT FRONT-MATTER (uses layouts that *exist* in the theme)
+# DEFAULT FRONT-MATTER
 ###############################################################################
 defaults:
-  - scope: 
+  - scope:
       path: "_blog"
       type: blog
-    values: 
+    values:
       layout: post
-  - scope: 
+  - scope:
       path: "_research"
       type: research
-    values: 
-      layout: post
-      nav_order: 2
-  - scope: 
-      path: "about_me"
-    values: 
-      layout: default
-  - scope: 
-      path: "home"
-    values: 
+    values:
       layout: default
 
 ###############################################################################
-# BUILD / SEO / ANALYTICS
+# BUILD
 ###############################################################################
 markdown: kramdown
 permalink: pretty
-paginate: 10                                     # blog page size
+paginate: 10
 paginate_path: "/blog/:num/"
 plugins:
-  - jekyll-remote-theme                          # whitelisted on Pages :contentReference[oaicite:4]{index=4}
   - jekyll-paginate
   - jekyll-sitemap
 sass:
   sass_dir: _sass
   style: compressed
-google_analytics: ""                             # add your UA / G-tag or leave blank
-exclude: [vendor, node_modules]
+exclude: [vendor, node_modules, CLAUDE.md, .claude]
 kramdown:
   input: GFM

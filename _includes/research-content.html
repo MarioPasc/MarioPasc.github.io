@@ -1,0 +1,69 @@
+<!-- Research page: personal intro (static) + dynamic experience sections -->
+<section class="research-intro">
+  <div class="intro-content">
+    <div class="intro-text">
+      <p>
+        For as long as I can remember, I have always been fascinated by technology and driven by an eagerness to discover new things through curiosity. This passion stems from my father, whose role in shaping my research career has been vital. He introduced me to technology when I was a young child, and together with my mother, consistently encouraged me to pursue a career in science and engineering.
+      </p>
+      <p>
+        I spent my early days playing with Legos and memorizing the Star Wars saga. When I was old enough, I received my first Lego Mindstorms set, which was truly a game changer. Through it, I learned to program basic instructions, read sensor data, and debug my numerous mistakes. Most importantly, it sparked a fundamental question that continues to drive my research today:
+      </p>
+      <p>
+        <strong>How can we teach machines to see and understand the world the way we do?</strong>
+      </p>
+      <p>
+        I'm currently enrolled in a Bioinformatics B.Sc. at the University of M&aacute;laga, where I've been conducting research in Computer Vision for Biomedical Applications since my third year. My work sits at the intersection of generative modeling and medical imaging&mdash;I'm drawn to understanding how learned representations and latent spaces can capture the structure of complex biomedical data. Lately, I've been exploring diffusion models, mean flow, and other generative frameworks as tools for tasks where labeled data is scarce and the stakes are high, such as lesion detection in angiography and MRI synthesis for neurological conditions.
+      </p>
+      <p>
+        Outside of my main research, I enjoy spending time going for hikes, playing tenis, and reading math books.
+      </p>
+    </div>
+
+    <div class="intro-image">
+      <figure>
+        <img src="/assets/images/research/little_me.jpeg" alt="Research workspace">
+        <figcaption>
+          Hospital Universitario Puerta de Hierro, Madrid, Spain (2004)
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Dynamic research experience sections from _data/groups.yml -->
+{% assign groups = site.data.groups | sort: "sort_order" %}
+{% for group in groups %}
+<section class="research-experience">
+  <header class="experience-header">
+    <div class="period">{{ group.period }}</div>
+    <h2 class="institution">
+      <a href="{{ group.url }}">{{ group.name }}</a>
+    </h2>
+    <div class="affiliation">{{ group.institution }}</div>
+  </header>
+
+  <div class="experience-content">
+    {% if group.image != "" %}
+    <div class="experience-image">
+      <figure>
+        <img src="{{ group.image }}" alt="Lab workspace">
+        <figcaption>{{ group.image_caption }}</figcaption>
+      </figure>
+    </div>
+    {% endif %}
+
+    <div class="experience-text">
+      {{ group.description_html }}
+    </div>
+  </div>
+
+  <div class="publications-section">
+    <h3>Publications during my stay</h3>
+    {% include publications.html group_id=group.id layout="grid" %}
+  </div>
+</section>
+
+{% unless forloop.last %}<hr class="section-divider">{% endunless %}
+{% endfor %}

@@ -1,0 +1,31 @@
+{% comment %}Auto-generate BibTeX from structured publication fields. Usage: {% include bibtex-entry.html pub=pub %}{% endcomment %}{% assign p = include.pub %}{% if p.type == "article" %}@article{ {{- p.id -}},
+  title={ {{- p.title -}} },
+  author={ {{- p.authors -}} },
+  journal={ {{- p.venue -}} },{% if p.volume != "" %}
+  volume={ {{- p.volume -}} },{% endif %}{% if p.pages != "" %}
+  pages={ {{- p.pages -}} },{% endif %}
+  year={ {{- p.year -}} },{% if p.publisher != "" %}
+  publisher={ {{- p.publisher -}} },{% endif %}{% if p.doi != "" %}
+  doi={ {{- p.doi -}} }{% endif %}
+}{% elsif p.type == "preprint" %}@misc{ {{- p.id -}},
+  title={ {{- p.title -}} },
+  author={ {{- p.authors -}} },
+  year={ {{- p.year -}} },{% if p.arxiv != "" %}
+  eprint={ {{- p.arxiv -}} },
+  archivePrefix={arXiv},{% endif %}{% if p.primary_class != "" %}
+  primaryClass={ {{- p.primary_class -}} },{% endif %}{% if p.arxiv != "" %}
+  url={https://arxiv.org/abs/{{ p.arxiv }}}{% endif %}
+}{% elsif p.type == "inproceedings" %}@inproceedings{ {{- p.id -}},
+  author={ {{- p.authors -}} },
+  title={ {{- p.title -}} },
+  booktitle={ {{- p.venue -}} },
+  year={ {{- p.year -}} },{% if p.pages != "" %}
+  pages={ {{- p.pages -}} },{% endif %}{% if p.publisher != "" %}
+  publisher={ {{- p.publisher -}} },{% endif %}{% if p.address != "" %}
+  address={ {{- p.address -}} },{% endif %}{% if p.isbn != "" %}
+  isbn={ {{- p.isbn -}} }{% endif %}
+}{% else %}@misc{ {{- p.id -}},
+  title={ {{- p.title -}} },
+  author={ {{- p.authors -}} },
+  year={ {{- p.year -}} }
+}{% endif %}

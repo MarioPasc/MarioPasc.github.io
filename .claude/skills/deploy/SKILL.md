@@ -7,22 +7,20 @@ Push the current changes to GitHub, wait for the Pages deploy, and verify the li
 
 ## Pre-flight checks
 
-Before deploying, ensure:
-
 1. **Build passes locally**:
    ```bash
+   export PATH="$HOME/.rbenv/bin:$PATH" && eval "$(rbenv init - bash)"
    cd /home/mpascual/misc/MarioPasc.github.io && bundle exec jekyll build 2>&1
    ```
-   If the build fails, stop and fix errors first.
 
-2. **No unintended changes** — review the diff:
+2. **Review changes**:
    ```bash
    git status
    git diff --stat
    ```
-   Summarise what will be deployed. If there are untracked files that should not be committed, ask the user.
+   Summarise what will be deployed. Ask about untracked files that shouldn't be committed.
 
-3. **Visual verification passed** — the `verify` skill should have been run. If not, run it now.
+3. **Visual verification passed** — run `/verify` if not already done.
 
 ## Deploy
 
@@ -31,43 +29,31 @@ Before deploying, ensure:
    git add -A
    git commit -m "<type>: <description>"
    ```
-   Follow the commit conventions from CLAUDE.md: `feat:`, `fix:`, `style:`, `content:`, `refactor:`, `docs:`, `chore:`.
-   Write a descriptive message. If multiple changes, use a multi-line commit body.
+   Follow commit conventions: `feat:`, `fix:`, `style:`, `content:`, `refactor:`, `docs:`, `chore:`.
 
 2. **Push**:
    ```bash
    git push origin main
    ```
 
-3. **Wait for deploy** — GitHub Pages takes 30–90 seconds:
+3. **Wait for deploy** (30-90 seconds):
    ```bash
    sleep 60
-   ```
-   Then check deploy status:
-   ```bash
    curl -s https://api.github.com/repos/MarioPasc/MarioPasc.github.io/pages/builds | head -20
    ```
-   Alternatively, use the **GitHub MCP** to check the deploy status if available. Look for `"status": "built"` in the most recent build.
-
-   If the deploy failed, check the error message and report it.
 
 ## Production Verification
 
-Once the deploy succeeds, use the **Playwright MCP** to verify the live site:
+Once deployed, use **Playwright MCP** to verify:
 
-1. Navigate to `https://mariopasc.github.io/` (homepage)
-2. Navigate to the specific page(s) that changed
-3. Take screenshots at desktop (1440×900) viewport
-4. Compare against the local preview — look for:
-   - Differences in font rendering (remote theme may override local)
-   - Missing assets (paths that work locally but break on Pages)
-   - HTTPS mixed-content warnings
-   - MathJax loading (CDN may be slower than local)
+1. Navigate to `https://mariopasc.github.io/`
+2. Navigate to changed page(s)
+3. Take desktop screenshots
+4. Check for: missing assets, font differences, HTTPS issues, MathJax loading
 
 ## Report
 
-Summarise:
 - Commit hash and message
-- Deploy status (success / failure)
-- Production screenshots: match local preview? Any discrepancies?
-- Final status: **deployed and verified** or **needs attention**
+- Deploy status
+- Production matches local? Any discrepancies?
+- Final: **deployed and verified** or **needs attention**

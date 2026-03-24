@@ -40,6 +40,8 @@
     <div class="pub-card-body">
       {% if pub.quartile and pub.quartile != "" %}
         <span class="pub-quartile pub-quartile-{{ pub.quartile | downcase }}">{{ pub.quartile }}</span>
+      {% elsif pub.type == "preprint" %}
+        <span class="pub-quartile pub-quartile-preprint">Preprint</span>
       {% endif %}
 
       <h4 class="pub-title">{{ pub.title }}</h4>

@@ -4,6 +4,6 @@ title: Research
 permalink: /research/
 ---
 
-# Research
+<h1 class="research-page-title">Research</h1>
 
 {% include research-content.html %}

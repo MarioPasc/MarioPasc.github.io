@@ -2,6 +2,17 @@
 // Research Page Components
 // ==========================================================================
 @import '../base/variables';
+@import '../base/typography';
+
+// ==========================================================================
+// Research Page Title
+// ==========================================================================
+.research-page-title {
+  max-width: $container-md;
+  margin: 0 auto $spacing-xl;
+  padding: 0 $spacing-md;
+  font-family: $font-family-heading;
+}
 
 // ==========================================================================
 // Publications List (data-driven)
@@ -94,6 +105,10 @@
   &.pub-quartile-q4 {
     background: rgba($color-error, 0.12);
     color: $color-error;
+  }
+  &.pub-quartile-preprint {
+    background: rgba(#6366f1, 0.12);
+    color: #6366f1;
   }
 }
 

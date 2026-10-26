@@ -108,6 +108,10 @@
           url: https://arxiv.org/abs/2602.03372
         - label: code
           url: https://github.com/MarioPasc/slim-diff
+        - label: PyPI
+          url: https://pypi.org/project/slim-diff/
+        - label: Zenodo
+          url: https://zenodo.org/records/18466775
       bibtex: |-
         @misc{pascualgonzalez2026slimdiff,
           title         = {{SLIM-Diff}: Shared Latent Image-Mask Diffusion with {Lp} loss for Data-Scarce Epilepsy {FLAIR} {MRI}},
@@ -175,3 +179,6 @@
       venue: 3rd National Congress of Radiology and Physical Medicine Students (APURF)
       details: University of Málaga, pp. 5–6, ISBN 978-1-300-31039-6
       year: 2025
+      links:
+        - label: proceedings (PDF)
+          url: https://www.biznaga.org/SLbiblio/2025-libro-III-congreso-estudiantes-APURF.pdf

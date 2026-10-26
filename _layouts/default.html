@@ -25,6 +25,9 @@
   {%- if page.url == '/' %}
   {% include person-jsonld.html %}
   {%- endif %}
+  {%- if page.math %}
+  {% include mathjax.html %}
+  {%- endif %}
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>

@@ -2,7 +2,7 @@
 title: "My Craving for Domesticated STEM Knowledge"
 date: 2025-08-10
 tag: personal
-description: "Why mathematics appeals to me as an undergraduate researcher in computer science, and why I want to study it formally."
+description: "Reflections on the value of foundational mathematics, the frustrations of AI research, and why I want to pursue a degree in pure math."
 ---
 
 ---

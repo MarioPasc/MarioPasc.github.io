@@ -12,7 +12,7 @@ Jekyll. No theme, no JavaScript, one stylesheet.
 | Publications (home page shows `selected: true`) | `_data/publications.yml` |
 | CV sections | `_data/cv.yml` |
 | Citation metrics (generated) | `_data/metrics.yml` |
-| Blog posts | `content/_blog/*.md` (see `content/_blog/_README.md`) |
+| Blog posts | `content/_blog/*.md` (front matter documented in `CLAUDE.md`) |
 | Page structure | `index.html`, `publications.html`, `cv.html`, `blog/index.html` |
 | Templates | `_layouts/`, `_includes/` |
 | Styles | `assets/css/main.css` |
@@ -30,12 +30,17 @@ python3 scripts/update_metrics.py
 
 The script only rewrites `_data/metrics.yml` if the profile page parses.
 
-## Local preview
+## Local preview and lint
 
 ```bash
 bundle install
 bundle exec jekyll serve
+npm install && npm run lint   # Stylelint on assets/css/main.css
 ```
+
+Claude Code: `CLAUDE.md` documents the architecture; `.claude/skills/` has
+`/serve`, `/verify`, `/screenshot`, `/new-post`, `/new-publication` and
+`/deploy`.
 
 GitHub Pages builds with Jekyll 3.10 and its whitelisted plugins; the local
 Gemfile uses Jekyll 4. Keep templates to features both support (no Sass,

@@ -14,6 +14,7 @@
   src: url("../fonts/source-serif-4-latin-normal.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 @font-face {
   font-family: "Source Serif 4";
   font-style: italic;
@@ -25,7 +26,8 @@
 
 :root {
   color-scheme: light dark;
-  --bg: #ffffff;
+
+  --bg: #fff;
   --text: #1c1c1c;
   --muted: #5e5e5e;
   --rule: #dcdcdc;
@@ -54,7 +56,7 @@
 
 html {
   font-size: 106.25%; /* 17px */
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; /* stylelint-disable-line property-no-vendor-prefix -- iOS Safari */
 }
 
 body {
@@ -78,6 +80,7 @@ a {
   text-decoration: none;
 }
 a:hover, a:focus-visible { text-decoration: underline; text-underline-offset: 2px; }
+
 /* Links inside running text are underlined so they do not rely on colour. */
 main p a, main li:not(.pub) a, main dd a {
   text-decoration: underline;
@@ -90,6 +93,7 @@ main p a, main li:not(.pub) a, main dd a {
   position: absolute;
   left: -999px;
 }
+
 .skip-link:focus {
   left: 1rem;
   top: 0.5rem;
@@ -102,6 +106,7 @@ h1, h2, h3 {
   line-height: 1.25;
 }
 h1 { font-size: 1.75rem; margin: 0 0 0.5rem; }
+
 h2 {
   font-size: 1.2rem;
   margin: 2.5rem 0 1rem;
@@ -123,6 +128,7 @@ hr {
 img { max-width: 100%; height: auto; }
 
 figure { text-align: center; }
+
 figcaption {
   color: var(--muted);
   font-size: 0.9rem;
@@ -153,6 +159,7 @@ details.more > summary {
   border-bottom: 1px solid var(--rule);
   margin-bottom: 2.5rem;
 }
+
 .site-header .wrap {
   display: flex;
   flex-wrap: wrap;
@@ -162,11 +169,13 @@ details.more > summary {
   padding-top: 1.1rem;
   padding-bottom: 0.9rem;
 }
+
 .site-title {
   color: var(--text);
   font-weight: 600;
 }
 .site-title:hover { text-decoration: none; }
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -195,12 +204,14 @@ details.more > summary {
   align-items: start;
   margin-bottom: 2rem;
 }
+
 .portrait {
   width: 9.5rem;
   border: 1px solid var(--rule);
 }
 .positions, .contact { margin-bottom: 0.75rem; }
 .positions { color: var(--muted); }
+
 .profiles {
   display: flex;
   flex-wrap: wrap;
@@ -221,6 +232,7 @@ details.more > summary {
   grid-template-columns: 7.5rem minmax(0, 1fr);
   gap: 0.6rem 1rem;
 }
+
 .dated dt {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
@@ -229,6 +241,7 @@ details.more > summary {
 .dated dd p, .dated dd ul { margin: 0.25rem 0 0; }
 .cv { grid-template-columns: 9rem minmax(0, 1fr); }
 .cv-title { font-weight: 600; }
+
 .cv-media-coverage .cv-title,
 .cv-skills-and-languages .cv-title { font-weight: 400; }
 .cv-org { color: var(--muted); }
@@ -244,12 +257,14 @@ details.more > summary {
   list-style: none;
   padding-left: 0;
 }
+
 .pub {
   display: grid;
   grid-template-columns: 2.5rem minmax(0, 1fr);
   gap: 0 0.75rem;
   margin-bottom: 1.1rem;
 }
+
 .pub-id {
   color: var(--muted);
   font-family: var(--sans);
@@ -259,6 +274,7 @@ details.more > summary {
 .pub-title { font-weight: 600; }
 .pub-authors { color: var(--text); }
 .pub-venue, .pub-note { color: var(--muted); }
+
 .pub-links {
   display: flex;
   flex-wrap: wrap;
@@ -268,6 +284,7 @@ details.more > summary {
   font-family: var(--sans);
   font-size: 0.8rem;
 }
+
 .pub-links summary {
   color: var(--link);
   cursor: pointer;
@@ -287,6 +304,7 @@ details.more > summary {
   list-style: none;
   padding-left: 0;
 }
+
 .post-list li {
   display: grid;
   grid-template-columns: 7.5rem minmax(0, 1fr);
@@ -296,9 +314,11 @@ details.more > summary {
 
 .post-header { margin-bottom: 2rem; }
 .post-header .meta { color: var(--muted); }
+
 /* Section headings written as # inside a post rank below the post title. */
 .post > h1 { font-size: 1.4rem; margin-top: 2.5rem; }
 .post > h2 { font-size: 1.15rem; }
+
 .post-footer {
   border-top: 1px solid var(--rule);
   margin-top: 3rem;
@@ -310,11 +330,13 @@ details.more > summary {
 /* Code ------------------------------------------------------------------ */
 
 code, pre { font-family: var(--mono); font-size: 0.85em; }
+
 :not(pre) > code {
   background: var(--code-bg);
   padding: 0.1em 0.3em;
   border-radius: 2px;
 }
+
 pre {
   background: var(--code-bg);
   border: 1px solid var(--rule);
@@ -329,6 +351,7 @@ pre code { background: none; padding: 0; font-size: 0.8rem; }
 .highlight .k, .highlight .kd, .highlight .kn, .highlight .kr, .highlight .kt, .highlight .kc, .highlight .ow { color: var(--link); }
 .highlight .s, .highlight .sh, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .si { color: #3d7a3d; }
 .highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .il { color: #9a5b13; }
+
 @media (prefers-color-scheme: dark) {
   .highlight .s, .highlight .sh, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .si { color: #9cc79c; }
   .highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .il { color: #d9a66b; }

@@ -1,0 +1,19 @@
+{
+  "name": "mariopasc.github.io",
+  "version": "2.0.0",
+  "description": "Personal academic website of Mario Pascual González",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "stylelint 'assets/css/*.css'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarioPasc/MarioPasc.github.io.git"
+  },
+  "homepage": "https://mariopasc.github.io/",
+  "devDependencies": {
+    "stylelint": "^17.5.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

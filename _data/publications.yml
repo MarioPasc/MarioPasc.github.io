@@ -1,0 +1,177 @@
+# Publications, newest first within each group. Rendered by
+# _includes/publication.html on /publications/; entries with selected: true
+# also appear on the home page. The author string equal to
+# profile.citation_name is set in bold.
+#
+# Item fields: id, authors, title, venue, details, year, note, selected,
+#              links (list of {label, url}), bibtex.
+
+- group: Journal articles
+  items:
+    - id: J1
+      selected: true
+      authors: M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, E. López-Rubio, A. Ortega-Gómez
+      title: Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment
+      venue: Computers in Biology and Medicine
+      details: vol. 196, art. 110697
+      year: 2025
+      links:
+        - label: DOI
+          url: https://doi.org/10.1016/j.compbiomed.2025.110697
+        - label: code
+          url: https://github.com/MarioPasc/Coronary_Angiography_Detection
+      bibtex: |-
+        @article{pascualgonzalez2025hyperparameter,
+          title   = {Hyperparameter optimization of {YOLO} models for invasive coronary angiography lesion detection and assessment},
+          author  = {Pascual-Gonz{\'a}lez, Mario and Jim{\'e}nez-Partinen, Ariadna and Palomo, Esteban J. and L{\'o}pez-Rubio, Ezequiel and Ortega-G{\'o}mez, Almudena},
+          journal = {Computers in Biology and Medicine},
+          volume  = {196},
+          pages   = {110697},
+          year    = {2025},
+          doi     = {10.1016/j.compbiomed.2025.110697}
+        }
+
+# Journal titles; the arXiv versions carry the original titles (note field).
+- group: Manuscripts under review
+  items:
+    - id: R1
+      selected: true
+      authors: E. López-Rubio, M. Pascual-González
+      title: Representation of directed acyclic graphs by sequences of instructions for symbolic regression
+      venue: IEEE Transactions on Pattern Analysis and Machine Intelligence
+      details: under review, minor revision
+      year: 2026
+      note: "Preprint: <i>Instruction Set and Language for Symbolic Regression</i> (IsalSR)."
+      links:
+        - label: arXiv
+          url: https://arxiv.org/abs/2603.21836
+        - label: code
+          url: https://github.com/MarioPasc/IsalSR
+      bibtex: |-
+        @misc{lopezrubio2026isalsr,
+          title         = {Instruction Set and Language for Symbolic Regression},
+          author        = {L{\'o}pez-Rubio, Ezequiel and Pascual-Gonz{\'a}lez, Mario},
+          year          = {2026},
+          eprint        = {2603.21836},
+          archivePrefix = {arXiv}
+        }
+    - id: R2
+      selected: true
+      authors: E. López-Rubio, M. Pascual-González
+      title: Representation of graphs by sequences of instructions
+      venue: Pattern Recognition
+      details: under review, revised version after major revision
+      year: 2026
+      note: "Preprint: <i>Instruction set for the representation of graphs</i> (IsalGraph)."
+      links:
+        - label: arXiv
+          url: https://arxiv.org/abs/2603.11039
+        - label: code
+          url: https://github.com/MarioPasc/IsalGraph
+      bibtex: |-
+        @misc{lopezrubio2026isalgraph,
+          title         = {Instruction set for the representation of graphs},
+          author        = {L{\'o}pez-Rubio, Ezequiel and Pascual-Gonz{\'a}lez, Mario},
+          year          = {2026},
+          eprint        = {2603.11039},
+          archivePrefix = {arXiv}
+        }
+
+- group: Preprints
+  items:
+    - id: P1
+      authors: M. Pascual-González, E. López-Rubio
+      title: Instruction set and language for hypergraphs
+      venue: arXiv preprint arXiv:2607.10194
+      year: 2026
+      links:
+        - label: arXiv
+          url: https://arxiv.org/abs/2607.10194
+        - label: code
+          url: https://github.com/MarioPasc/IsalHG
+      bibtex: |-
+        @misc{pascualgonzalez2026isalhg,
+          title         = {Instruction Set and Language for Hypergraphs},
+          author        = {Pascual-Gonz{\'a}lez, Mario and L{\'o}pez-Rubio, Ezequiel},
+          year          = {2026},
+          eprint        = {2607.10194},
+          archivePrefix = {arXiv}
+        }
+    - id: P2
+      selected: true
+      authors: M. Pascual-González, A. Jiménez-Partinen, R. M. Luque-Baena, F. Nagib-Raya, E. López-Rubio
+      title: "SLIM-Diff: shared latent image-mask diffusion with Lp loss for data-scarce epilepsy FLAIR MRI"
+      venue: arXiv preprint arXiv:2602.03372
+      year: 2026
+      links:
+        - label: arXiv
+          url: https://arxiv.org/abs/2602.03372
+        - label: code
+          url: https://github.com/MarioPasc/slim-diff
+      bibtex: |-
+        @misc{pascualgonzalez2026slimdiff,
+          title         = {{SLIM-Diff}: Shared Latent Image-Mask Diffusion with {Lp} loss for Data-Scarce Epilepsy {FLAIR} {MRI}},
+          author        = {Pascual-Gonz{\'a}lez, Mario and Jim{\'e}nez-Partinen, Ariadna and Luque-Baena, Rafael Marcos and Nagib-Raya, F{\'a}tima and L{\'o}pez-Rubio, Ezequiel},
+          year          = {2026},
+          eprint        = {2602.03372},
+          archivePrefix = {arXiv}
+        }
+    - id: P3
+      authors: M. Pascual-González
+      title: Fuzzy information seeded region growing for automated lesions after stroke segmentation in MR brain images
+      venue: arXiv preprint arXiv:2311.11742
+      year: 2023
+      links:
+        - label: arXiv
+          url: https://arxiv.org/abs/2311.11742
+        - label: code
+          url: https://github.com/MarioPasc/FISRG-for-Automated-Lesion-After-Stroke-Segmentation-in-MRI
+
+- group: Conference proceedings
+  items:
+    - id: C1
+      authors: J.-J. Rus-Muñoz, A. Jiménez-Partinen, M. Pascual-González, E. J. Palomo, J. Rodríguez-Capitán
+      title: Automatic screening of invasive coronary angiography images using Swin Transformer
+      venue: 11th International Work-Conference on the Interplay Between Natural and Artificial Computation (IWINAC 2026)
+      details: pp. 32–42, Springer
+      year: 2026
+      links:
+        - label: DOI
+          url: https://doi.org/10.1007/978-3-032-27317-8_4
+    - id: C2
+      authors: A. Jiménez-Partinen, S. Rozenblum, M. Pascual-González*, M. P. Ordóñez-Walkowiak, V. Guirado-Osorio, M. A. Molina-Cabello
+      title: "YOLO-MSLesSeg: automated multiple sclerosis lesion segmentation in MRI with image enhancement techniques"
+      venue: 21st International Conference on Soft Computing Models in Industrial and Environmental Applications (SOCO 2026)
+      details: pp. 574–585, Springer
+      year: 2026
+      note: "* Corresponding author."
+      links:
+        - label: DOI
+          url: https://doi.org/10.1007/978-3-032-29254-4_46
+
+- group: Communications at clinical congresses
+  intro: Methodological work presented at Spanish radiology congresses (in Spanish).
+  items:
+    - id: C3
+      authors: M. Pascual-González, A. Jiménez-Partinen, R. M. Luque-Baena, E. López-Rubio, A. Pérez-Lara, F. Nagib-Raya, F. Sendra-Portero, B. Asenjo-García
+      title: Are deep neural networks ready to replace gadolinium in glioma MRI?
+      venue: 54th Annual Meeting of the Spanish Society of Neuroradiology (SENR)
+      details: Málaga, oral communication
+      year: 2026
+      note: Best Oral Communication Award, Diagnostic Neuroradiology.
+    - id: C4
+      authors: M. Pascual-González, A. Jiménez-Partinen, E. J. Palomo, R. M. Luque-Baena, E. López-Rubio, F. Sendra-Portero, A. Pérez-Lara, B. Asenjo-García
+      title: "PaCS-SR: patch-wise convex combination of experts for 3D super-resolution of magnetic resonance images under clinical anisotropy"
+      venue: 38th National Congress of the Spanish Society of Medical Radiology (SERAM)
+      details: Valencia, oral communication
+      year: 2026
+      note: Accésit (runner-up prize) for oral communication; <i>Cum Laude</i> distinction for electronic communication.
+      links:
+        - label: code
+          url: https://github.com/MarioPasc/PaCS-SR
+    - id: C5
+      authors: M. Pascual-González, E. López-Rubio, F. Sendra-Portero, A. Pérez-Lara
+      title: "Optimising magnetic resonance image preprocessing: blind noise estimation with Gaussian random fields"
+      venue: 3rd National Congress of Radiology and Physical Medicine Students (APURF)
+      details: University of Málaga, pp. 5–6, ISBN 978-1-300-31039-6
+      year: 2025

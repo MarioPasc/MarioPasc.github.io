@@ -1,0 +1,25 @@
+---
+title: Publications
+permalink: /publications/
+description: Publications of Mario Pascual González (journal articles, manuscripts under review, preprints and conference papers).
+---
+<h1>Publications</h1>
+{%- assign scholar = site.data.profile.links | where: "label", "Google Scholar" | first -%}
+{%- assign orcid = site.data.profile.links | where: "label", "ORCID" | first %}
+<p class="lede">
+  Also on <a href="{{ scholar.url }}">Google Scholar</a> and
+  <a href="{{ orcid.url }}">ORCID</a>.
+</p>
+{% include metrics.html %}
+
+{% for group in site.data.publications %}
+<h2>{{ group.group }}</h2>
+{%- if group.intro %}
+<p class="muted">{{ group.intro }}</p>
+{%- endif %}
+<ol class="pubs">
+  {%- for pub in group.items %}
+  {% include publication.html pub=pub %}
+  {%- endfor %}
+</ol>
+{% endfor %}

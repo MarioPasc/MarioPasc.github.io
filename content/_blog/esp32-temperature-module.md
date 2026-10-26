@@ -1,8 +1,8 @@
 ---
 title: "Wi-Fi ESP-32 Humidity and Temperature Module"
 date: 2025-08-01
-layout: post
 tag: esp32
+description: "Tutorial: a Wi-Fi humidity and temperature logger built on an ESP32 with a DHT11 sensor and an OLED display."
 ---
 
 ---
@@ -44,10 +44,9 @@ Everything used in this project can be found in the<a href="https://www.aliexpre
 
 There are some constant values that are important to identify and communicate with our components. I decided to declare and define all these constant values in a separate file, where I can really keep track of their setting. The following code corresponds to <code>config.h</code>, the header file of the configuration module.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 #pragma once
-#include &lt;Arduino.h&gt;
+#include <Arduino.h>
 namespace cfg {
     // GPIOs
     constexpr gpio_num_t PIN_DHT      = GPIO_NUM_5;
@@ -70,13 +69,11 @@ namespace cfg {
     constexpr size_t READINGS_PER_BATCH = 10;
     constexpr size_t NETWORK_QUEUE_SIZE = 5;
 } // namespace cfg
-  </code>
-</div>
+```
 
 The <code>config.cpp</code> file only implements the actual WiFi passwords and values.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 #include "config.h"
 
 namespace cfg {
@@ -87,17 +84,15 @@ namespace cfg {
     // Server endpoint
     const char* SERVER_URL = "http://(your computer IP):8080/sensor-data";
 }
-  </code>
-</div>
+```
 
 ## Display
 
 The <code>display</code> module is simple, we only need an <code>init()</code> method that returns the OLED status and initializes it with the previously defined constants, one helper method to center our text in the OLED, and one function per display we want to show. The first two methods are straightforward:
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 #include "display.h"
-#include &lt;esp_log.h&gt;
+#include <esp_log.h>
 
 static const char* TAG = "DISPLAY";
 
@@ -127,15 +122,13 @@ void Display::centrePrint(int16_t y, const String& txt) {
     oled.setCursor(x, y);
     oled.print(txt);
 }
-  </code>
-</div>
+```
 
 As a sanity routine, every time the OLED gets initialized, we clear the display, set our text color, font size, display a static message (<i>"Environmental + WiFi"</i>), and return a positive boolean if the routine ended successfully.  The <code>Display::centrePrint</code> method gets the text length, stores the width of the text in <code>w</code>, and computes the offset (<code>int16_t x</code>) that it needs to set so that the text appears in the middle of the display. The display height is hard-coded by the input parameter <code>y</code>. 
 
 Only two more functions are needed to complete this module, which are: (i) <code>Display::showWiFiStatus</code>, to display the WiFi status regarding the connection between the ESP32 and my router, and (ii) <code>Display::showSensorData</code>, which displays temperature (T), humidity (RH), WiFi status, and the buffer that is being stored relative to the hard-coded readings per batch (10). Only the stored buffer reaches the maximum readings per batch, the <code>network</code> module parses the data into a JSON file to sent it to a python script listening on the target port. 
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 void Display::showWiFiStatus(const String& status) {
     oled.fillRect(0, 16, cfg::OLED_W, 32, SSD1306_BLACK);
     centrePrint(24, "WiFi: " + status);
@@ -158,19 +151,17 @@ void Display::showSensorData(const Reading& reading, size_t buffer_count, bool w
     }
     oled.display();
 }
-  </code>
-</div>
+```
 
 ## Sensor
 
 
 The main class is <code>SensorManager</code>, which owns the DHT sensor driver and holds the last successful reading, while protecting it with a FreeRTOS mutex. The constructor initializes the class with the settings defined in <code>config.h</code>. First, it configures the DHT pin as <code>INPUT_PULLUP</code> and waits briefly, afterwards, it starts the DHT driver and waits for sensor stabilization, creating a FreeRTOS mutex (<code>xSemaphoreCreateMutex</code>) to guard the current reading. Finally, it returns true on success, and false if the mutex couldn’t be created.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 #include "sensor.h"
 #include "config/config.h"
-#include &lt;esp_log.h&gt;
+#include <esp_log.h>
 
 static const char* TAG = "SENSOR";
 
@@ -202,13 +193,11 @@ bool SensorManager::init() {
     ESP_LOGI(TAG, "Sensor manager initialized");
     return true;
 }
-  </code>
-</div>
+```
 
 The only two more functionalities that we may need from the sensor class is the safe <code>SensorManager::getCurrentReading</code> and the actual reading function, <code>SensorManager::readSensor</code>. The current reading function locks the mutex, copies the most recent cached current reading into a local <code>Reading</code> variable, unlocks, and returns the copy. To take a new reading, the function asks the DHT driver for fresh temperature and humidity events: <code>dht.temperature().getEvent(...)</code> and <code>dht.humidity().getEvent(...)</code>, validating both by checking they’re not NaN. On success, it populates the output reference with temperature (ºC), humidity (%RH), and <code>timestamp = millis()</code> to get the time of the reading. It updates the cached <code>current_reading</code> under the mutex, logs the values and returns true.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 Reading SensorManager::getCurrentReading() {
     Reading reading;
     
@@ -251,18 +240,16 @@ bool SensorManager::readSensor(Reading& reading) {
         return false;
     }
 }
-  </code>
-</div>
+```
 
 ## Network
 
 The main class is <code>NetworkManager</code>, which owns a FreeRTOS queue to buffer outgoing batches of sensor readings and provides Wi‑Fi connectivity plus HTTP upload. The constructor sets up internal state; initialization creates the queue. Wi‑Fi is established via <code>NetworkManager::connectWiFi</code>, which performs a bounded retry loop with logging. Utility getters expose connection status and local IP.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 #include "network.h"
 #include "config/config.h"
-#include &lt;esp_log.h&gt;
+#include <esp_log.h>
 
 static const char* TAG = "NETWORK";
 
@@ -361,13 +348,11 @@ bool NetworkManager::isConnected() const {
 String NetworkManager::getLocalIP() const {
     return WiFi.localIP().toString();
 }
-  </code>
-</div>
+```
 
 The remaining functionality covers batching and sending data plus a task loop. <code>NetworkManager::queueBatch</code> copies a <code>ReadingBatch</code> to heap and enqueues its pointer; <code>NetworkManager::sendDataBatch</code> serializes readings to JSON and POSTs to <code>cfg::SERVER_URL</code>; <code>NetworkManager::networkTask</code> drains the queue and sends, cleaning up memory. 
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 bool NetworkManager::queueBatch(const ReadingBatch& batch) {
     if (!batch_queue) return false;
     
@@ -402,10 +387,10 @@ bool NetworkManager::sendDataBatch(const ReadingBatch& readings) {
     JsonDocument doc;
     doc["device_id"] = "ESP32_DHT11";
     doc["batch_time"] = millis();
-    doc["readings"].to&lt;JsonArray&gt;();
+    doc["readings"].to<JsonArray>();
 
     for (const auto& reading : readings) {
-        JsonObject obj = doc["readings"].add&lt;JsonObject&gt;();
+        JsonObject obj = doc["readings"].add<JsonObject>();
         obj["temperature"] = reading.t;
         obj["humidity"] = reading.h;
         obj["timestamp"] = reading.timestamp;
@@ -419,7 +404,7 @@ bool NetworkManager::sendDataBatch(const ReadingBatch& readings) {
 
     int httpResponseCode = http.POST(jsonString);
     
-    bool success = (httpResponseCode &gt;= 200 && httpResponseCode &lt; 300);
+    bool success = (httpResponseCode >= 200 && httpResponseCode < 300);
     
     if (success) {
         String response = http.getString();
@@ -451,8 +436,7 @@ void NetworkManager::networkTask() {
         }
     }
 }
-  </code>
-</div>
+```
 
 As a side note, this was the most stressful module to code and debug, in the end it was because the deprecation of <code>StaticJsonDocument</code>, and me not knowing how to work with the <code>JsonDocument</code> type. There may be a lot of code here, but it narrows down to logging, data collection, and data transmision via an HTML POST operation (<code>http.POST(jsonString)</code>). Further experimentation with possible HTML errors would be good.
 
@@ -460,12 +444,11 @@ As a side note, this was the most stressful module to code and debug, in the end
 
 After looking at several ESP32 projects on the internet, I noticed that most of them coded their components-related modules, and then integrated the functionality is a "tasks" module, where they would just orchestrate the functionality of the component with high-level functions they can use from their <code>main.cpp</code> script. Here, the main class is <code>TaskManager</code>, which coordinates sensor sampling, batching/uploads, and UI updates. It holds references to <code>SensorManager</code>, <code>NetworkManager</code>, and <code>Display</code>. It also maintains a readings buffer. During initialization, it creates the buffer mutex, logs status with ESP-IDF, and returns true on success (false if the mutex cannot be created).
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 // filepath: tasks.cpp
 #include "tasks.h"
 #include "config/config.h"
-#include &lt;esp_log.h&gt;
+#include <esp_log.h>
 
 static const char* TAG = "TASKS";
 
@@ -488,13 +471,11 @@ bool TaskManager::init() {
     ESP_LOGI(TAG, "Task manager initialized");
     return true;
 }
-  </code>
-</div>
+```
 
 The two core task loops are the safe <code>TaskManager::sensorTask</code> and the UI updater <code>TaskManager::uiTask</code>. The sensor task periodically calls <code>sensor_manager.readSensor</code>; on success, it pushes the reading into the guarded buffer and, when the buffer reaches <code>cfg::READINGS_PER_BATCH</code>, it copies the buffer into a batch and tries to enqueue it via <code>network_manager.queueBatch</code>. If enqueued, it clears the buffer; otherwise it keeps data for later retries. The UI task polls the latest cached reading with <code>sensor_manager.getCurrentReading</code>, snapshots the buffer size under the mutex, and renders via <code>display.showSensorData</code>. Both tasks sleep using <code>vTaskDelay</code> with periods from <code>config.h</code>.
 
-<div class="code-block">
-  <code data-lang="cpp">
+```cpp
 // filepath: tasks.cpp
 void TaskManager::sensorTask() {
     Reading reading;
@@ -542,20 +523,18 @@ void TaskManager::uiTask() {
         vTaskDelay(cfg::UI_PERIOD);
     }
 }
-  </code>
-</div>
+```
 
 ## Main script 
 
 The <code>setup()</code> method of the main script instantiates all the classes with the parameters defined in the configuration class, performs the sensor initialization routine, WiFi connection routine, and uploads the tasks for the <code>loop()</code> function. It also includes important debugging steps using the </code>&lt;esp_log.h&gt;</code> library, or at least, logging points that I found important while debugging the code, and that cause no harm to be left behind. 
 
-<div class="code-block">
-  <code data-lang="cpp">
-#include &lt;Arduino.h&gt;
-#include &lt;Wire.h&gt;
-#include &lt;esp_log.h&gt;
-#include &lt;Adafruit_GFX.h&gt;
-#include &lt;Adafruit_SSD1306.h&gt;
+```cpp
+#include <Arduino.h>
+#include <Wire.h>
+#include <esp_log.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 // Local modules
 #include "config/config.h"
@@ -633,15 +612,13 @@ void setup()
 void loop() { 
     vTaskDelete(nullptr); 
 }
-    </code>
-</div>
+```
 
 ## Python Listener
 
 The Python listener is quite straightforward and could be implemented in many ways, in my case, I let the generative AI ChatGPT help me incorporate the data collection with a Matplotlib animation, where we can visualize in real time the temperature and humidity measurements and the temperature-humidity curve. The listener script should be initialized at a local computer IP (e.g., <code>http://0.0.0.0:8080</code>), using the same port and endpoint configuration implemented in the ESP32 <code>config.h</code> file. The data collection is straightforward, by creating a method <code>do_POST(self)</code> or <code>do_GET(self)</code> within a class that inherits from <code>BaseHTTPRequestHandler</code> we can obtain the latest JSON sent to the endpoint. In my case, I decided to go with a POST HTTP operation, this is the start of this class:
 
-<div class="code-block">
-  <code data-lang="python">
+```python
 class SensorHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == '/sensor-data':
@@ -660,8 +637,7 @@ def start_server():
     print("Server running on http://0.0.0.0:8080")
     print("Waiting for sensor data...")
     server.serve_forever()
-    </code>
-</div>
+```
 
 <figure id="fig2">
 <img src="/assets/images/blog/humiditytemp/humidityfunction.png" alt="Plotting Functionality">

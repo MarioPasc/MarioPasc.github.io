@@ -2,24 +2,15 @@
 layout: default
 ---
 <article class="post">
-  <header>
+  <header class="post-header">
     <h1>{{ page.title }}</h1>
-    <p class="post-date"><em>{{ page.date | date: site.date_format }}</em></p>
-    {% if page.image %}
-    <img src="{{ page.image }}" alt="" class="post-image">
-    {% endif %}
+    <p class="meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      {%- if page.tag %} · {{ page.tag }}{% endif %}
+    </p>
   </header>
-  <div class="post-content">
-    {{ content }}
-  </div>
-  <hr>
+  {{ content }}
   <footer class="post-footer">
-    <div class="author-info">
-      <p><strong>About the Author</strong></p>
-      <p>Mario Pascual González is just a curious person. You can find more of his work on <a href="https://github.com/MarioPasc">GitHub</a>.</p>
-    </div>
-    <div class="contact-info">
-      <p>Have questions or feedback? Feel free to reach out at <a href="mailto:mpascualg02@gmail.com">mpascualg02@gmail.com</a>.</p>
-    </div>
+    <a href="{{ '/blog/' | relative_url }}">All posts</a>
   </footer>
 </article>

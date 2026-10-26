@@ -1,8 +1,8 @@
 ---
 title: "My Craving for Domesticated STEM Knowledge"
 date: 2025-08-10
-layout: post
 tag: personal
+description: "Why mathematics appeals to me as an undergraduate researcher in computer science, and why I want to study it formally."
 ---
 
 ---

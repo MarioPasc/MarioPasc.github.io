@@ -1,0 +1,3 @@
+{%- comment -%}One entry of _data/news.yml, passed as include.item.{%- endcomment -%}
+<dt>{{ include.item.date | date: "%b %Y" }}</dt>
+<dd>{{ include.item.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</dd>

@@ -1,0 +1,31 @@
+# Dated news items, newest first; only month and year are displayed (the day
+# only orders items within a month). `text` is Markdown. Links to
+# publications use their ids (/publications/#C3). The home page shows the
+# first six items and folds the rest under "Earlier news".
+
+# Remove the "Upcoming" prefix once the lecture has taken place.
+- date: 2026-11-01
+  text: "Upcoming: invited lecture *Artificial intelligence and biomedical imaging* in the Biomedical Imaging course of the BSc in Biomedical Engineering, University of Málaga."
+- date: 2026-10-23
+  text: "Best Oral Communication Award (Diagnostic Neuroradiology) at the 54th Annual Meeting of the Spanish Society of Neuroradiology (SENR), Málaga, for our work on whether deep neural networks can replace gadolinium in glioma MRI [[C3](/publications/#C3)]."
+- date: 2026-10-16
+  text: "Third prize in the AEPIA Best Bachelor's Thesis Award (CAEPIA 2026) for my thesis on meningioma growth prediction from multimodal MRI ([UMA press release](https://www.uma.es/sala-de-prensa/noticias/un-trabajo-fin-de-grado-de-la-uma-distinguido-por-la-asociacion-espanola-para-la-inteligencia-artificial/))."
+# Drop "Provisionally" once the final award list is published.
+- date: 2026-10-07
+  text: "Provisionally awarded a Collaboration Grant (Spanish Ministry of Education) for my Master's thesis research in the Machine Learning Group (GAA), Universidad Autónoma de Madrid."
+- date: 2026-10-01
+  text: "Our manuscript on representing directed acyclic graphs by sequences of instructions for symbolic regression received a minor revision at IEEE TPAMI [[R1](/publications/#R1)]."
+- date: 2026-07-11
+  text: "New preprint: an instruction set and language for hypergraphs [[P1](/publications/#P1)]."
+- date: 2026-07-10
+  text: "Defended my Bachelor's thesis at the University of Málaga, graded 10/10 with *Matrícula de Honor*."
+- date: 2026-05-22
+  text: "Accésit (runner-up prize) for oral communication and *Cum Laude* distinction for electronic communication at the 38th SERAM National Congress, Valencia, for PaCS-SR [[C4](/publications/#C4)]."
+- date: 2026-03-23
+  text: "New preprint: an instruction set and language for symbolic regression (IsalSR) [[R1](/publications/#R1)]."
+- date: 2026-03-11
+  text: "New preprint: an instruction set for the representation of graphs (IsalGraph) [[R2](/publications/#R2)]."
+- date: 2026-02-03
+  text: "New preprint: SLIM-Diff, shared-latent image–mask diffusion for data-scarce epilepsy FLAIR MRI [[P2](/publications/#P2)]."
+- date: 2025-09-01
+  text: "*Hyperparameter optimization of YOLO models for invasive coronary angiography lesion detection and assessment* published in *Computers in Biology and Medicine* [[J1](/publications/#J1)]."

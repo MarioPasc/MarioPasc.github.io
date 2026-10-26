@@ -1,35 +1,21 @@
 ---
-layout: default
 title: Blog
 permalink: /blog/
+description: Notes on side projects and other topics by Mario Pascual González.
 ---
+<h1>Blog</h1>
+<p class="lede">Notes on side projects and other topics.</p>
 
-{% assign blog_posts = site.blog | sort: 'date' | reverse %}
-{% if blog_posts.size > 0 %}
-<div class="blog-list">
-  {% for post in blog_posts %}
-  <article class="blog-entry">
-    {% if post.image %}
-    <img src="{{ post.image }}" alt="" class="blog-entry-image" />
-    {% endif %}
-    <div class="blog-entry-content">
-      <h2 class="blog-entry-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      
-      <!-- Group date and tag in a meta container -->
-      <div class="blog-entry-meta">
-        <p class="blog-entry-date">{{ post.date | date: site.date_format }}</p>
-        {% if post.tag %}
-        {% assign tag = site.data.tags[post.tag] %}
-        {% if tag %}
-        <span class="blog-entry-tag" style="background: {{ tag.bg_color }}; color: {{ tag.text_color }};">{{ tag.label }}</span>
-        {% endif %}
-        {% endif %}
-      </div>
-    </div>
-  </article>
-  {% endfor %}
-</div>
-{% else %}
+{%- assign posts = site.blog | sort: 'date' | reverse %}
+{%- if posts.size > 0 %}
+<ul class="post-list">
+  {%- for post in posts %}
+  <li>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+  </li>
+  {%- endfor %}
+</ul>
+{%- else %}
 <p>No posts yet.</p>
-{% endif %}
-
+{%- endif %}

@@ -1,0 +1,81 @@
+---
+title: Home
+permalink: /
+---
+{%- assign p = site.data.profile -%}
+<section class="intro">
+  <img class="portrait" src="{{ '/assets/images/portrait.jpg' | relative_url }}" alt="Portrait of {{ p.name }}" width="480" height="535">
+  <div>
+    <h1>{{ p.name }}</h1>
+    <p class="positions">
+      {%- for pos in p.positions %}
+      {{ pos.role }}, {{ pos.org }}{% unless forloop.last %}<br>{% endunless %}
+      {%- endfor %}
+    </p>
+    <p class="contact">
+      {%- for e in p.emails %}
+      <a href="mailto:{{ e }}">{{ e }}</a>{% unless forloop.last %}<br>{% endunless %}
+      {%- endfor %}
+    </p>
+    <p class="profiles">
+      {%- for l in p.links %}
+      <a href="{{ l.url }}">{{ l.label }}</a>
+      {%- endfor %}
+    </p>
+  </div>
+</section>
+
+<p>
+  I am an MSc student in Artificial Intelligence at the Universidad Autónoma de
+  Madrid, and I work on Bayesian deep learning for deep generative models. My
+  Master's thesis, supervised by Daniel Hernández-Lobato, is on scalable
+  linearised Laplace approximations to quantify the uncertainty of pretrained
+  flow-matching models.
+</p>
+<p>
+  Since 2023 I have been a research trainee in the Computational Intelligence
+  and Image Analysis Group (ICAI) at the University of Málaga, where I work with
+  <a href="https://orcid.org/0000-0001-8231-5687">Ezequiel López-Rubio</a> on
+  deep learning for brain MRI and invasive coronary angiography, and on
+  representations of graphs as sequences of instructions for symbolic
+  regression. I received a BSc in Biomedical Engineering (bioinformatics track)
+  from the University of Málaga in 2026. I intend to pursue a PhD on Bayesian
+  methods for generative models, in particular diffusion and flow matching.
+</p>
+
+<h2>Research interests</h2>
+<ul>
+  {%- for i in p.interests %}
+  <li>{{ i }}</li>
+  {%- endfor %}
+</ul>
+
+<h2>News</h2>
+<dl class="dated">
+  {%- for n in site.data.news limit: 6 %}
+  {% include news-item.html item=n %}
+  {%- endfor %}
+</dl>
+{%- if site.data.news.size > 6 %}
+<details class="more">
+  <summary>Earlier news</summary>
+  <dl class="dated">
+    {%- for n in site.data.news offset: 6 %}
+    {% include news-item.html item=n %}
+    {%- endfor %}
+  </dl>
+</details>
+{%- endif %}
+
+<h2>Selected papers</h2>
+{% include metrics.html %}
+<ol class="pubs">
+  {%- for group in site.data.publications %}
+    {%- for pub in group.items %}
+      {%- if pub.selected %}
+  {% include publication.html pub=pub %}
+      {%- endif %}
+    {%- endfor %}
+  {%- endfor %}
+</ol>
+<p><a href="{{ '/publications/' | relative_url }}">All publications</a></p>

@@ -1,0 +1,47 @@
+---
+title: CV
+permalink: /cv/
+description: Curriculum vitae of Mario Pascual González.
+---
+<h1>Curriculum vitae</h1>
+<p class="lede">{{ site.data.profile.name }} · {{ site.data.profile.location }}</p>
+
+{% for s in site.data.cv %}
+<h2>{{ s.section }}</h2>
+<dl class="dated cv cv-{{ s.section | slugify }}">
+  {%- for e in s.entries %}
+  <dt>{{ e.date }}</dt>
+  <dd>
+    <span class="cv-title">{{ e.title }}</span>
+    {%- if e.org %}<br><span class="cv-org">{{ e.org }}</span>{% endif %}
+    {%- if e.text %}
+    <p>{{ e.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+    {%- endif %}
+    {%- if e.items %}
+    <ul>
+      {%- for i in e.items %}
+      <li>{{ i | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+    {%- if e.links %}
+    <div class="pub-links">
+      {%- for l in e.links %}
+      <a href="{{ l.url }}">{{ l.label }}</a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </dd>
+  {%- endfor %}
+</dl>
+{%- if s.section == 'Research experience' %}
+
+<h2>Publications</h2>
+<p>
+  {%- for group in site.data.publications %}
+  {{ group.group }}: {{ group.items | size }}{% unless forloop.last %};{% else %}.{% endunless %}
+  {%- endfor %}
+  Full list on the <a href="{{ '/publications/' | relative_url }}">publications page</a>.
+</p>
+{%- endif %}
+{% endfor %}

@@ -1,0 +1,25 @@
+{%- comment -%}One entry of _data/publications.yml, passed as include.pub.{%- endcomment -%}
+{%- assign pub = include.pub -%}
+{%- capture me_bold %}<strong>{{ site.data.profile.citation_name }}</strong>{% endcapture -%}
+<li id="{{ pub.id }}" class="pub">
+  <span class="pub-id">{{ pub.id }}</span>
+  <div class="pub-body">
+    <span class="pub-title">{{ pub.title }}</span><br>
+    <span class="pub-authors">{{ pub.authors | replace: site.data.profile.citation_name, me_bold }}</span><br>
+    <span class="pub-venue"><em>{{ pub.venue }}</em>{% if pub.details %}, {{ pub.details }}{% endif %}, {{ pub.year }}.</span>
+    {%- if pub.note %}<br><span class="pub-note">{{ pub.note }}</span>{% endif %}
+    {%- if pub.links or pub.bibtex %}
+    <div class="pub-links">
+      {%- for l in pub.links %}
+      <a href="{{ l.url }}">{{ l.label }}</a>
+      {%- endfor %}
+      {%- if pub.bibtex %}
+      <details>
+        <summary>BibTeX</summary>
+        <pre><code>{{ pub.bibtex | xml_escape }}</code></pre>
+      </details>
+      {%- endif %}
+    </div>
+    {%- endif %}
+  </div>
+</li>

@@ -1,0 +1,135 @@
+# Curriculum vitae, rendered by cv.md. Source of truth: the LaTeX CV
+# (ELLIS 2026 build, English). Personal data in that CV (phone, ID number,
+# referees) is deliberately not reproduced here.
+#
+# Entry fields: date, title, org, text (Markdown), items (Markdown list),
+#               links (list of {label, url}).
+
+- section: Education
+  entries:
+    - date: 2026–2027
+      title: MSc in Artificial Intelligence
+      org: Escuela Politécnica Superior, Universidad Autónoma de Madrid
+      text: Full-time, 60 ECTS; expected completion July 2027.
+      items:
+        - "Master's thesis (working title): *Scalable linearised Laplace uncertainty quantification for pretrained flow-matching generative neural networks*. Supervisor: Dr. Daniel Hernández-Lobato (Machine Learning Group, GAA)."
+    - date: 2022–2026
+      title: BSc in Biomedical Engineering (Ingeniería de la Salud), bioinformatics track
+      org: ETSI Informática, University of Málaga
+      text: "GPA 9.05/10 over 240 ECTS. *Matrícula de Honor* in 21 courses (120 ECTS); this distinction is capped at 5% of the students enrolled in each course."
+      items:
+        - "Bachelor's thesis: *Meningioma growth prediction in multimodal magnetic resonance imaging using deep learning techniques*. Graded 10/10 with *Matrícula de Honor* (10 Jul 2026). Supervisor: Dr. Ezequiel López-Rubio. Third prize, AEPIA Best Bachelor's Thesis Award."
+      links:
+        - label: degree
+          url: https://www.uma.es/grado-en-ingenieria-de-la-salud/?set_language=en
+
+- section: Research experience
+  entries:
+    - date: 2023–present
+      title: Research trainee
+      org: Computational Intelligence and Image Analysis Group (ICAI), Dept. of Computer Languages and Computer Science, University of Málaga
+      text: Deep learning for brain MRI and invasive coronary angiography; instruction-sequence representations of graphs for symbolic regression.
+    - date: Jun 2024 – Aug 2025
+      title: Researcher (part-time contract)
+      org: Biomedical Research Institute of Málaga (IBIMA), BIONAND Platform
+      text: "Supervisors: Dr. Esteban J. Palomo and Dr. Ezequiel López-Rubio."
+      items:
+        - Detection, segmentation and characterisation of non-obstructive coronary artery disease in invasive coronary angiography with deep learning.
+        - "Dataset standardisation, benchmarking of preprocessing pipelines and hyperparameter optimisation [[J1](/publications/#J1)]; integration of the models into a working application."
+
+- section: Grants
+  entries:
+    - date: 2026–2027
+      title: Collaboration Grant (Beca de Colaboración), Spanish Ministry of Education
+      org: Machine Learning Group (GAA), Dept. of Computer Engineering, Universidad Autónoma de Madrid
+      text: "National competitive call for research initiation of final-year BSc and MSc students (2,111 grants nationwide). Highest average grade among the department's four awardees. Funds the Master's thesis research with Dr. D. Hernández-Lobato. Provisional award, 7 Oct 2026."
+      links:
+        - label: award list
+          url: https://www.uam.es/uam/media/doc/1607054577835/acuerdo-comision-seleccion-becarios-signed.pdf
+    - date: Jan – Jul 2026
+      title: Research Initiation Grant, modality A.1
+      org: ICAI group, University of Málaga
+      text: Competitive call limited to ten engineering students across the university; third-highest score in the call.
+      links:
+        - label: call
+          url: https://www.uma.es/servicio-de-investigacion/info/135783/a1-ayudas-la-iniciacion-la-investigacion-informacion/
+
+- section: Awards
+  entries:
+    - date: Oct 2026
+      title: Best Oral Communication Award, Diagnostic Neuroradiology
+      org: Spanish Society of Neuroradiology (SENR), 54th Annual Meeting, Málaga
+      text: "For [[C3](/publications/#C3)], first author and presenter."
+    - date: Oct 2026
+      title: Third Prize, AEPIA Best Bachelor's Thesis Award
+      org: Spanish Association for Artificial Intelligence (AEPIA), CAEPIA 2026
+      text: National award, general category.
+      links:
+        - label: award list
+          url: https://simidat.ujaen.es/caepia26/es/awards
+        - label: press release
+          url: https://www.uma.es/sala-de-prensa/noticias/un-trabajo-fin-de-grado-de-la-uma-distinguido-por-la-asociacion-espanola-para-la-inteligencia-artificial/
+    - date: May 2026
+      title: Accésit (runner-up prize) for oral communication and <i>Cum Laude</i> distinction for electronic communication
+      org: Spanish Society of Medical Radiology (SERAM), 38th National Congress, Valencia
+      text: "Both for [[C4](/publications/#C4)], first author."
+      links:
+        - label: accésit
+          url: https://drive.google.com/file/d/1WKwNK34E5d5pvsFGcZiGfDsQSUBXryuq/view?usp=sharing
+        - label: cum laude
+          url: https://drive.google.com/file/d/1g_xPa4aR3LadaANuTp8UBq7XO-FRilAS/view?usp=sharing
+
+- section: Talks
+  entries:
+    - date: Nov 2026
+      title: "Invited lecture: <i>Artificial intelligence and biomedical imaging</i>"
+      org: Biomedical Imaging course, BSc in Biomedical Engineering, University of Málaga
+      text: Invited by Dr. Francisco Sendra-Portero (scheduled).
+    - date: Oct 2026
+      title: Oral communication of <a href="/publications/#C3">[C3]</a>
+      org: 54th SENR Annual Meeting, Málaga
+    - date: May 2026
+      title: Oral communication of <a href="/publications/#C4">[C4]</a>
+      org: 38th SERAM National Congress, Valencia
+
+- section: Media coverage
+  entries:
+    - date: Oct 2026
+      title: University of Málaga press release on the AEPIA award
+      links:
+        - label: uma.es
+          url: https://www.uma.es/sala-de-prensa/noticias/un-trabajo-fin-de-grado-de-la-uma-distinguido-por-la-asociacion-espanola-para-la-inteligencia-artificial/
+    - date: Oct 2026
+      title: AEPIA award and meningioma growth research, <i>Málaga Hoy</i>
+      links:
+        - label: malagahoy.es
+          url: https://www.malagahoy.es/malaga/asociacion-espanola-ia-distingue-tfg-uma_0_2008266872.html
+    - date: Oct 2026
+      title: AEPIA award, <i>Nova Ciencia</i>
+      links:
+        - label: novaciencia.es
+          url: https://novaciencia.es/premio-nacional-a-un-estudiante-de-la-uma-por-investigar-como-predecir-el-crecimiento-de-tumores-cerebrales
+    - date: Sep 2025
+      title: AI-assisted cardiac diagnosis research, <i>La Vanguardia</i>
+      links:
+        - label: lavanguardia.com
+          url: https://www.lavanguardia.com/local/sevilla/20250911/11049633/desarrollan-ia-vanguardista-mejora-precision-diagnostico-cardiaco-salvar-vidas-agenciaslv20250911.html
+
+- section: Service and outreach
+  entries:
+    - date: 2023–2024
+      title: Student ambassador (Estudiante Cicerón)
+      org: University of Málaga
+      text: Campus tours and guidance for prospective students at the School of Computer Science (ETSI Informática).
+
+# In this section `date` holds the row label.
+- section: Skills and languages
+  entries:
+    - date: Machine learning
+      title: PyTorch, scikit-learn, MONAI, NumPy, SciPy
+    - date: Programming
+      title: Python, Bash, LaTeX
+    - date: Computing
+      title: Over two years on the Picasso supercomputer, University of Málaga (SLURM, Conda, Git, multi-GPU training)
+    - date: Languages
+      title: Spanish (native); English (C2; Cambridge C1 Advanced, grade A, 2026)

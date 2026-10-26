@@ -1,0 +1,34 @@
+# Identity, affiliations and external profiles. Rendered on the home page,
+# in the footer and in the page metadata (JSON-LD).
+name: Mario Pascual González
+# Author string highlighted in publication lists.
+citation_name: M. Pascual-González
+location: Madrid, Spain
+
+positions:
+  - role: MSc student in Artificial Intelligence
+    org: Universidad Autónoma de Madrid
+    url: https://www.uam.es/
+  - role: Research trainee, ICAI group
+    org: University of Málaga
+    url: https://www.uma.es/
+
+emails:
+  - mario.pascualg@estudiante.uam.es
+  - mpascualg02@gmail.com
+
+links:
+  - label: Google Scholar
+    url: https://scholar.google.es/citations?user=47ei0IcAAAAJ
+  - label: ORCID
+    url: https://orcid.org/0009-0001-2178-4647
+  - label: GitHub
+    url: https://github.com/MarioPasc
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/mario-pascual-gonzalez
+
+interests:
+  - "Bayesian and probabilistic deep learning: uncertainty quantification for deep generative models, Laplace approximations"
+  - "Generative models: diffusion and flow matching"
+  - "Medical imaging under data scarcity (brain MRI, invasive coronary angiography)"
+  - "Graph representations for symbolic regression"

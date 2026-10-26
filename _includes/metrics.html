@@ -1,0 +1,8 @@
+{%- comment -%}Citation metrics from _data/metrics.yml (scripts/update_metrics.py).{%- endcomment -%}
+{%- assign m = site.data.metrics -%}
+{%- if m %}
+<p class="metrics">
+  Citations {{ m.citations }} · h-index {{ m.h_index }} · i10-index {{ m.i10_index }}
+  <span class="muted">(<a href="{{ m.profile }}">{{ m.source }}</a>, {{ m.retrieved | date: "%-d %b %Y" }})</span>
+</p>
+{%- endif %}

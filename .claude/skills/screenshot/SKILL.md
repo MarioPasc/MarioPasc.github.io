@@ -37,9 +37,9 @@ The local server must be running. If not, start it with `/serve` first.
    - `browser_navigate` to the target URL
    - `browser_take_screenshot` (full page; save under `.playwright-mcp/`, which is git-ignored)
 
-3. **Dark mode** (if requested or if the change touches colours): the site follows the system setting, there is no toggle.
-   - `browser_emulate_media` with `colorScheme: "dark"`, reload, screenshot at desktop viewport
-   - Reset with `colorScheme: "light"` afterwards
+3. **Dark mode** (if requested or if the change touches colours): light is the default; the header button switches themes.
+   - `browser_click` on `.theme-toggle`, screenshot at desktop viewport
+   - Click it again afterwards: the choice persists in `localStorage` and would leak into later screenshots
 
 4. **Report** — For each screenshot, note viewport, any issues, and overall assessment.
 

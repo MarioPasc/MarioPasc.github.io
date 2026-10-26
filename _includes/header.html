@@ -11,6 +11,7 @@
         {%- endif %}
       <a href="{{ item.url | relative_url }}"{% if current %} aria-current="page"{% endif %}>{{ item.title }}</a>
       {%- endfor %}
+      <button type="button" class="theme-toggle" hidden>Dark</button>
     </nav>
   </div>
 </header>

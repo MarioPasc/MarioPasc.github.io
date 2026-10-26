@@ -39,7 +39,7 @@ For each affected page, at each viewport:
 3. Check for: text overflow, overlapping elements, missing images, nav rendering, MathJax equations (pages with `math: true`)
 4. No horizontal scroll at mobile width, with every BibTeX `<details>` opened:
    `browser_evaluate` → `document.querySelectorAll('details').forEach(d => d.open = true); document.documentElement.scrollWidth <= document.documentElement.clientWidth`
-5. If the change touches colours: `browser_emulate_media` with `colorScheme: "dark"`, screenshot again, then reset to `"light"`
+5. If the change touches colours: click `.theme-toggle`, screenshot again, then click it back to light (the choice persists in `localStorage`)
 
 ### Which pages to check
 

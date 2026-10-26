@@ -9,16 +9,17 @@ UAM; research trainee, ICAI group, University of Málaga). Hosted on GitHub
 Pages at `https://mariopasc.github.io/`, built by the Pages builder from the
 `main` branch. Pages: Home, Publications, CV, Blog.
 
-The site is deliberately minimal: one column of text, no theme, no
-JavaScript (except opt-in MathJax), one plain CSS file. Content lives in
+The site is deliberately minimal: one column of text, no theme, one plain
+CSS file, and JavaScript only for the light/dark toggle and opt-in MathJax. Content lives in
 `_data/` YAML files; pages only arrange it.
 
 ## Design System
 
 - **Font**: Source Serif 4 (self-hosted in `assets/fonts/`, SIL OFL) for all text; system sans-serif for navigation and small metadata; system monospace for code
-- **Palette**: near-black text on white, one muted grey, one dark-blue link colour; dark mode follows `prefers-color-scheme` (no toggle)
+- **Palette**: near-black text on white, one muted grey, one dark-blue link colour
+- **Theme**: light by default (also when the OS is dark); a text button in the header switches to dark via `<html data-theme="dark">`, remembered in `localStorage`
 - **Layout**: single column, `--measure: 46rem`; header with name left and nav right; date/label column grids for news, CV and publications
-- **Not used, on purpose**: cards, shadows, gradients, animations, icons, badges, theme toggle, third-party fonts or trackers
+- **Not used, on purpose**: cards, shadows, gradients, animations, icons, badges, third-party fonts or trackers
 
 ## Available Tech Stack
 
@@ -37,7 +38,7 @@ JavaScript (except opt-in MathJax), one plain CSS file. Content lives in
 
 | Server | Tools | When to use |
 |--------|-------|-------------|
-| **playwright** | `browser_navigate`, `browser_take_screenshot`, `browser_snapshot`, `browser_resize`, `browser_emulate_media` | Preview the site, screenshots at several viewports, dark mode via `colorScheme: "dark"` |
+| **playwright** | `browser_navigate`, `browser_take_screenshot`, `browser_snapshot`, `browser_resize`, `browser_click` | Preview the site, screenshots at several viewports, dark mode by clicking `.theme-toggle` |
 | **github** | Push, PR creation, deploy status, issue management | Push commits, check deploy status |
 | **chrome-devtools** | CSS inspection, console logs, network requests | Debug CSS issues, check computed styles |
 
@@ -87,12 +88,13 @@ MarioPasc.github.io/
 │   ├── person-jsonld.html      # schema.org Person (home page only)
 │   └── mathjax.html            # Loaded only when page.math is true
 ├── _layouts/
-│   ├── default.html            # Head, header, main, footer
+│   ├── default.html            # Head (incl. pre-paint theme script), header, main, footer
 │   ├── page.html               # Default for pages
 │   ├── post.html               # Blog post
 │   └── redirect.html           # Meta-refresh redirect
 ├── assets/
 │   ├── css/main.css            # The only stylesheet (plain CSS)
+│   ├── js/theme.js             # Light/dark toggle (header button)
 │   ├── fonts/                  # Source Serif 4 woff2 + OFL.txt
 │   └── images/                 # portrait.jpg, blog/<post>/
 ├── content/_blog/              # Blog posts (collection, /blog/:title/)
@@ -171,13 +173,14 @@ CI runners, so this is not automated.
 ### CSS
 
 - Plain CSS in `assets/css/main.css`; use the custom properties on `:root`
-- Every colour needs a dark-mode value in the `prefers-color-scheme: dark` block
+- Every colour needs a dark value in the `:root[data-theme="dark"]` block; print always uses the light palette
 - Grid columns use `minmax(0, 1fr)` so long content (BibTeX, URLs) cannot widen the page
 - Keep it lint-clean: `npm run lint`
 
 ### JavaScript
 
-- None by default. Anything interactive should work without it (e.g. `<details>`)
+- Only `assets/js/theme.js` (toggle) and the inline pre-paint snippet in `_layouts/default.html`; plain ES5, no build step
+- Everything else must work without JavaScript (e.g. `<details>`); the toggle button stays `hidden` if the script does not run
 
 ## Agentic Workflow
 
@@ -186,7 +189,7 @@ When making any visual or structural change, follow this loop:
 1. **Edit** — Make the code change
 2. **Build check** — `bundle exec jekyll build 2>&1`
 3. **Start server** — `bundle exec jekyll serve` if not running
-4. **Visual inspection** — Playwright screenshots at mobile (375×812), tablet (768×1024), desktop (1440×900); dark mode via `browser_emulate_media`. Check that no page scrolls horizontally at 360 px.
+4. **Visual inspection** — Playwright screenshots at mobile (375×812), tablet (768×1024), desktop (1440×900); dark mode by clicking the header toggle. Check that no page scrolls horizontally at 360 px.
 5. **Fix issues** — Repeat from step 2
 6. **Commit and push** — Conventional commits (`feat:`, `fix:`, `style:`, `content:`, `refactor:`)
 7. **Verify deploy** — Check the "pages build and deployment" run, then screenshot production
@@ -203,5 +206,6 @@ Types: `feat`, `fix`, `style`, `content`, `refactor`, `docs`, `chore`
 | Formula not rendering | Add `math: true` to the page front matter |
 | Builds locally, fails on Pages | Feature not in Jekyll 3.10 / Liquid 4, or a non-whitelisted plugin |
 | Unexpected `assets/css/style.css` in the build | `theme: null` missing from `_config.yml` |
+| Site opens dark for a visitor | Expected only if they chose dark before (`localStorage.theme`); the default is light |
 | Page scrolls sideways on mobile | A grid/flex child without `min-width: 0`, or a long unbreakable string |
 | `git push` over HTTPS asks for a username | Push over SSH: `git@github.com:MarioPasc/MarioPasc.github.io.git` |

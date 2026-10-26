@@ -1,7 +1,8 @@
 # MarioPasc.github.io
 
 Personal academic website, built by GitHub Pages from the `main` branch with
-Jekyll. No theme, no JavaScript, one stylesheet.
+Jekyll. No theme, one stylesheet, and one small script for the light/dark
+toggle (light is the default).
 
 ## Where things live
 

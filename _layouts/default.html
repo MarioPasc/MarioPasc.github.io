@@ -24,7 +24,9 @@
   </script>
   <link rel="icon" href="data:,">
   <link rel="preload" href="{{ '/assets/fonts/source-serif-4-latin-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  {%- comment -%}Pages caches assets for 10 min; a per-build query string keeps CSS/JS in step with the HTML.{%- endcomment %}
+  {%- assign build = site.time | date: '%s' %}
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ build }}">
   {%- if page.url == '/' %}
   {% include person-jsonld.html %}
   {%- endif %}
@@ -39,6 +41,6 @@
     {{ content }}
   </main>
   {% include footer.html %}
-  <script defer src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/theme.js' | relative_url }}?v={{ build }}"></script>
 </body>
 </html>
